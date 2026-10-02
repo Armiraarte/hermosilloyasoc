@@ -1,0 +1,6 @@
+{
+  "name": "Administrador de Sistema de Expedientes",
+  "description": "Panel administrativo independiente para expedientes, clientes y calendario.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,189 @@
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #ffffff;
+  color: #111111;
+  font-family: 'Montserrat', sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(59, 130, 246, 0.18);
+  color: #111111;
+}
+
+.portal-vignette::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: transparent;
+  z-index: 0;
+}
+
+.portal-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.portal-sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 24%, rgba(223, 228, 233, 0.32) 50%, transparent 76%);
+  transform: translateX(-180%);
+  animation: portal-sheen-move 7s linear infinite;
+  pointer-events: none;
+}
+
+.portal-grid {
+  background-image: none;
+}
+
+.portal-vignette .bg-white,
+.portal-vignette .bg-neutral-50,
+.portal-vignette .bg-neutral-50\/50,
+.portal-vignette .bg-blue-50,
+.portal-vignette .bg-purple-50,
+.portal-vignette .bg-green-50 {
+  background-color: #ffffff !important;
+}
+
+.portal-vignette .bg-neutral-100 {
+  background-color: #ffffff !important;
+}
+
+.portal-vignette .bg-blue-600,
+.portal-vignette .bg-blue-500,
+.portal-vignette .bg-purple-600,
+.portal-vignette .bg-green-600 {
+  background-color: #1c2025 !important;
+}
+
+.portal-vignette .text-neutral-900,
+.portal-vignette .text-neutral-700,
+.portal-vignette .text-neutral-600,
+.portal-vignette .text-blue-700,
+.portal-vignette .text-blue-600,
+.portal-vignette .text-purple-600,
+.portal-vignette .text-green-600,
+.portal-vignette .text-yellow-700 {
+  color: #111111 !important;
+}
+
+.portal-vignette .text-neutral-500,
+.portal-vignette .text-neutral-400,
+.portal-vignette .text-neutral-300 {
+  color: #6a727b !important;
+}
+
+.portal-vignette .border-neutral-200,
+.portal-vignette .border-neutral-100,
+.portal-vignette .border-blue-200,
+.portal-vignette .border-blue-300,
+.portal-vignette .border-red-200,
+.portal-vignette .border-green-200,
+.portal-vignette .border-yellow-200,
+.portal-vignette .border-purple-200 {
+  border-color: rgba(191, 197, 205, 0.35) !important;
+}
+
+.portal-vignette .shadow-sm,
+.portal-vignette .hover\:shadow-md:hover {
+  box-shadow:
+    0 22px 60px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+.portal-vignette .hover\:bg-neutral-50:hover,
+.portal-vignette .hover\:bg-neutral-100:hover,
+.portal-vignette .hover\:bg-blue-50:hover,
+.portal-vignette .hover\:bg-blue-100:hover,
+.portal-vignette .hover\:bg-red-50:hover {
+  background-color: #ffffff !important;
+}
+
+.portal-vignette .hover\:bg-blue-700:hover,
+.portal-vignette .hover\:bg-blue-600:hover {
+  background-color: #2a3038 !important;
+}
+
+.portal-vignette .group:hover .group-hover\:bg-blue-700 {
+  background-color: #2a3038 !important;
+}
+
+.portal-vignette .hover\:text-blue-600:hover,
+.portal-vignette .hover\:text-blue-700:hover,
+.portal-vignette .group:hover .group-hover\:text-blue-600,
+.portal-vignette .group:hover .group-hover\:text-blue-500,
+.portal-vignette .group-focus-within\:text-blue-600,
+.portal-vignette .focus\:text-blue-600:focus {
+  color: #111111 !important;
+}
+
+.portal-vignette .focus\:border-blue-500:focus,
+.portal-vignette .focus\:border-blue-600:focus {
+  border-color: rgba(183, 191, 201, 0.55) !important;
+}
+
+.portal-vignette .hover\:border-blue-300:hover {
+  border-color: rgba(183, 191, 201, 0.45) !important;
+}
+
+.portal-vignette .focus\:ring-blue-500:focus {
+  --tw-ring-color: rgba(183, 191, 201, 0.22) !important;
+}
+
+.portal-vignette .disabled\:bg-neutral-300:disabled {
+  background-color: #cfd6dd !important;
+}
+
+.portal-vignette .placeholder\:text-neutral-400::placeholder {
+  color: #737373 !important;
+}
+
+.portal-vignette input,
+.portal-vignette select,
+.portal-vignette textarea {
+  background-color: #ffffff !important;
+  color: #111111 !important;
+}
+
+.portal-vignette table tr:hover {
+  background-color: #ffffff !important;
+}
+
+@keyframes portal-sheen-move {
+  0% {
+    transform: translateX(-180%);
+  }
+  100% {
+    transform: translateX(180%);
+  }
+}

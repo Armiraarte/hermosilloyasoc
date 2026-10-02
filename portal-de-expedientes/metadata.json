@@ -1,0 +1,6 @@
+{
+  "name": "Sistema de Control de Expedientes",
+  "description": "Portal para la consulta de estatus de expedientes por codigo o nombre.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

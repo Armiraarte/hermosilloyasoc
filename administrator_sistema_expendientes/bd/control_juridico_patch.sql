@@ -1,0 +1,54 @@
+USE administrador_expedientes;
+
+ALTER TABLE expedientes
+  ADD COLUMN estado_juridico ENUM(
+    'ESPERANDO_ACUERDO',
+    'ESP_REG_PS_AG',
+    'FINALIZADO',
+    'ESP_TERMINO',
+    'ESP_AL_CLIENTE',
+    'PENDIENTE_SEGUIMIENTO',
+    'AUD_DILIG_PROXIMA',
+    'PENDIENTE',
+    'REALIZADO'
+  ) NOT NULL DEFAULT 'PENDIENTE_SEGUIMIENTO' AFTER estatus,
+  ADD COLUMN notas_pendientes TEXT NULL AFTER estado_juridico,
+  ADD KEY idx_expedientes_estado_juridico (estado_juridico);
+
+UPDATE expedientes
+SET estado_juridico = CASE estado_juridico
+  WHEN 'AUDIENCIA_DILIGENCIA_PROXIMA' THEN 'AUD_DILIG_PROXIMA'
+  WHEN 'ESPERANDO_AL_CLIENTE' THEN 'ESP_AL_CLIENTE'
+  WHEN 'CONCLUIDO' THEN 'FINALIZADO'
+  ELSE estado_juridico
+END;
+
+UPDATE expedientes
+SET estatus = CASE
+  WHEN estado_juridico IN (
+    'ESPERANDO_ACUERDO',
+    'ESP_REG_PS_AG',
+    'FINALIZADO',
+    'ESP_TERMINO',
+    'ESP_AL_CLIENTE',
+    'PENDIENTE_SEGUIMIENTO',
+    'AUD_DILIG_PROXIMA',
+    'PENDIENTE',
+    'REALIZADO'
+  ) THEN estado_juridico
+  WHEN estatus IN ('RESUELTO', 'CERRADO') THEN 'FINALIZADO'
+  ELSE 'PENDIENTE_SEGUIMIENTO'
+END;
+
+ALTER TABLE expedientes
+  MODIFY COLUMN estatus ENUM(
+    'ESPERANDO_ACUERDO',
+    'ESP_REG_PS_AG',
+    'FINALIZADO',
+    'ESP_TERMINO',
+    'ESP_AL_CLIENTE',
+    'PENDIENTE_SEGUIMIENTO',
+    'AUD_DILIG_PROXIMA',
+    'PENDIENTE',
+    'REALIZADO'
+  ) NOT NULL DEFAULT 'PENDIENTE_SEGUIMIENTO';
