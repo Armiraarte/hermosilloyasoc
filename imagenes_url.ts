@@ -1,4 +1,4 @@
-﻿// ============================================================================
+// ============================================================================
 // ARCHIVO DE CONTROL DE IMÁGENES Y DATOS (imagenes_url.ts)
 // ============================================================================
 // INSTRUCCIONES:
@@ -22,19 +22,6 @@ export const IMAGENES = {
 
   // --- ICONOS (NUEVA SECCIÓN CENTRALIZADA) ---
   icons: {
-    services: {
-      notaria: "https://cdn-icons-png.flaticon.com/512/5968/5968535.png",
-      civil: "https://cdn-icons-png.flaticon.com/512/2636/2636250.png",
-      ija: "https://cdn-icons-png.flaticon.com/512/5968/5968506.png",
-      registro_civil: "https://cdn-icons-png.flaticon.com/512/5968/5968525.png",
-      amparo: "https://cdn-icons-png.flaticon.com/512/5968/5968284.png",
-      registro_publico: "https://cdn-icons-png.flaticon.com/512/5968/5968305.png",
-      rh_blindaje: "https://cdn-icons-png.flaticon.com/512/476/476863.png",
-      ayuntamiento: "https://cdn-icons-png.flaticon.com/512/1018/1018513.png",
-      movilidad: "https://cdn-icons-png.flaticon.com/512/741/741407.png",
-      comercio_exterior: "https://cdn-icons-png.flaticon.com/512/751/751663.png",
-      marca: "https://cdn-icons-png.flaticon.com/512/5968/5968430.png"
-    },
     contact: {
       location: "https://cdn-icons-png.flaticon.com/512/535/535239.png",
       phone: "https://cdn-icons-png.flaticon.com/512/159/159832.png",
@@ -60,7 +47,7 @@ export const IMAGENES = {
 
     // 3. SECCIÓN QUIÉNES SOMOS (LEGAL)
     about: {
-      mainImage: "/components/media/images/FOTOHERMOSILLO2.png"
+      mainImage: "/components/media/images/FOTOHERMOSILLO2.webp"
     },
 
     // 4. FONDOS GENERALES
@@ -70,17 +57,17 @@ export const IMAGENES = {
 
     // 5. SERVICIOS LEGALES
     services: {
-      notaria: "/components/media/images/CATEGORIAS/TRÁMITES ANTE NOTARÍA Y CORREDURÍA PÚBLICA.webp",
-      civil: "/components/media/images/CATEGORIAS/JUICIO CIVIL · FAMILIAR · MERCANTIL.webp",
-      ija: "/components/media/images/CATEGORIAS/CONVENIOS DE VALIDACIÓN ANTE EL IJA_11.webp",
-      registro_civil: "/components/media/images/CATEGORIAS/REGISTRO CIVIL.webp",
-      amparo: "/components/media/images/CATEGORIAS/JUICIOS DE AMPARO.webp",
-      registro_publico: "/components/media/images/CATEGORIAS/REGISTRO PÚBLICO DE LA PROPIEDAD.webp",
-      rh_blindaje: "/components/media/images/CATEGORIAS/RECURSOS HUMANOS Y BLINDAJE LABORAL.webp",
-      ayuntamiento: "/components/media/images/CATEGORIAS/LICENCIAS Y PERMISOS AYUNTAMIENTO.webp",
-      movilidad: "/components/media/images/CATEGORIAS/SECRETARÍA DE MOVILIDAD.webp",
-      comercio_exterior: "/components/media/images/CATEGORIAS/ADUANAS.webp",
-      marca: "/components/media/images/CATEGORIAS/REGISTRO DE MARCA Y PROPIEDAD INTELECTUAL.webp"
+      notaria: "/components/media/images/CATEGORIAS/opt/TRÁMITES ANTE NOTARÍA Y CORREDURÍA PÚBLICA.webp",
+      civil: "/components/media/images/CATEGORIAS/opt/JUICIO CIVIL · FAMILIAR · MERCANTIL.webp",
+      ija: "/components/media/images/CATEGORIAS/opt/CONVENIOS DE VALIDACIÓN ANTE EL IJA_11.webp",
+      registro_civil: "/components/media/images/CATEGORIAS/opt/REGISTRO CIVIL.webp",
+      amparo: "/components/media/images/CATEGORIAS/opt/JUICIOS DE AMPARO.webp",
+      registro_publico: "/components/media/images/CATEGORIAS/opt/REGISTRO PÚBLICO DE LA PROPIEDAD.webp",
+      rh_blindaje: "/components/media/images/CATEGORIAS/opt/RECURSOS HUMANOS Y BLINDAJE LABORAL.webp",
+      ayuntamiento: "/components/media/images/CATEGORIAS/opt/LICENCIAS Y PERMISOS AYUNTAMIENTO.webp",
+      movilidad: "/components/media/images/CATEGORIAS/opt/SECRETARÍA DE MOVILIDAD.webp",
+      comercio_exterior: "/components/media/images/CATEGORIAS/opt/ADUANAS.webp",
+      marca: "/components/media/images/CATEGORIAS/opt/REGISTRO DE MARCA Y PROPIEDAD INTELECTUAL.webp"
     },
 
 
@@ -94,27 +81,27 @@ export const IMAGENES = {
       alejandro_atras: "/components/media/images/members/lic_antonio.webp",
       jose_luis_frente: "/components/media/images/members/lic_joseluis.webp",
       jose_luis_atras: "/components/media/images/members/lic_joseluis.webp",
-      ximena_frente: "/components/media/images/members/lic_ximena.png",
-      ximena_atras: "/components/media/images/members/lic_ximena.png",
-      yanci_frente: "/components/media/images/members/lic_yanci.png",
-      yanci_atras: "/components/media/images/members/lic_yanci.png",
+      ximena_frente: "/components/media/images/members/lic_ximena.webp",
+      ximena_atras: "/components/media/images/members/lic_ximena.webp",
+      yanci_frente: "/components/media/images/members/lic_yanci.webp",
+      yanci_atras: "/components/media/images/members/lic_yanci.webp",
       // Reemplaza estas rutas cuando subas la fotografia de Jesus Godinez
-      jesus_frente: "/components/media/images/members/lic_jesus.jpeg",
-      jesus_atras: "/components/media/images/members/lic_jesus.jpeg",
+      jesus_frente: "/components/media/images/members/lic_jesus.webp",
+      jesus_atras: "/components/media/images/members/lic_jesus.webp",
       // Rutas listas para las nuevas tarjetas de derecho inmobiliario
-      sarah_frente: "/components/media/images/members/lic_sarah.jpg",
-      sarah_atras: "/components/media/images/members/lic_sarah.jpg",
-      fabricio_frente: "/components/media/images/members/lic_fabricio.jpg",
-      fabricio_atras: "/components/media/images/members/lic_fabricio.jpg"
+      sarah_frente: "/components/media/images/members/lic_sarah.webp",
+      sarah_atras: "/components/media/images/members/lic_sarah.webp",
+      fabricio_frente: "/components/media/images/members/lic_fabricio.webp",
+      fabricio_atras: "/components/media/images/members/lic_fabricio.webp"
     },
 
     // 7. INSTALACIONES (Imágenes de ejemplo actualizadas)
     facilities: [
       { id: 1, title: "Recepción", phrase: "Excelencia desde el primer paso.", image: "/components/media/instalaciones/1.jpeg" },
-      { id: 2, title: "Sala de Juntas", phrase: "Estrategia y Decisión.", image: "/components/media/instalaciones/juntas.webp" },
+      { id: 2, title: "Sala de Juntas", phrase: "Estrategia y Decisión.", image: "/components/media/instalaciones/juntas-opt.webp" },
       { id: 3, title: "Oficinas", phrase: "Privacidad Absoluta.", image: "/components/media/instalaciones/4.jpeg" },
-      { id: 4, title: "Sala de Espera", phrase: "Confort y Serenidad.", image: "/components/media/instalaciones/espera.webp" },
-      { id: 5, title: "Edificio", phrase: "Infraestructura de vanguardia.", image: "/components/media/instalaciones/edificio.jpg" }
+      { id: 4, title: "Sala de Espera", phrase: "Confort y Serenidad.", image: "/components/media/instalaciones/espera-opt.webp" },
+      { id: 5, title: "Edificio", phrase: "Infraestructura de vanguardia.", image: "/components/media/instalaciones/edificio.webp" }
     ]
   }
 };

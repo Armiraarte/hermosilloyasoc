@@ -1,5 +1,6 @@
 
 import React, { lazy } from 'react';
+import SectionFigure from './SectionFigure';
 import Navbar from './Navbar';
 import Hero from './Hero';
 import ClientControlSystem from './ClientControlSystem';
@@ -10,6 +11,7 @@ import Facilities from './Facilities';
 import Reveal from './Reveal';
 import { IMAGENES } from '../imagenes_url';
 import DeferredSection from './DeferredSection';
+import ScrollJourney from './ScrollJourney';
 
 const SeoContent = lazy(() => import('./SeoContent'));
 const LocationMap = lazy(() => import('./LocationMap'));
@@ -19,13 +21,15 @@ const Home: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-transparent text-white font-sans selection:bg-gray-700 selection:text-white">
       <Navbar />
+      <ScrollJourney />
       <main className="flex-grow">
         <Hero />
         <ClientControlSystem />
         
         {/* About Section - "¿Quiénes somos?" - CLEAN BLACK BACKGROUND */}
-        <section id="nosotros" className="py-20 bg-transparent relative">
-           <div className="w-[90%] max-w-[1600px] mx-auto px-6 grid lg:grid-cols-2 gap-24 items-center">
+        <section id="nosotros" className="py-20 bg-transparent relative overflow-hidden">
+           <SectionFigure variant="temple" className="-left-16 bottom-[-3rem] h-[24rem] w-[24rem] opacity-25" />
+           <div className="relative z-10 w-[90%] max-w-[1600px] mx-auto px-6 grid lg:grid-cols-2 gap-24 items-center">
               
               {/* Left Content */}
               <Reveal

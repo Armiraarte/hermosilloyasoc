@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import SectionFigure from './SectionFigure';
 import { IMAGENES } from '../imagenes_url';
 import Reveal from './Reveal';
 
@@ -57,6 +58,7 @@ const Facilities: React.FC = () => {
 
             {/* ================= 2. CONTENIDO PRINCIPAL ================= */}
             {/* CHANGE: Increased max-width to 95% and added a larger breakpoint for ultra-wide screens */}
+            <SectionFigure variant="building" className="-right-8 bottom-0 z-[25] hidden h-[19rem] w-[19rem] opacity-30 xl:block" />
             <div className="relative z-30 w-full max-w-[95%] 2xl:max-w-[1800px] mx-auto px-4 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center h-full">
 
                 {/* --- COLUMNA IZQUIERDA: LA FOTO (Marco Flotante) --- */}

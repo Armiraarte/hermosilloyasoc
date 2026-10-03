@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
+import SectionFigure from './SectionFigure';
 import { IMAGENES } from '../imagenes_url';
 import Reveal from './Reveal';
 
@@ -80,6 +81,7 @@ const Contact: React.FC = () => {
   return (
     // Se quitó bg-[#050505] para transparencia
     <section id="contacto" className="py-16 md:py-24 bg-transparent relative overflow-hidden">
+      <SectionFigure variant="contact" className="-right-10 bottom-[-5rem] z-[1] hidden h-[18rem] w-[18rem] opacity-40 lg:block" />
       
       {/* ================= BACKGROUND ATMOSPHERE ================= */}
       <div className="absolute inset-0 z-0 pointer-events-none">
