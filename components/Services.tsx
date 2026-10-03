@@ -1,10 +1,17 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import SectionLight from './SectionLight';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SectionFigure from './SectionFigure';
 import { BadgeCheck, Car, FileText, Handshake, Landmark, Scale, ShieldCheck, Ship, Stamp, Store, Users, type LucideIcon } from 'lucide-react';
-import Reveal from './Reveal';
 import { IMAGENES } from '../imagenes_url';
 import { WHATSAPP_URLS } from '../whatsapp_urls';
+import { prefersReducedMotion } from './gsapEffects';
+import './Services.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // --- DATA STRUCTURE ---
 interface SubService {
@@ -301,13 +308,15 @@ const WhatsAppIcon: React.FC = () => (
   </svg>
 );
 
-// Tarjeta con inclinación 3D y brillo platino que sigue al cursor.
+// El brillo de scroll y la inclinación del cursor usan capas independientes.
 const ServiceCard: React.FC<{ service: ServiceData; index: number; onOpen: () => void }> = ({ service, index, onOpen }) => {
   const ref = useRef<HTMLButtonElement>(null);
   const frame = useRef(0);
 
+  useEffect(() => () => cancelAnimationFrame(frame.current), []);
+
   const handleMove = (e: React.PointerEvent<HTMLButtonElement>) => {
-    if (e.pointerType !== 'mouse') return;
+    if (e.pointerType !== 'mouse' || prefersReducedMotion()) return;
     const el = ref.current;
     if (!el) return;
     const { clientX, clientY } = e;
@@ -326,6 +335,8 @@ const ServiceCard: React.FC<{ service: ServiceData; index: number; onOpen: () =>
   };
 
   const handleLeave = () => {
+    cancelAnimationFrame(frame.current);
+    frame.current = 0;
     const el = ref.current;
     if (!el) return;
     el.style.setProperty('--rx', '0deg');
@@ -341,43 +352,47 @@ const ServiceCard: React.FC<{ service: ServiceData; index: number; onOpen: () =>
       onClick={onOpen}
       onPointerMove={handleMove}
       onPointerLeave={handleLeave}
+      onPointerCancel={handleLeave}
       aria-haspopup="dialog"
-      className={`pt-card group relative block w-full h-full min-h-[360px] text-left rounded-2xl p-[1.5px] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70`}
+      aria-label={`Explorar ${service.title}`}
+      className="pt-card group"
     >
       {/* Marco platino metálico */}
-      <span className="pt-frame absolute inset-0 rounded-2xl" aria-hidden="true" />
+      <span className="pt-frame" aria-hidden="true" />
 
-      <span className="relative block h-full min-h-[357px] rounded-[14px] overflow-hidden bg-[#08080a]">
+      <span className="pt-card__surface">
         <img
           src={service.image}
           alt=""
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 w-full h-full object-cover grayscale opacity-35 transition-[opacity,transform,filter] duration-700 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105"
+          className="pt-card__image"
         />
-        <span className="absolute inset-0 bg-gradient-to-t from-[#050506] via-[#050506]/80 to-[#050506]/20 transition-opacity duration-700 group-hover:opacity-75" />
+        <span className="pt-card__shade" aria-hidden="true" />
+        <span className="pt-spectrum" aria-hidden="true" />
+        <span className="pt-light-band" aria-hidden="true" />
         {/* Textura de metal cepillado */}
         <span className="pt-brushed absolute inset-0 pointer-events-none" aria-hidden="true" />
         {/* Brillo platino que sigue al cursor */}
         <span className="pt-sheen absolute inset-0 pointer-events-none" aria-hidden="true" />
 
-        <span className="relative z-10 flex h-full min-h-[357px] flex-col p-7">
+        <span className="pt-card__content">
           <span className="flex items-start justify-between">
             <span className="pt-text font-mono text-xs tracking-[0.3em]">{String(index + 1).padStart(2, '0')}</span>
-            <span className="w-11 h-11 rounded-xl flex items-center justify-center border border-white/25 bg-gradient-to-br from-white/20 via-white/5 to-white/15 transition-transform duration-500 group-hover:rotate-6 group-hover:scale-110">
+            <span className="pt-card__icon">
               <service.icon className="w-5 h-5 text-white/90" strokeWidth={1.6} aria-hidden="true" />
             </span>
           </span>
 
-          <span className="mt-auto block">
+          <span className="pt-card__copy">
             <span className="block h-px w-10 mb-4 pt-line transition-all duration-500 group-hover:w-20" />
-            <span className="pt-text block font-serif text-xl font-bold leading-tight uppercase">{service.title}</span>
-            <span className="mt-3 block text-xs text-gray-400 font-light leading-relaxed line-clamp-3 group-hover:text-gray-300 transition-colors">
+            <span className="pt-card__title pt-text font-serif">{service.title}</span>
+            <span className="pt-card__description">
               {service.description}
             </span>
-            <span className="mt-5 flex items-center justify-between gap-4 text-[10px] font-mono uppercase tracking-[0.25em] text-gray-500 group-hover:text-gray-200 transition-colors">
+            <span className="pt-card__footer font-mono">
               <span>{subCount} {subCount === 1 ? 'línea' : 'líneas'} de servicio</span>
-              <span className="flex items-center gap-2">
+              <span className="pt-card__explore">
                 Explorar
                 <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -404,11 +419,11 @@ const ServiceModal: React.FC<{ service: ServiceData; onClose: () => void }> = ({
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-6" role="dialog" aria-modal="true" aria-label={service.modalTitle}>
+    <div className="fixed inset-0 z-[80] flex items-center justify-center px-4 py-6 md:p-6" role="dialog" aria-modal="true" aria-label={service.modalTitle}>
       <div className="absolute inset-0 bg-black/95 backdrop-blur-md" onClick={onClose} />
 
-      <div className="pt-modal-frame relative w-full max-w-6xl max-h-[92vh] rounded-3xl p-[1.5px] svc-pop">
-        <div className="relative flex flex-col md:flex-row w-full max-h-[calc(92vh-3px)] overflow-hidden rounded-[22px] bg-[#09090b]">
+      <div className="pt-modal-frame relative w-full max-w-6xl max-h-[88dvh] rounded-3xl p-[1.5px] svc-pop">
+        <div className="relative flex flex-col md:flex-row w-full max-h-[calc(88dvh-3px)] overflow-hidden rounded-[22px] bg-[#09090b]">
           <button
             onClick={onClose}
             aria-label="Cerrar"
@@ -476,84 +491,112 @@ const ServiceModal: React.FC<{ service: ServiceData; onClose: () => void }> = ({
   );
 };
 
-const PLATINUM_CSS = `
-  .pt-card {
-    --mx: 50%; --my: 50%; --rx: 0deg; --ry: 0deg;
-    transition: transform .25s ease-out;
-    content-visibility: auto;
-    contain-intrinsic-size: auto 360px;
-  }
-  .pt-card:hover {
-    transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-4px);
-    will-change: transform;
-  }
-  .pt-frame, .pt-modal-frame {
-    background: linear-gradient(135deg, #f4f4f5 0%, #9a9aa0 22%, #3a3a3f 40%, #d8d8dc 58%, #6e6e75 78%, #f4f4f5 100%);
-  }
-  .pt-frame { opacity: .35; transition: opacity .5s; }
-  .pt-card:hover .pt-frame, .pt-card:focus-visible .pt-frame { opacity: 1; box-shadow: 0 0 40px rgba(220,220,230,.18); }
-  .pt-brushed {
-    background: repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0 1px, transparent 1px 3px);
-    opacity: 0; transition: opacity .4s;
-  }
-  .pt-card:hover .pt-brushed { opacity: 1; }
-  .pt-sheen {
-    opacity: 0; transition: opacity .4s;
-    background:
-      radial-gradient(420px circle at var(--mx) var(--my), rgba(255,255,255,.22), transparent 55%),
-      linear-gradient(115deg, transparent 35%, rgba(255,255,255,.10) 48%, rgba(255,255,255,.02) 52%, transparent 65%);
-  }
-  .pt-card:hover .pt-sheen { opacity: 1; }
-  .pt-text {
-    background: linear-gradient(180deg, #ffffff 0%, #d9d9de 45%, #8d8d95 100%);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .pt-line { background: linear-gradient(90deg, #fff, #8d8d95, transparent); }
-  .pt-subcard:hover { box-shadow: 0 0 28px rgba(226,232,240,.12); background: #141416; }
-  @keyframes svc-pop { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
-  .svc-pop { animation: svc-pop .35s ease-out both; }
-  @media (prefers-reduced-motion: reduce) {
-    .pt-card, .pt-card:hover { transform: none !important; }
-    .svc-pop { animation: none; }
-  }
-`;
-
 const Services: React.FC = () => {
   const [selectedService, setSelectedService] = useState<ServiceData | null>(null);
   const close = useCallback(() => setSelectedService(null), []);
+  const cascadeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const root: HTMLDivElement | null = cascadeRef.current;
+    if (!root) return;
+
+    const media = gsap.matchMedia();
+    media.add({
+      compact: '(max-width: 899px)',
+      desktop: '(min-width: 900px)',
+      reducedMotion: '(prefers-reduced-motion: reduce)',
+    }, (context) => {
+      if (context.conditions?.reducedMotion) return;
+      const compact = Boolean(context.conditions?.compact);
+      const progress = root.querySelector<HTMLElement>('.service-cascade__progress');
+      if (!progress) return;
+
+      gsap.fromTo(progress, { scaleY: 0 }, {
+        scaleY: 1,
+        ease: 'none',
+        scrollTrigger: { trigger: root, start: 'top 72%', end: 'bottom 72%', scrub: 0.6 },
+      });
+
+      root.querySelectorAll<HTMLElement>('.service-step').forEach((step, index) => {
+        const panel = step.querySelector<HTMLElement>('.service-reveal');
+        const card = step.querySelector<HTMLElement>('.pt-card');
+        const spectrum = step.querySelector<HTMLElement>('.pt-spectrum');
+        const band = step.querySelector<HTMLElement>('.pt-light-band');
+        const node = step.querySelector<HTMLElement>('.service-step__node');
+        const link = step.querySelector<HTMLElement>('.service-step__link');
+        if (!panel || !card || !spectrum || !band || !node || !link) return;
+        const direction = index % 2 === 0 ? -1 : 1;
+
+        // Una secuencia por escalón: responde al scroll en ambos sentidos.
+        const timeline = gsap.timeline({
+          defaults: { ease: 'none' },
+          scrollTrigger: {
+            trigger: step,
+            start: 'top 88%',
+            end: 'bottom 22%',
+            scrub: 0.65,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        timeline
+          .fromTo(panel,
+            { opacity: 0.38, x: direction * (compact ? 12 : 56), y: compact ? 36 : 72, scale: 0.94 },
+            { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.48, ease: 'power2.out' }, 0)
+          .fromTo(link, { scaleX: 0, opacity: 0.15 }, { scaleX: 1, opacity: 1, duration: 0.4 }, 0)
+          .fromTo(node, { '--node-light': 0.15, scale: 0.75 }, { '--node-light': 1, scale: 1, duration: 0.38 }, 0.06)
+          .fromTo(card, { '--scroll-light': 0 }, { '--scroll-light': 1, duration: 0.4, ease: 'sine.out' }, 0.06)
+          .fromTo(spectrum,
+            { opacity: 0, scale: 0.82, xPercent: direction * 12, yPercent: -14 },
+            { opacity: 1, scale: 1, xPercent: 0, yPercent: 8, duration: 0.5, ease: 'sine.out' }, 0.1)
+          .fromTo(band,
+            { xPercent: -direction * 200, opacity: 0 },
+            { xPercent: direction * 200, opacity: 1, duration: 0.75 }, 0.06)
+          .to(band, { opacity: 0, duration: 0.12 }, 0.8)
+          .to(card, { '--scroll-light': 0.32, duration: 0.24 }, 0.76)
+          .to(spectrum, { opacity: 0.22, duration: 0.24 }, 0.76);
+      });
+    }, root);
+
+    return () => media.revert();
+  }, []);
 
   return (
-    <section id="servicios" className="py-24 bg-transparent relative overflow-hidden border-t border-white/5">
+    <section id="servicios" className="services-section bg-transparent relative overflow-hidden border-t border-white/5">
+      <SectionLight side="center" />
       <SectionFigure variant="book" className="-right-24 -top-8 hidden h-[24rem] w-[24rem] opacity-40 md:block" />
-      <style>{PLATINUM_CSS}</style>
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6">
-        <Reveal direction="up" width="100%">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-3xl md:text-4xl text-white mb-4">Áreas de Especialización</h2>
-            <div className="w-24 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent mx-auto mb-6"></div>
-            <p className="text-gray-400 max-w-2xl mx-auto font-light leading-relaxed text-base md:text-lg">
-              Excelencia jurídica aplicada. Soluciones diseñadas para brindar certeza, protección y estrategia en cada aspecto de tu vida y empresa.
-            </p>
-          </div>
-        </Reveal>
+      <div className="services-container relative z-10">
+        <div className="services-heading text-center">
+          <p className="services-eyebrow font-mono">Nuestra práctica jurídica</p>
+          <h2 className="services-title font-serif text-white">Áreas de Especialización</h2>
+          <div className="w-24 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent mx-auto mb-6"></div>
+          <p className="text-gray-400 max-w-2xl mx-auto font-light leading-relaxed text-base md:text-lg">
+            Excelencia jurídica aplicada. Soluciones diseñadas para brindar certeza, protección y estrategia en cada aspecto de tu vida y empresa.
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 auto-rows-fr grid-flow-dense">
+        <div ref={cascadeRef} className="service-cascade">
+          <div className="service-cascade__rail" aria-hidden="true">
+            <span className="service-cascade__progress" />
+          </div>
           {allServices.map((service, index) => (
-            <Reveal
+            <div
               key={service.id}
-              width="100%"
-              direction="up"
-              delay={(index % 4) * 0.07}
-              blur={false}
-              className={`h-full ${index === 0 ? 'md:col-span-2' : ''}`}
+              className="service-step"
+              data-side={index % 2 === 0 ? 'left' : 'right'}
             >
-              <ServiceCard service={service} index={index} onOpen={() => setSelectedService(service)} />
-            </Reveal>
+              <span className="service-step__link" aria-hidden="true" />
+              <span className="service-step__node" aria-hidden="true" />
+              <div className="service-reveal">
+                <ServiceCard service={service} index={index} onOpen={() => setSelectedService(service)} />
+              </div>
+            </div>
           ))}
         </div>
       </div>
 
-      {selectedService && <ServiceModal service={selectedService} onClose={close} />}
+      {/* En body: así el modal queda por encima de la barra de navegación y no dentro de la sección */}
+      {selectedService && createPortal(<ServiceModal service={selectedService} onClose={close} />, document.body)}
     </section>
   );
 };

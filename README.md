@@ -12,6 +12,13 @@ Sitio web del despacho (Vite + React + Tailwind).
 2. Run the app:
    `npm run dev`
 
+Al cambiar de rama o actualizar el codigo, ejecuta `npm ci` en la carpeta del
+proyecto que vayas a usar para sincronizar sus dependencias con `package-lock.json`.
+El panel administrativo y el portal de expedientes tienen instalaciones independientes.
+
+Para comprobar el sitio principal, ejecuta `npm run lint` y `npm run build`.
+Para publicar, utiliza el contenido generado en `dist/`.
+
 ## Configuracion del backend PHP
 
 Las credenciales se configuran localmente y no se incluyen en Git.

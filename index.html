@@ -194,6 +194,16 @@
       position: relative;
     }
 
+    /* Sin deslizamiento lateral en móvil: los elementos que entran desde un costado
+       no deben ensanchar la página. `clip` no crea contenedor de scroll, así que no
+       interfiere con las secciones fijas (pin) de GSAP. */
+    @supports (overflow: clip) {
+      html,
+      body {
+        overflow-x: clip;
+      }
+    }
+
     .starfield {
       position: fixed;
       top: 0;

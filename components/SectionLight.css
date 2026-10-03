@@ -1,0 +1,64 @@
+/* Capa de luz compartida por las secciones: queda detrás del contenido. */
+*:has(> .section-light) {
+  isolation: isolate;
+}
+
+.section-light {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Filo de luz que se enciende desde el centro al entrar la sección */
+.section-light__rim {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(214 222 240 / 0.55) 30%, #fff 50%, rgb(214 222 240 / 0.55) 70%, transparent);
+  box-shadow: 0 0 18px rgb(226 234 250 / 0.35);
+  transform-origin: center;
+}
+
+/* Foco ambiental, como una luz de estudio sobre la sección */
+.section-light__spot {
+  position: absolute;
+  top: -20%;
+  width: 70%;
+  height: 90%;
+  background: radial-gradient(closest-side, rgb(214 224 246 / 0.11), rgb(150 166 204 / 0.05) 55%, transparent);
+  filter: blur(10px);
+}
+
+.section-light[data-side='left'] .section-light__spot {
+  left: -15%;
+}
+
+.section-light[data-side='right'] .section-light__spot {
+  right: -15%;
+}
+
+.section-light[data-side='center'] .section-light__spot {
+  left: 15%;
+}
+
+/* Banda diagonal que barre la sección con el scroll */
+.section-light__band {
+  position: absolute;
+  top: -30%;
+  bottom: -30%;
+  left: 0;
+  width: 60%;
+  opacity: 0;
+  background: linear-gradient(105deg, transparent 20%, rgb(190 204 232 / 0.025) 38%, rgb(255 255 255 / 0.075) 50%, rgb(210 222 246 / 0.03) 60%, transparent 80%);
+  mix-blend-mode: screen;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-light__band {
+    display: none;
+  }
+}

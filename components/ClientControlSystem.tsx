@@ -1,10 +1,11 @@
 import React from 'react';
+import SectionLight from './SectionLight';
 import SectionFigure from './SectionFigure';
 import { DOSSIER_PORTAL_URL } from '../config';
 import Reveal from './Reveal';
 
-const BRAND_WORDMARK = '/components/media/images/HA ABOGADOS BLANCO Y NEGRO.png';
-const BRAND_MONOGRAM = '/components/media/images/HA-BWH.png';
+const BRAND_WORDMARK = new URL('./media/images/HA ABOGADOS BLANCO Y NEGRO.png', import.meta.url).href;
+const BRAND_MONOGRAM = new URL('./media/images/HA-BWH.png', import.meta.url).href;
 
 const features = [
   {
@@ -40,6 +41,7 @@ const features = [
 const ClientControlSystem: React.FC = () => {
   return (
     <section id="sistema-control-expedientes" className="relative overflow-hidden bg-black py-14 md:py-16">
+      <SectionLight side="right" />
       <div className="relative z-10 mx-auto w-[92%] max-w-[1600px] px-4 sm:px-6">
         <Reveal width="100%" className="mb-6 flex justify-center">
           <div className="rounded-[1.4rem] border border-white/10 bg-black px-3.5 py-2.5">

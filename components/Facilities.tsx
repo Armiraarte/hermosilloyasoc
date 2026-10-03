@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import SectionLight from './SectionLight';
 import SectionFigure from './SectionFigure';
 import { IMAGENES } from '../imagenes_url';
 import Reveal from './Reveal';
@@ -40,6 +41,7 @@ const Facilities: React.FC = () => {
 
     return (
         <section id="instalaciones" className="relative w-full py-20 min-h-screen bg-black overflow-hidden flex items-center">
+            <SectionLight side="left" />
 
             {/* ================= 1. FONDO ATMOSFÉRICO (Blur Extremo) ================= */}
             {/* Este fondo asegura que no haya espacios negros vacíos, tomando el color de la foto actual */}

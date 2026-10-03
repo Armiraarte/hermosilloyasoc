@@ -4,7 +4,9 @@
 // INSTRUCCIONES:
 // 1. Busca la sección que quieras editar (Ej: HERO, EQUIPO, SERVICIOS).
 // 2. Reemplaza el texto entre comillas "https://..." con el link de tu imagen nueva.
-// 3. Guarda el archivo y los cambios se verán en toda la página web.
+// 3. Para archivos locales, conserva new URL con una ruta literal e import.meta.url.
+//    Esto permite que Vite incluya las imagenes al compilar.
+// 4. Guarda el archivo para aplicar los cambios.
 // ============================================================================
 
 export const IMAGENES = {
@@ -33,13 +35,13 @@ export const IMAGENES = {
   assets: {
     // 1. LOGOTIPOS
     logos: {
-      navbar: "/components/media/images/HA-BW.ico",
-      footer: "/components/media/images/HA-BW.ico"
+      navbar: new URL("./components/media/images/HA-BW.ico", import.meta.url).href,
+      footer: new URL("./components/media/images/HA-BW.ico", import.meta.url).href
     },
 
     // 2. SECCIÓN INICIO (HERO LEGAL)
     hero: {
-      mainImage: "/components/media/images/LaJusticia.png",
+      mainImage: new URL("./components/media/images/LaJusticia.png", import.meta.url).href,
       videoBackground: "/media/video/0114.mp4", // VIDEO MOVEMOS A PUBLIC
       videoBackgroundWebm: "/media/video/0114.webm",
       videoPoster: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2070&auto=format&fit=crop" // Imagen que se ve mientras carga el video
@@ -47,7 +49,7 @@ export const IMAGENES = {
 
     // 3. SECCIÓN QUIÉNES SOMOS (LEGAL)
     about: {
-      mainImage: "/components/media/images/FOTOHERMOSILLO2.webp"
+      mainImage: new URL("./components/media/images/FOTOHERMOSILLO2.webp", import.meta.url).href
     },
 
     // 4. FONDOS GENERALES
@@ -57,51 +59,51 @@ export const IMAGENES = {
 
     // 5. SERVICIOS LEGALES
     services: {
-      notaria: "/components/media/images/CATEGORIAS/opt/TRÁMITES ANTE NOTARÍA Y CORREDURÍA PÚBLICA.webp",
-      civil: "/components/media/images/CATEGORIAS/opt/JUICIO CIVIL · FAMILIAR · MERCANTIL.webp",
-      ija: "/components/media/images/CATEGORIAS/opt/CONVENIOS DE VALIDACIÓN ANTE EL IJA_11.webp",
-      registro_civil: "/components/media/images/CATEGORIAS/opt/REGISTRO CIVIL.webp",
-      amparo: "/components/media/images/CATEGORIAS/opt/JUICIOS DE AMPARO.webp",
-      registro_publico: "/components/media/images/CATEGORIAS/opt/REGISTRO PÚBLICO DE LA PROPIEDAD.webp",
-      rh_blindaje: "/components/media/images/CATEGORIAS/opt/RECURSOS HUMANOS Y BLINDAJE LABORAL.webp",
-      ayuntamiento: "/components/media/images/CATEGORIAS/opt/LICENCIAS Y PERMISOS AYUNTAMIENTO.webp",
-      movilidad: "/components/media/images/CATEGORIAS/opt/SECRETARÍA DE MOVILIDAD.webp",
-      comercio_exterior: "/components/media/images/CATEGORIAS/opt/ADUANAS.webp",
-      marca: "/components/media/images/CATEGORIAS/opt/REGISTRO DE MARCA Y PROPIEDAD INTELECTUAL.webp"
+      notaria: new URL("./components/media/images/CATEGORIAS/opt/TRÁMITES ANTE NOTARÍA Y CORREDURÍA PÚBLICA.webp", import.meta.url).href,
+      civil: new URL("./components/media/images/CATEGORIAS/opt/JUICIO CIVIL · FAMILIAR · MERCANTIL.webp", import.meta.url).href,
+      ija: new URL("./components/media/images/CATEGORIAS/opt/CONVENIOS DE VALIDACIÓN ANTE EL IJA_11.webp", import.meta.url).href,
+      registro_civil: new URL("./components/media/images/CATEGORIAS/opt/REGISTRO CIVIL.webp", import.meta.url).href,
+      amparo: new URL("./components/media/images/CATEGORIAS/opt/JUICIOS DE AMPARO.webp", import.meta.url).href,
+      registro_publico: new URL("./components/media/images/CATEGORIAS/opt/REGISTRO PÚBLICO DE LA PROPIEDAD.webp", import.meta.url).href,
+      rh_blindaje: new URL("./components/media/images/CATEGORIAS/opt/RECURSOS HUMANOS Y BLINDAJE LABORAL.webp", import.meta.url).href,
+      ayuntamiento: new URL("./components/media/images/CATEGORIAS/opt/LICENCIAS Y PERMISOS AYUNTAMIENTO.webp", import.meta.url).href,
+      movilidad: new URL("./components/media/images/CATEGORIAS/opt/SECRETARÍA DE MOVILIDAD.webp", import.meta.url).href,
+      comercio_exterior: new URL("./components/media/images/CATEGORIAS/opt/ADUANAS.webp", import.meta.url).href,
+      marca: new URL("./components/media/images/CATEGORIAS/opt/REGISTRO DE MARCA Y PROPIEDAD INTELECTUAL.webp", import.meta.url).href
     },
 
 
     // 6. EQUIPO LEGAL
     team: {
-      carlos_frente: "/components/media/images/members/img1.webp",
-      carlos_atras: "/components/media/images/members/img1.webp",
-      senen_frente: "/components/media/images/members/lic_senen.webp",
-      senen_atras: "/components/media/images/members/lic_senen.webp",
-      alejandro_frente: "/components/media/images/members/lic_antonio.webp",
-      alejandro_atras: "/components/media/images/members/lic_antonio.webp",
-      jose_luis_frente: "/components/media/images/members/lic_joseluis.webp",
-      jose_luis_atras: "/components/media/images/members/lic_joseluis.webp",
-      ximena_frente: "/components/media/images/members/lic_ximena.webp",
-      ximena_atras: "/components/media/images/members/lic_ximena.webp",
-      yanci_frente: "/components/media/images/members/lic_yanci.webp",
-      yanci_atras: "/components/media/images/members/lic_yanci.webp",
+      carlos_frente: new URL("./components/media/images/members/img1.webp", import.meta.url).href,
+      carlos_atras: new URL("./components/media/images/members/img1.webp", import.meta.url).href,
+      senen_frente: new URL("./components/media/images/members/lic_senen.webp", import.meta.url).href,
+      senen_atras: new URL("./components/media/images/members/lic_senen.webp", import.meta.url).href,
+      alejandro_frente: new URL("./components/media/images/members/lic_antonio.webp", import.meta.url).href,
+      alejandro_atras: new URL("./components/media/images/members/lic_antonio.webp", import.meta.url).href,
+      jose_luis_frente: new URL("./components/media/images/members/lic_joseluis.webp", import.meta.url).href,
+      jose_luis_atras: new URL("./components/media/images/members/lic_joseluis.webp", import.meta.url).href,
+      ximena_frente: new URL("./components/media/images/members/lic_ximena.webp", import.meta.url).href,
+      ximena_atras: new URL("./components/media/images/members/lic_ximena.webp", import.meta.url).href,
+      yanci_frente: new URL("./components/media/images/members/lic_yanci.webp", import.meta.url).href,
+      yanci_atras: new URL("./components/media/images/members/lic_yanci.webp", import.meta.url).href,
       // Reemplaza estas rutas cuando subas la fotografia de Jesus Godinez
-      jesus_frente: "/components/media/images/members/lic_jesus.webp",
-      jesus_atras: "/components/media/images/members/lic_jesus.webp",
+      jesus_frente: new URL("./components/media/images/members/lic_jesus.webp", import.meta.url).href,
+      jesus_atras: new URL("./components/media/images/members/lic_jesus.webp", import.meta.url).href,
       // Rutas listas para las nuevas tarjetas de derecho inmobiliario
-      sarah_frente: "/components/media/images/members/lic_sarah.webp",
-      sarah_atras: "/components/media/images/members/lic_sarah.webp",
-      fabricio_frente: "/components/media/images/members/lic_fabricio.webp",
-      fabricio_atras: "/components/media/images/members/lic_fabricio.webp"
+      sarah_frente: new URL("./components/media/images/members/lic_sarah.webp", import.meta.url).href,
+      sarah_atras: new URL("./components/media/images/members/lic_sarah.webp", import.meta.url).href,
+      fabricio_frente: new URL("./components/media/images/members/lic_fabricio.webp", import.meta.url).href,
+      fabricio_atras: new URL("./components/media/images/members/lic_fabricio.webp", import.meta.url).href
     },
 
     // 7. INSTALACIONES (Imágenes de ejemplo actualizadas)
     facilities: [
-      { id: 1, title: "Recepción", phrase: "Excelencia desde el primer paso.", image: "/components/media/instalaciones/1.jpeg" },
-      { id: 2, title: "Sala de Juntas", phrase: "Estrategia y Decisión.", image: "/components/media/instalaciones/juntas-opt.webp" },
-      { id: 3, title: "Oficinas", phrase: "Privacidad Absoluta.", image: "/components/media/instalaciones/4.jpeg" },
-      { id: 4, title: "Sala de Espera", phrase: "Confort y Serenidad.", image: "/components/media/instalaciones/espera-opt.webp" },
-      { id: 5, title: "Edificio", phrase: "Infraestructura de vanguardia.", image: "/components/media/instalaciones/edificio.webp" }
+      { id: 1, title: "Recepción", phrase: "Excelencia desde el primer paso.", image: new URL("./components/media/instalaciones/1.jpeg", import.meta.url).href },
+      { id: 2, title: "Sala de Juntas", phrase: "Estrategia y Decisión.", image: new URL("./components/media/instalaciones/juntas-opt.webp", import.meta.url).href },
+      { id: 3, title: "Oficinas", phrase: "Privacidad Absoluta.", image: new URL("./components/media/instalaciones/4.jpeg", import.meta.url).href },
+      { id: 4, title: "Sala de Espera", phrase: "Confort y Serenidad.", image: new URL("./components/media/instalaciones/espera-opt.webp", import.meta.url).href },
+      { id: 5, title: "Edificio", phrase: "Infraestructura de vanguardia.", image: new URL("./components/media/instalaciones/edificio.webp", import.meta.url).href }
     ]
   }
 };

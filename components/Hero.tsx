@@ -8,6 +8,101 @@ import { WHATSAPP_URLS } from '../whatsapp_urls';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Balanza de la justicia: línea fina platino con anillos orbitales.
+// Se dibuja dos veces (escritorio y móvil); uid evita ids de gradiente repetidos.
+const ScaleArt: React.FC<{ uid: string; className?: string }> = ({ uid, className }) => (
+    <svg viewBox="0 0 600 600" className={className} data-scale-art>
+      <defs>
+        <linearGradient id={`${uid}-sg`} gradientUnits="userSpaceOnUse" x1="60" y1="60" x2="540" y2="540">
+          <stop offset="0" stopColor="#ffffff" />
+          <stop offset="0.5" stopColor="#9a9aa4" />
+          <stop offset="1" stopColor="#f2f2f6" />
+        </linearGradient>
+        <radialGradient id={`${uid}-sc-glow`} cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stopColor="#6f9bff" stopOpacity="0.35" />
+          <stop offset="0.6" stopColor="#6f9bff" stopOpacity="0.08" />
+          <stop offset="1" stopColor="#6f9bff" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id={`${uid}-sc-pan`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#ffffff" stopOpacity="0.28" />
+          <stop offset="1" stopColor="#ffffff" stopOpacity="0.02" />
+        </linearGradient>
+        <path id={`${uid}-sc-text-ring`} d="M 300 300 m -262 0 a 262 262 0 1 1 524 0 a 262 262 0 1 1 -524 0" />
+      </defs>
+
+      <circle className="sc-glow" cx="300" cy="300" r="300" fill={`url(#${uid}-sc-glow)`} />
+
+      {/* Anillos orbitales */}
+      <g className="sc-ring-a" fill="none">
+        <circle cx="300" cy="300" r="280" stroke="#fff" strokeOpacity="0.16" strokeDasharray="2 10" />
+        <circle cx="300" cy="300" r="244" stroke="#fff" strokeOpacity="0.07" />
+        <text fill="#fff" fillOpacity="0.32" fontSize="11" letterSpacing="9" fontFamily="'Cinzel', serif">
+          <textPath href={`#${uid}-sc-text-ring`} startOffset="0">IUSTITIA · FIDES · VERITAS · AEQUITAS · IUSTITIA · FIDES · VERITAS · AEQUITAS ·</textPath>
+        </text>
+      </g>
+      <g className="sc-ring-b" fill="none" stroke="#fff">
+        <circle cx="300" cy="300" r="214" strokeOpacity="0.1" />
+        {[...Array(72)].map((_, i) => {
+          const a = (i * 5 * Math.PI) / 180;
+          const long = i % 6 === 0;
+          const r1 = 214;
+          const r2 = long ? 200 : 207;
+          return (
+            <line
+              key={i}
+              x1={300 + r1 * Math.cos(a)}
+              y1={300 + r1 * Math.sin(a)}
+              x2={300 + r2 * Math.cos(a)}
+              y2={300 + r2 * Math.sin(a)}
+              strokeOpacity={long ? 0.45 : 0.2}
+            />
+          );
+        })}
+      </g>
+
+      {/* Partículas en órbita */}
+      {[
+        { r: 280, a: 20, s: 3 },
+        { r: 244, a: 140, s: 2.4 },
+        { r: 214, a: 250, s: 2.8 },
+        { r: 280, a: 300, s: 2 },
+      ].map((o, i) => (
+        <g key={i} className="sc-orbit" data-speed={i % 2 ? -1 : 1}>
+          <circle cx={300 + o.r * Math.cos((o.a * Math.PI) / 180)} cy={300 + o.r * Math.sin((o.a * Math.PI) / 180)} r={o.s} fill="#cfdcff" />
+        </g>
+      ))}
+
+      {/* Balanza */}
+      <g fill="none" stroke={`url(#${uid}-sg)`} strokeLinecap="round" strokeLinejoin="round">
+        {/* base y columna */}
+        <path className="sc-draw" pathLength={1} d="M 220 500 L 380 500" strokeWidth="2.5" />
+        <path className="sc-draw" pathLength={1} d="M 240 500 Q 300 470 360 500" strokeWidth="1.8" />
+        <path className="sc-draw" pathLength={1} d="M 300 194 L 300 486" strokeWidth="3" />
+        <path className="sc-draw" pathLength={1} d="M 288 400 Q 300 388 312 400 M 290 330 Q 300 320 310 330" strokeWidth="1.5" />
+        <circle className="sc-draw" pathLength={1} cx="300" cy="170" r="12" strokeWidth="2.2" />
+      </g>
+
+      {/* Astil (se inclina) */}
+      <g className="sc-beam" fill="none" stroke={`url(#${uid}-sg)`} strokeLinecap="round">
+        <path className="sc-draw" pathLength={1} d="M 112 190 L 488 190" strokeWidth="3.2" />
+        <path className="sc-draw" pathLength={1} d="M 112 190 Q 206 168 300 190 Q 394 168 488 190" strokeWidth="1.4" />
+        <circle className="sc-draw" pathLength={1} cx="112" cy="190" r="7" strokeWidth="2" />
+        <circle className="sc-draw" pathLength={1} cx="488" cy="190" r="7" strokeWidth="2" />
+        <circle cx="300" cy="190" r="9" fill="#05060a" strokeWidth="2.4" />
+        <circle cx="300" cy="190" r="3" fill="#bcd0ff" stroke="none" />
+      </g>
+
+      {/* Platillos: cuelgan siempre rectos */}
+      {['sc-pan-l', 'sc-pan-r'].map((cls) => (
+        <g key={cls} className={cls} fill="none" stroke={`url(#${uid}-sg)`} strokeLinecap="round">
+          <path className="sc-draw" pathLength={1} d="M 0 0 L -74 128 M 0 0 L 74 128 M 0 0 L 0 140" strokeWidth="1.2" strokeOpacity="0.8" />
+          <path className="sc-draw" pathLength={1} d="M -82 128 Q 0 205 82 128 Z" strokeWidth="2.4" fill={`url(#${uid}-sc-pan)`} />
+          <ellipse cx="0" cy="128" rx="82" ry="7" strokeWidth="1.6" />
+        </g>
+      ))}
+    </svg>
+);
+
 const Hero: React.FC = () => {
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -23,9 +118,7 @@ const Hero: React.FC = () => {
         .from('.hero-rule', { scaleX: 0, duration: 0.9 }, 0.4)
         .from('.hero-kicker', { opacity: 0, x: -20, duration: 0.9 }, 0.4)
         .from('.hero-line', { yPercent: 110, duration: 1.1, stagger: 0.14 }, 0.5)
-        .from('.hero-fade', { opacity: 0, y: 24, duration: 0.9, stagger: 0.12 }, 1.0)
-        .from('.hg-block', { opacity: 0, y: 40, duration: 1.2 }, 0.3)
-        .from('.hg-gavel', { opacity: 0, duration: 0.8 }, 0.6);
+        .from('.hero-fade', { opacity: 0, y: 24, duration: 0.9, stagger: 0.12 }, 1.0);
 
       // Balanza: se dibuja, se pesa (oscilación amortiguada) y respira
       const BEAM_Y = 190;
@@ -44,7 +137,10 @@ const Hero: React.FC = () => {
       intro
         .fromTo('.sc-glow', { opacity: 0, scale: 0.7, svgOrigin: '300 300' }, { opacity: 1, scale: 1, duration: 1.8, ease: 'power2.out' }, 0)
         .fromTo('.sc-ring-a, .sc-ring-b', { opacity: 0 }, { opacity: 1, duration: 1.4, stagger: 0.2 }, 0.1)
-        .to('.sc-draw', { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut', stagger: 0.07 }, 0.3)
+        // Cada copia de la balanza (escritorio y móvil) se dibuja a la vez, no una tras otra
+        .add(gsap.utils.toArray<SVGSVGElement>('[data-scale-art]').map((svg) =>
+          gsap.to(svg.querySelectorAll('.sc-draw'), { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut', stagger: 0.07 })
+        ), 0.3)
         .add(() => weigh(8), 1.9);
 
       // "Pesaje": el astil parte inclinado y se estabiliza con rebote elástico
@@ -194,102 +290,13 @@ const Hero: React.FC = () => {
         aria-hidden="true"
       />
 
-      {/* Balanza de la justicia: línea fina platino con anillos orbitales */}
+      {/* Balanza en escritorio: a la derecha del texto */}
       <div
         data-depth="0.6"
-        className="hero-layer pointer-events-none absolute right-[-30%] top-[14%] bottom-[2%] z-[2] flex w-[110%] items-center justify-center opacity-30 sm:right-[-14%] sm:w-[70%] sm:opacity-60 lg:right-[0%] lg:w-[52%] lg:opacity-100"
+        className="hero-layer pointer-events-none absolute right-0 top-[14%] bottom-[2%] z-[2] hidden w-[52%] items-center justify-center lg:flex"
         aria-hidden="true"
       >
-        <svg viewBox="0 0 600 600" className="h-full max-h-[82vh] w-full overflow-visible">
-          <defs>
-            <linearGradient id="sg" gradientUnits="userSpaceOnUse" x1="60" y1="60" x2="540" y2="540">
-              <stop offset="0" stopColor="#ffffff" />
-              <stop offset="0.5" stopColor="#9a9aa4" />
-              <stop offset="1" stopColor="#f2f2f6" />
-            </linearGradient>
-            <radialGradient id="sc-glow" cx="0.5" cy="0.5" r="0.5">
-              <stop offset="0" stopColor="#6f9bff" stopOpacity="0.35" />
-              <stop offset="0.6" stopColor="#6f9bff" stopOpacity="0.08" />
-              <stop offset="1" stopColor="#6f9bff" stopOpacity="0" />
-            </radialGradient>
-            <linearGradient id="sc-pan" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#ffffff" stopOpacity="0.28" />
-              <stop offset="1" stopColor="#ffffff" stopOpacity="0.02" />
-            </linearGradient>
-            <path id="sc-text-ring" d="M 300 300 m -262 0 a 262 262 0 1 1 524 0 a 262 262 0 1 1 -524 0" />
-          </defs>
-
-          <circle className="sc-glow" cx="300" cy="300" r="300" fill="url(#sc-glow)" />
-
-          {/* Anillos orbitales */}
-          <g className="sc-ring-a" fill="none">
-            <circle cx="300" cy="300" r="280" stroke="#fff" strokeOpacity="0.16" strokeDasharray="2 10" />
-            <circle cx="300" cy="300" r="244" stroke="#fff" strokeOpacity="0.07" />
-            <text fill="#fff" fillOpacity="0.32" fontSize="11" letterSpacing="9" fontFamily="'Cinzel', serif">
-              <textPath href="#sc-text-ring" startOffset="0">IUSTITIA · FIDES · VERITAS · AEQUITAS · IUSTITIA · FIDES · VERITAS · AEQUITAS ·</textPath>
-            </text>
-          </g>
-          <g className="sc-ring-b" fill="none" stroke="#fff">
-            <circle cx="300" cy="300" r="214" strokeOpacity="0.1" />
-            {[...Array(72)].map((_, i) => {
-              const a = (i * 5 * Math.PI) / 180;
-              const long = i % 6 === 0;
-              const r1 = 214;
-              const r2 = long ? 200 : 207;
-              return (
-                <line
-                  key={i}
-                  x1={300 + r1 * Math.cos(a)}
-                  y1={300 + r1 * Math.sin(a)}
-                  x2={300 + r2 * Math.cos(a)}
-                  y2={300 + r2 * Math.sin(a)}
-                  strokeOpacity={long ? 0.45 : 0.2}
-                />
-              );
-            })}
-          </g>
-
-          {/* Partículas en órbita */}
-          {[
-            { r: 280, a: 20, s: 3 },
-            { r: 244, a: 140, s: 2.4 },
-            { r: 214, a: 250, s: 2.8 },
-            { r: 280, a: 300, s: 2 },
-          ].map((o, i) => (
-            <g key={i} className="sc-orbit" data-speed={i % 2 ? -1 : 1}>
-              <circle cx={300 + o.r * Math.cos((o.a * Math.PI) / 180)} cy={300 + o.r * Math.sin((o.a * Math.PI) / 180)} r={o.s} fill="#cfdcff" />
-            </g>
-          ))}
-
-          {/* Balanza */}
-          <g fill="none" stroke="url(#sg)" strokeLinecap="round" strokeLinejoin="round">
-            {/* base y columna */}
-            <path className="sc-draw" pathLength={1} d="M 220 500 L 380 500" strokeWidth="2.5" />
-            <path className="sc-draw" pathLength={1} d="M 240 500 Q 300 470 360 500" strokeWidth="1.8" />
-            <path className="sc-draw" pathLength={1} d="M 300 194 L 300 486" strokeWidth="3" />
-            <path className="sc-draw" pathLength={1} d="M 288 400 Q 300 388 312 400 M 290 330 Q 300 320 310 330" strokeWidth="1.5" />
-            <circle className="sc-draw" pathLength={1} cx="300" cy="170" r="12" strokeWidth="2.2" />
-          </g>
-
-          {/* Astil (se inclina) */}
-          <g className="sc-beam" fill="none" stroke="url(#sg)" strokeLinecap="round">
-            <path className="sc-draw" pathLength={1} d="M 112 190 L 488 190" strokeWidth="3.2" />
-            <path className="sc-draw" pathLength={1} d="M 112 190 Q 206 168 300 190 Q 394 168 488 190" strokeWidth="1.4" />
-            <circle className="sc-draw" pathLength={1} cx="112" cy="190" r="7" strokeWidth="2" />
-            <circle className="sc-draw" pathLength={1} cx="488" cy="190" r="7" strokeWidth="2" />
-            <circle cx="300" cy="190" r="9" fill="#05060a" strokeWidth="2.4" />
-            <circle cx="300" cy="190" r="3" fill="#bcd0ff" stroke="none" />
-          </g>
-
-          {/* Platillos: cuelgan siempre rectos */}
-          {['sc-pan-l', 'sc-pan-r'].map((cls) => (
-            <g key={cls} className={cls} fill="none" stroke="url(#sg)" strokeLinecap="round">
-              <path className="sc-draw" pathLength={1} d="M 0 0 L -74 128 M 0 0 L 74 128 M 0 0 L 0 140" strokeWidth="1.2" strokeOpacity="0.8" />
-              <path className="sc-draw" pathLength={1} d="M -82 128 Q 0 205 82 128 Z" strokeWidth="2.4" fill="url(#sc-pan)" />
-              <ellipse cx="0" cy="128" rx="82" ry="7" strokeWidth="1.6" />
-            </g>
-          ))}
-        </svg>
+        <ScaleArt uid="d" className="h-full max-h-[82vh] w-full overflow-visible" />
       </div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col px-6 md:px-12">
@@ -302,7 +309,7 @@ const Hero: React.FC = () => {
           <h1 className="text-white">
             <span className="block overflow-hidden pb-1">
               <span
-                className="hero-line block text-5xl font-bold uppercase leading-[1.05] tracking-[0.06em] md:text-6xl lg:text-7xl"
+                className="hero-line block text-[clamp(2rem,10.5vw,3rem)] font-bold uppercase leading-[1.05] tracking-[0.06em] md:text-6xl lg:text-7xl"
                 style={{ fontFamily: "'Cinzel', serif" }}
               >
                 Hermosillo
@@ -317,6 +324,11 @@ const Hero: React.FC = () => {
               </span>
             </span>
           </h1>
+
+          {/* Balanza en móvil y tablet: debajo del título, sin encimarse al texto */}
+          <div className="pointer-events-none mx-auto mt-8 w-full max-w-[300px] sm:max-w-[360px] lg:hidden" aria-hidden="true">
+            <ScaleArt uid="m" className="h-auto w-full overflow-visible" />
+          </div>
 
           <p className="hero-fade mt-10 max-w-md border-l border-white/20 pl-6 text-base font-light leading-relaxed tracking-wide text-gray-300 md:text-lg">
             Defensa estratégica y certeza legal para quienes exigen excelencia.

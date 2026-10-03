@@ -1,10 +1,12 @@
 import React from 'react';
+import SectionLight from './SectionLight';
 import Reveal from './Reveal';
 import { WHATSAPP_URLS } from '../whatsapp_urls';
 
 const SeoContent: React.FC = () => {
   return (
-    <section id="abogados-guadalajara" className="py-20 bg-transparent border-t border-white/5">
+    <section id="abogados-guadalajara" className="relative py-20 bg-transparent border-t border-white/5">
+      <SectionLight side="left" />
       <div className="max-w-6xl mx-auto px-6">
         <Reveal direction="up" width="100%" className="mb-10 text-center">
           <h2 className="font-serif text-3xl md:text-4xl text-white mb-4">

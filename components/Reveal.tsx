@@ -1,5 +1,9 @@
-
 import React, { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { prefersReducedMotion, SEQUENCE_START } from './gsapEffects';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface RevealProps {
   children: React.ReactNode;
@@ -8,7 +12,7 @@ interface RevealProps {
   delay?: number; // in seconds
   duration?: number; // in seconds
   className?: string;
-  threshold?: number; // 0 to 1
+  threshold?: number; // Se conserva por compatibilidad; la secuencia usa SEQUENCE_START
   blur?: boolean; // Enable blur effect
 }
 
@@ -19,35 +23,23 @@ const Reveal: React.FC<RevealProps> = ({
   delay = 0, 
   duration = 0.8,
   className = "",
-  threshold = 0.2,
   blur = true
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(prefersReducedMotion);
 
+  // Se revela al cruzar la línea de secuencia, en el orden de la página.
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          // Once visible, we can disconnect if we only want it to animate once
-          if (ref.current) observer.unobserve(ref.current);
-        }
-      },
-      { threshold }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, [threshold]);
-
+    const el = ref.current;
+    if (!el || isVisible) return;
+    const trigger = ScrollTrigger.create({
+      trigger: el,
+      start: `clamp(${SEQUENCE_START})`,
+      once: true,
+      onEnter: () => setIsVisible(true),
+    });
+    return () => trigger.kill();
+  }, [isVisible]);
   // Calculate transform based on direction
   const getTransform = () => {
     if (!isVisible) {

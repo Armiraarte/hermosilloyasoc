@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import SectionLight from './SectionLight';
 import { IMAGENES } from '../imagenes_url';
 import Reveal from './Reveal';
 
@@ -21,6 +22,7 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="bg-black text-white pt-24 pb-8 border-t border-white/10 font-sans relative z-10">
+      <SectionLight side="center" />
       
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         

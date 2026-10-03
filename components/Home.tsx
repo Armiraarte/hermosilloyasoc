@@ -1,6 +1,5 @@
 
 import React, { lazy } from 'react';
-import SectionFigure from './SectionFigure';
 import Navbar from './Navbar';
 import Hero from './Hero';
 import ClientControlSystem from './ClientControlSystem';
@@ -12,6 +11,7 @@ import Reveal from './Reveal';
 import { IMAGENES } from '../imagenes_url';
 import DeferredSection from './DeferredSection';
 import ScrollJourney from './ScrollJourney';
+import SequenceReveal from './SequenceReveal';
 
 const SeoContent = lazy(() => import('./SeoContent'));
 const LocationMap = lazy(() => import('./LocationMap'));
@@ -22,13 +22,12 @@ const Home: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-transparent text-white font-sans selection:bg-gray-700 selection:text-white">
       <Navbar />
       <ScrollJourney />
-      <main className="flex-grow">
+      <main className="relative flex-grow">
         <Hero />
         <ClientControlSystem />
         
         {/* About Section - "¿Quiénes somos?" - CLEAN BLACK BACKGROUND */}
-        <section id="nosotros" className="py-20 bg-transparent relative overflow-hidden">
-           <SectionFigure variant="temple" className="-left-16 bottom-[-3rem] h-[24rem] w-[24rem] opacity-25" />
+        <section id="nosotros" className="py-20 bg-black relative overflow-hidden">
            <div className="relative z-10 w-[90%] max-w-[1600px] mx-auto px-6 grid lg:grid-cols-2 gap-24 items-center">
               
               {/* Left Content */}
@@ -123,30 +122,30 @@ const Home: React.FC = () => {
                    
                    {/* Top Right - Glassmorphism Card */}
                    <div className="absolute -top-8 -right-8 z-20 animate-float-slow hidden md:block">
-                      <div className="backdrop-blur-md bg-white/60 border border-white/40 p-4 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] flex flex-col items-center justify-center gap-1 min-w-[150px] text-center">
-                         <h3 className="font-serif text-xl text-black font-bold italic leading-none drop-shadow-sm">
+                      <div className="platinum-glass p-4 flex flex-col items-center justify-center gap-1 min-w-[150px] text-center">
+                         <h3 className="platinum-text font-serif text-xl font-bold italic leading-none">
                             Buffete de<br/>Abogados
                          </h3>
-                         <span className="text-[0.55rem] uppercase tracking-widest text-white font-extrabold bg-black px-2 py-0.5 rounded-sm mt-1 shadow-sm">
+                         <span className="text-[0.55rem] uppercase tracking-widest text-black font-extrabold bg-gradient-to-r from-gray-100 via-gray-400 to-gray-200 px-2 py-0.5 rounded-sm mt-1 shadow-sm">
                             Guadalajara
                          </span>
-                         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/40 to-transparent rounded-xl pointer-events-none"></div>
+                         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.07] to-transparent rounded-xl pointer-events-none"></div>
                       </div>
                    </div>
 
                    {/* Bottom Left - Glassmorphism Card */}
                    <div className="absolute bottom-8 -left-12 z-20 animate-float hidden md:block">
-                      <div className="backdrop-blur-md bg-white/60 border border-white/40 p-4 pr-8 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] flex items-center gap-4">
-                         <div className="w-10 h-10 rounded-full bg-black/10 flex items-center justify-center shadow-sm">
-                            <svg className="w-5 h-5 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="platinum-glass p-4 pr-8 flex items-center gap-4">
+                         <div className="w-10 h-10 rounded-full border border-white/20 bg-gradient-to-br from-white/15 to-white/[0.02] flex items-center justify-center">
+                            <svg className="w-5 h-5 text-gray-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
                             </svg>
                          </div>
                          <div>
-                            <p className="font-serif font-bold text-black text-sm drop-shadow-sm">Excelencia Legal</p>
-                            <p className="text-gray-800 text-xs font-medium drop-shadow-sm">Resultados comprobados</p>
+                            <p className="platinum-text font-serif font-bold text-sm">Excelencia Legal</p>
+                            <p className="text-gray-400 text-xs font-medium">Resultados comprobados</p>
                          </div>
-                         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/40 to-transparent rounded-xl pointer-events-none"></div>
+                         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.07] to-transparent rounded-xl pointer-events-none"></div>
                       </div>
                    </div>
 
@@ -167,6 +166,7 @@ const Home: React.FC = () => {
           <LocationMap />
         </DeferredSection>
         <Facilities />
+        <SequenceReveal />
       </main>
       <DeferredSection minHeight={420}>
         <Footer />
