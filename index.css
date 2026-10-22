@@ -1,4 +1,54 @@
-﻿/*
-  Placeholder global stylesheet.
-  Keep this file to avoid 404 requests for /index.css.
-*/
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------
+   Reveal (aparicion al hacer scroll)
+   Se controla por CSS para poder simplificarlo en celular y respetar
+   "reducir movimiento". El componente solo marca data-visible.
+------------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translate3d(var(--rv-x, 0px), var(--rv-y, 40px), 0);
+  transition-property: opacity, transform;
+  transition-duration: var(--rv-dur, 0.8s);
+  transition-delay: var(--rv-delay, 0s);
+  transition-timing-function: cubic-bezier(0.17, 0.55, 0.55, 1);
+  /* El transform ya no queda activo al terminar: isolation conserva el contexto de apilado. */
+  isolation: isolate;
+}
+
+.reveal-blur {
+  filter: blur(4px);
+  transition-property: opacity, transform, filter;
+}
+
+.reveal[data-visible] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* Celular / tablet: solo un fade corto, sin blur ni retrasos (mucho mas ligero). */
+@media (max-width: 1023px) {
+  .reveal {
+    --rv-x: 0px;
+    --rv-y: 16px;
+    transition-duration: 0.45s;
+    transition-delay: 0s;
+  }
+
+  .reveal-blur {
+    filter: none;
+    transition-property: opacity, transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}

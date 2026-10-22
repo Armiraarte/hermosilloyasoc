@@ -112,6 +112,8 @@ const Home: React.FC = () => {
                    <img 
                       src={IMAGENES.assets.about.mainImage}
                       alt="Nosotros - Grupo Hermosillo" 
+                      width={1200}
+                      height={1600}
                       loading="lazy"
                       decoding="async"
                       className="w-full h-full object-cover rounded-sm shadow-2xl relative z-10 grayscale brightness-75 contrast-125" 
@@ -119,7 +121,7 @@ const Home: React.FC = () => {
                    
                    {/* Top Right - Glassmorphism Card */}
                    <div className="absolute -top-8 -right-8 z-20 animate-float-slow hidden md:block">
-                      <div className="backdrop-blur-md bg-white/60 border border-white/40 p-4 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] flex flex-col items-center justify-center gap-1 min-w-[150px] text-center">
+                      <div className="bg-white/75 border border-white/40 p-4 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] flex flex-col items-center justify-center gap-1 min-w-[150px] text-center">
                          <h3 className="font-serif text-xl text-black font-bold italic leading-none drop-shadow-sm">
                             Buffete de<br/>Abogados
                          </h3>
@@ -132,7 +134,7 @@ const Home: React.FC = () => {
 
                    {/* Bottom Left - Glassmorphism Card */}
                    <div className="absolute bottom-8 -left-12 z-20 animate-float hidden md:block">
-                      <div className="backdrop-blur-md bg-white/60 border border-white/40 p-4 pr-8 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] flex items-center gap-4">
+                      <div className="bg-white/75 border border-white/40 p-4 pr-8 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] flex items-center gap-4">
                          <div className="w-10 h-10 rounded-full bg-black/10 flex items-center justify-center shadow-sm">
                             <svg className="w-5 h-5 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
@@ -154,17 +156,17 @@ const Home: React.FC = () => {
 
         <Services />
         <Team />
-        <DeferredSection minHeight={780}>
+        <DeferredSection minHeightClassName="min-h-[1455px] md:min-h-[1031px] lg:min-h-[959px]">
           <SeoContent />
         </DeferredSection>
         {/* En la página principal mantenemos el Contacto integrado, pero también tendremos la página individual */}
         <Contact />
-        <DeferredSection minHeight={520}>
+        <DeferredSection minHeightClassName="min-h-[500px]">
           <LocationMap />
         </DeferredSection>
         <Facilities />
       </main>
-      <DeferredSection minHeight={420}>
+      <DeferredSection minHeightClassName="min-h-[1474px] md:min-h-[1416px] lg:min-h-[620px]">
         <Footer />
       </DeferredSection>
     </div>

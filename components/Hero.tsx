@@ -10,16 +10,31 @@ const Hero: React.FC = () => {
   useEffect(() => {
     const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const connection = (navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+    }).connection;
+    const isSlowConnection = Boolean(connection?.saveData) || /^(slow-2g|2g|3g)$/.test(connection?.effectiveType ?? '');
 
-    if (!isDesktop || prefersReducedMotion) {
+    if (!isDesktop || prefersReducedMotion || isSlowConnection) {
       return;
     }
 
-    const timer = window.setTimeout(() => {
-      setShouldLoadVideo(true);
-    }, 150);
+    // El video es decorativo: se pide hasta que la pagina termino de cargar para no competir con el contenido.
+    let timer: number | undefined;
+    const scheduleVideo = () => {
+      timer = window.setTimeout(() => setShouldLoadVideo(true), 1200);
+    };
 
-    return () => window.clearTimeout(timer);
+    if (document.readyState === 'complete') {
+      scheduleVideo();
+    } else {
+      window.addEventListener('load', scheduleVideo, { once: true });
+    }
+
+    return () => {
+      window.removeEventListener('load', scheduleVideo);
+      window.clearTimeout(timer);
+    };
   }, []);
 
   return (
@@ -36,9 +51,8 @@ const Hero: React.FC = () => {
               preload="metadata"
               poster={IMAGENES.assets.hero.videoPoster}
               aria-label="Video de fondo de Hermosillo y Asociados"
-              className="w-full h-full object-cover opacity-40 grayscale contrast-125"
+              className="w-full h-full object-cover opacity-40"
             >
-               <source src={IMAGENES.assets.hero.videoBackgroundWebm} type="video/webm" />
                <source src={IMAGENES.assets.hero.videoBackground} type="video/mp4" />
             </video>
           ) : (
@@ -47,7 +61,8 @@ const Hero: React.FC = () => {
               alt=""
               aria-hidden="true"
               fetchPriority="high"
-              className="w-full h-full object-cover opacity-40 grayscale contrast-125"
+              decoding="async"
+              className="w-full h-full object-cover opacity-40"
             />
           )}
 
@@ -108,11 +123,15 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Right Content - Abstract or Image */}
-        <div className="hidden lg:flex justify-end relative h-full items-center">
+        <div className="hidden lg:flex justify-end relative h-full min-h-[85vh] items-center">
              <Reveal direction="none" delay={0.2} duration={1.2} className="relative z-10 w-full flex justify-end">
                 <img 
                     src={IMAGENES.assets.hero.mainImage}
                     alt="Justicia"
+                    width={1024}
+                    height={1536}
+                    loading="lazy"
+                    decoding="async"
                     className="w-auto max-w-full h-auto max-h-[85vh] object-contain opacity-100 drop-shadow-2xl"
                     style={{ 
                         filter: 'contrast(1.1) brightness(1.1)',

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { IMAGENES } from '../imagenes_url';
 import Reveal from './Reveal';
 
@@ -9,14 +9,31 @@ const facilitiesData = IMAGENES.assets.facilities;
 const Facilities: React.FC = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
+    const [isInView, setIsInView] = useState(false);
+    const sectionRef = useRef<HTMLElement>(null);
+
+    // Solo se rota mientras la seccion esta cerca de la pantalla (antes cambiaba fotos de varios MB desde el inicio).
+    useEffect(() => {
+        const node = sectionRef.current;
+        if (!node || typeof IntersectionObserver === 'undefined') {
+            setIsInView(true);
+            return;
+        }
+        const observer = new IntersectionObserver(([entry]) => setIsInView(entry.isIntersecting), {
+            rootMargin: '100px 0px',
+        });
+        observer.observe(node);
+        return () => observer.disconnect();
+    }, []);
 
     // Auto-rotation
     useEffect(() => {
+        if (!isInView) return;
         const timer = setInterval(() => {
-            handleNext();
+            if (!document.hidden) handleNext();
         }, 6000); // Un poco más lento para apreciar las fotos
         return () => clearInterval(timer);
-    }, [currentIndex]);
+    }, [currentIndex, isInView]);
 
     const handleNext = () => {
         setIsAnimating(true);
@@ -38,11 +55,11 @@ const Facilities: React.FC = () => {
     const currentFacility = facilitiesData[currentIndex];
 
     return (
-        <section id="instalaciones" className="relative w-full py-20 min-h-screen bg-black overflow-hidden flex items-center">
+        <section ref={sectionRef} id="instalaciones" className="relative w-full py-20 min-h-screen bg-black overflow-hidden flex items-center">
 
             {/* ================= 1. FONDO ATMOSFÉRICO (Blur Extremo) ================= */}
             {/* Este fondo asegura que no haya espacios negros vacíos, tomando el color de la foto actual */}
-            <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 z-0 hidden lg:block">
                 <div className="absolute inset-0 bg-black/60 z-10"></div> {/* Oscurecedor */}
                 <img
                     key={`bg-${currentIndex}`} // Key fuerza re-render suave
@@ -68,10 +85,10 @@ const Facilities: React.FC = () => {
                 >
 
                     {/* Marco Decorativo */}
-                    <div className={`relative w-full h-[55vh] md:h-[85vh] flex items-center justify-center transition-all duration-500 ease-out transform ${isAnimating ? 'opacity-0 scale-95 blur-md' : 'opacity-100 scale-100 blur-0'}`}>
+                    <div className={`relative w-full h-[55vh] md:h-[85vh] flex items-center justify-center transition-[opacity,transform] duration-500 ease-out ${isAnimating ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
 
                         {/* Sombra de la foto */}
-                        <div className="absolute inset-0 bg-black/50 blur-3xl -z-10 rounded-lg transform translate-y-12 scale-90 opacity-60"></div>
+                        <div className="absolute inset-0 bg-black/50 blur-3xl -z-10 rounded-lg transform translate-y-12 scale-90 opacity-60 hidden lg:block"></div>
 
                         <img
                             src={currentFacility.image}
@@ -79,13 +96,13 @@ const Facilities: React.FC = () => {
                             // RETORNO A OBJECT-CONTAIN:
                             // Esto asegura que NO se haga zoom (no se recorte nada).
                             // Se verá la imagen completa. Si es vertical, tendrá espacio a los lados.
-                            className="w-full h-full object-cover object-center rounded-lg drop-shadow-2xl border border-white/5"
+                            className="w-full h-full object-cover object-center rounded-lg shadow-2xl border border-white/5"
                             loading="lazy"
                             decoding="async"
                         />
 
                         {/* Etiqueta flotante sobre la foto - Ajustada al centro/bottom para que no tape si la foto es angosta */}
-                        <div className="absolute bottom-8 left-8 md:left-12 bg-black/70 backdrop-blur-xl px-8 py-4 border-l-4 border-blue-500 rounded-r-md shadow-2xl z-20 whitespace-nowrap">
+                        <div className="absolute bottom-8 left-8 md:left-12 bg-black/80 px-8 py-4 border-l-4 border-blue-500 rounded-r-md shadow-2xl z-20 whitespace-nowrap">
                             <span className="text-blue-400 font-mono text-xs uppercase tracking-widest block mb-2">
                                 Espacio 0{currentFacility.id}
                             </span>

@@ -330,62 +330,62 @@ const serviceRevealDirections = [
   "left"
 ] as const;
 
-const Services: React.FC = () => {
-  const [selectedService, setSelectedService] = useState<ServiceData | null>(null);
+const ServiceCard: React.FC<{ service: ServiceData; onSelect: (service: ServiceData) => void }> = React.memo(({ service, onSelect }) => {
+  return (
+    <div
+      onClick={() => onSelect(service)}
+      className="group relative h-full min-h-[340px] w-full rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-[#050505] transition-all duration-500 hover:border-white/30 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-1"
+    >
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <img
+          src={service.image}
+          alt={service.title}
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
+          className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110 grayscale opacity-40 group-hover:opacity-60"
+        />
+        {/* Dark Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent opacity-90 group-hover:opacity-80 transition-opacity duration-500"></div>
 
-  const ServiceCard: React.FC<{ service: ServiceData }> = ({ service }) => {
-    return (
-      <div
-        onClick={() => setSelectedService(service)}
-        className="group relative h-full min-h-[340px] w-full rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-[#050505] transition-all duration-500 hover:border-white/30 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-1"
-      >
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <img
-            src={service.image}
-            alt={service.title}
-            loading="lazy"
-            decoding="async"
-            fetchPriority="low"
-            className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110 grayscale opacity-40 group-hover:opacity-60"
-          />
-          {/* Dark Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent opacity-90 group-hover:opacity-80 transition-opacity duration-500"></div>
+        {/* Scanline Effect (Subtle) */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%] pointer-events-none opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+      </div>
 
-          {/* Scanline Effect (Subtle) */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%] pointer-events-none opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+      {/* Content Container */}
+      <div className="absolute inset-0 p-8 flex flex-col justify-end z-20">
+
+        {/* Text Content */}
+        <div className="transform transition-transform duration-500 translate-y-2 group-hover:translate-y-0">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-[1px] bg-blue-500 group-hover:w-12 transition-all duration-500 shadow-[0_0_8px_#3b82f6]"></div>
+            <span className="text-[10px] uppercase tracking-widest text-blue-400 font-mono opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Servicio Legal</span>
+          </div>
+
+          <h3 className="text-lg md:text-xl font-serif text-white font-bold leading-tight mb-3 drop-shadow-md group-hover:text-white transition-colors uppercase">
+            {service.title}
+          </h3>
+
+          <p className="text-gray-400 text-[11px] md:text-xs font-light leading-relaxed line-clamp-3 group-hover:text-gray-300 transition-colors border-l border-white/10 pl-4">
+            {service.description}
+          </p>
         </div>
 
-        {/* Content Container */}
-        <div className="absolute inset-0 p-8 flex flex-col justify-end z-20">
-
-          {/* Text Content */}
-          <div className="transform transition-transform duration-500 translate-y-2 group-hover:translate-y-0">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-8 h-[1px] bg-blue-500 group-hover:w-12 transition-all duration-500 shadow-[0_0_8px_#3b82f6]"></div>
-              <span className="text-[10px] uppercase tracking-widest text-blue-400 font-mono opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Servicio Legal</span>
-            </div>
-
-            <h3 className="text-lg md:text-xl font-serif text-white font-bold leading-tight mb-3 drop-shadow-md group-hover:text-white transition-colors uppercase">
-              {service.title}
-            </h3>
-
-            <p className="text-gray-400 text-[11px] md:text-xs font-light leading-relaxed line-clamp-3 group-hover:text-gray-300 transition-colors border-l border-white/10 pl-4">
-              {service.description}
-            </p>
-          </div>
-
-          {/* Hover "Ver Más" Indicator */}
-          <div className="mt-6 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">
-            Ver Detalles
-            <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </div>
+        {/* Hover "Ver Más" Indicator */}
+        <div className="mt-6 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">
+          Ver Detalles
+          <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+});
+
+const Services: React.FC = () => {
+  const [selectedService, setSelectedService] = useState<ServiceData | null>(null);
 
   return (
     <section id="servicios" className="py-24 bg-transparent relative border-t border-white/5">
@@ -412,7 +412,7 @@ const Services: React.FC = () => {
               blur={false}
               className={`h-full ${service.className || 'md:col-span-1'}`}
             >
-              <ServiceCard service={service} />
+              <ServiceCard service={service} onSelect={setSelectedService} />
             </Reveal>
           ))}
         </div>
@@ -423,7 +423,7 @@ const Services: React.FC = () => {
       {selectedService && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-6">
           {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/95 backdrop-blur-md" onClick={() => setSelectedService(null)}></div>
+          <div className="absolute inset-0 bg-black/95" onClick={() => setSelectedService(null)}></div>
 
           {/* MODAL CONTAINER */}
           <div className="relative bg-[#080808] border border-white/10 w-full max-w-6xl max-h-[95vh] overflow-hidden rounded-3xl shadow-2xl flex flex-col md:flex-row animate-[float_0.3s_ease-out]">

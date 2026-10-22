@@ -49,7 +49,7 @@ const LocationMap: React.FC = () => {
             <Reveal
                 direction="left"
                 delay={0.08}
-                className="hidden md:block bg-black/60 backdrop-blur-md border border-white/10 p-3 rounded-sm shadow-lg pointer-events-auto"
+                className="hidden md:block bg-black/75 border border-white/10 p-3 rounded-sm shadow-lg pointer-events-auto"
             >
                 <div className="flex items-center gap-4 text-[10px] font-mono text-gray-400">
                     <div>
@@ -67,7 +67,7 @@ const LocationMap: React.FC = () => {
 
         {/* Center Target/Reticle - kept for aesthetics but pointer-events-none ensures it doesn't block map */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-64 md:h-64 border border-white/20 rounded-full flex items-center justify-center pointer-events-none opacity-40">
-            <div className="absolute inset-0 rounded-full border border-t-white/40 border-b-transparent border-l-transparent border-r-transparent animate-spin-slow"></div>
+            <div className="absolute inset-0 rounded-full border border-t-white/40 border-b-transparent border-l-transparent border-r-transparent"></div>
             <div className="w-[1px] h-4 bg-white/40 absolute top-0"></div>
             <div className="w-[1px] h-4 bg-white/40 absolute bottom-0"></div>
             <div className="h-[1px] w-4 bg-white/40 absolute left-0"></div>
@@ -83,7 +83,7 @@ const LocationMap: React.FC = () => {
         <div className="flex justify-between items-end">
              <Reveal
                  direction="right"
-                 className="bg-black/70 backdrop-blur-md border-l-2 border-blue-500 pl-4 py-3 pr-8 rounded-r-lg shadow-xl pointer-events-auto"
+                 className="bg-black/80 border-l-2 border-blue-500 pl-4 py-3 pr-8 rounded-r-lg shadow-xl pointer-events-auto"
              >
                  <p className="text-[10px] text-gray-300 font-mono mb-1 uppercase tracking-widest">Dirección Corporativa</p>
                  <p className="text-sm md:text-base text-white font-medium">{IMAGENES.contacto.direccion.linea1}</p>

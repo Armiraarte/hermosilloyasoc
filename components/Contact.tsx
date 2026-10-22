@@ -100,13 +100,13 @@ const Contact: React.FC = () => {
          {/* Grid sutil local ELIMINADO para usar el global del body */}
          
          {/* Blue ambient glow */}
-         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 animate-pulse-glow z-10"></div>
+         <div className="absolute top-0 right-0 w-[900px] h-[900px] bg-[radial-gradient(circle,rgba(30,58,138,0.16)_0%,transparent_65%)] -translate-y-1/2 translate-x-1/2 lg:animate-[pulse-glow_3s_ease-in-out_infinite] z-10"></div>
       </div>
 
       {alertMessage && (
         <div className="fixed inset-0 z-[70] flex items-center justify-center px-4">
           <div
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/75"
             onClick={dismissAlert}
             aria-hidden="true"
           ></div>
@@ -239,7 +239,7 @@ const Contact: React.FC = () => {
                         <div className={`absolute bottom-0 left-0 h-[1px] bg-blue-400 shadow-[0_0_10px_#3b82f6] transition-all duration-500 ${isDropdownOpen ? 'w-full' : 'w-0'}`}></div>
 
                         {/* Dropdown Menu */}
-                        <div className={`absolute top-full left-0 w-full mt-2 bg-[#0a0a0a]/95 backdrop-blur-xl border border-white/10 rounded-lg shadow-[0_10px_40px_rgba(0,0,0,0.8)] z-50 overflow-hidden transition-all duration-300 origin-top ${isDropdownOpen ? 'opacity-100 scale-y-100 translate-y-0' : 'opacity-0 scale-y-95 -translate-y-2 pointer-events-none'}`}>
+                        <div className={`absolute top-full left-0 w-full mt-2 bg-[#0a0a0a]/95 border border-white/10 rounded-lg shadow-[0_10px_40px_rgba(0,0,0,0.8)] z-50 overflow-hidden transition-all duration-300 origin-top ${isDropdownOpen ? 'opacity-100 scale-y-100 translate-y-0' : 'opacity-0 scale-y-95 -translate-y-2 pointer-events-none'}`}>
                             
                             {/* Decorative Top Line */}
                             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
@@ -328,7 +328,7 @@ const Contact: React.FC = () => {
             className="lg:col-span-5 flex flex-col justify-center h-full pt-8 lg:pt-0"
           >
             
-            <div className="relative group p-5 md:p-10 border border-white/10 bg-black/40 backdrop-blur-md rounded-xl transition-all duration-500 hover:border-white/30 hover:shadow-[0_0_50px_rgba(255,255,255,0.1)] overflow-hidden">
+            <div className="relative group p-5 md:p-10 border border-white/10 bg-black/50 rounded-xl transition-all duration-500 hover:border-white/30 hover:shadow-[0_0_50px_rgba(255,255,255,0.1)] overflow-hidden">
                 
                 {/* Neon Background Glow on Hover (Changed Pink to Amber) */}
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-transparent group-hover:from-amber-900/10 group-hover:via-emerald-900/10 group-hover:to-cyan-900/10 transition-all duration-700"></div>

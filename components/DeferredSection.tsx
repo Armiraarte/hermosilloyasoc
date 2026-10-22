@@ -3,6 +3,8 @@ import React, { Suspense, useEffect, useRef, useState } from 'react';
 interface DeferredSectionProps {
   children: React.ReactNode;
   minHeight?: number | string;
+  // Alturas por breakpoint (clases de Tailwind). Si se pasa, tiene prioridad sobre minHeight.
+  minHeightClassName?: string;
   rootMargin?: string;
 }
 
@@ -12,6 +14,7 @@ const getMinHeight = (minHeight: number | string) =>
 const DeferredSection: React.FC<DeferredSectionProps> = ({
   children,
   minHeight = 320,
+  minHeightClassName,
   rootMargin = '350px 0px',
 }) => {
   const [shouldRender, setShouldRender] = useState(false);
@@ -43,12 +46,18 @@ const DeferredSection: React.FC<DeferredSectionProps> = ({
     return () => observer.disconnect();
   }, [rootMargin, shouldRender]);
 
+  const placeholderStyle = minHeightClassName ? undefined : { minHeight: getMinHeight(minHeight) };
+
   return (
     <div
       ref={containerRef}
-      style={!shouldRender ? { minHeight: getMinHeight(minHeight) } : undefined}
+      className={!shouldRender ? minHeightClassName : undefined}
+      style={!shouldRender ? placeholderStyle : undefined}
     >
-      {shouldRender ? <Suspense fallback={null}>{children}</Suspense> : null}
+      {/* Mientras carga el chunk se conserva la altura reservada para que la pagina no brinque. */}
+      {shouldRender ? (
+        <Suspense fallback={<div className={minHeightClassName} style={placeholderStyle} />}>{children}</Suspense>
+      ) : null}
     </div>
   );
 };

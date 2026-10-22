@@ -16,10 +16,8 @@ export const WHATSAPP_URLS = {
         alfonso: "523323841469", // Lic. Alfonso Gonzalez
         antonio: "523323841469", // Lic. Antonio Guzman
         jose_luis: "523343299463", // Lic. Jose Luis Gutierrez
-        sarah: "523347617381", // Lic. Sarah Robles
         ximena: "523318107412", // Derecho civil - Lic. Ximena Lopez Vazquez
         yanci: "523318107412", // Derecho familiar - Lic. Yanci Contreras Garcia
-        fabrizio: "523318107412", // Lic. Fabrizio Ibarra
-        jesus: "523318107412" // Lic. Jesus Godinez
+        fabrizio: "523318107412" // Lic. Fabrizio Ibarra
     }
 };

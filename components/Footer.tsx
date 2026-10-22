@@ -3,20 +3,25 @@ import React, { useState, useEffect } from 'react';
 import { IMAGENES } from '../imagenes_url';
 import Reveal from './Reveal';
 
-const Footer: React.FC = () => {
-  const [time, setTime] = useState(new Date());
+const formatTime = (date: Date) => {
+  return date.toLocaleTimeString('es-MX', { hour12: false }) + " MX";
+};
+
+// Reloj aislado: solo este nodo se actualiza cada segundo (antes re-renderizaba todo el Footer).
+const LiveClock: React.FC = () => {
+  const [time, setTime] = useState(() => new Date());
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
+  return <span className="text-[10px] font-mono text-gray-300 tracking-widest">{formatTime(time)}</span>;
+};
+
+const Footer: React.FC = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('es-MX', { hour12: false }) + " MX";
   };
 
   return (
@@ -194,7 +199,7 @@ const Footer: React.FC = () => {
                     <span className="w-0.5 h-3 bg-white/60"></span>
                     <span className="w-0.5 h-2 bg-white/40"></span>
                 </div>
-                <span className="text-[10px] font-mono text-gray-300 tracking-widest">{formatTime(time)}</span>
+                <LiveClock />
             </div>
 
             <button 

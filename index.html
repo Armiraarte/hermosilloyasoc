@@ -140,46 +140,19 @@
   </script>
 
   <!-- OPTIMIZACIÓN DE CARGA -->
-  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="preload" as="image" href="/components/media/images/hero-poster.webp" fetchpriority="high" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <!-- TAILWIND CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
   <!-- FUENTES -->
-  <link
+  <link rel="preload" as="style"
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
-    rel="stylesheet">
-
-  <!-- CONFIGURACIÓN DE TAILWIND -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Montserrat', 'sans-serif'],
-            serif: ['Playfair Display', 'serif'],
-          },
-          colors: {
-            gray: {
-              850: '#1f2937',
-              950: '#030712',
-            }
-          },
-          animation: {
-            'twinkle': 'twinkle 4s ease-in-out infinite alternate',
-          },
-          keyframes: {
-            twinkle: {
-              '0%': { opacity: '0.3' },
-              '100%': { opacity: '0.8' },
-            }
-          }
-        }
-      }
-    }
-  </script>
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet">
+  </noscript>
 
   <!-- ESTILOS GLOBALES -->
   <style>
@@ -215,7 +188,6 @@
         radial-gradient(1px 1px at 30% 30%, rgba(255, 255, 255, 0.4) 0%, transparent 100%),
         radial-gradient(1px 1px at 70% 60%, rgba(255, 255, 255, 0.4) 0%, transparent 100%);
       background-size: 800px 800px;
-      animation: twinkle 5s ease-in-out infinite alternate;
     }
 
     .vignette-overlay {
@@ -255,7 +227,6 @@
     }
   </style>
 
-  <link rel="stylesheet" href="/index.css">
 </head>
 
 <body>
