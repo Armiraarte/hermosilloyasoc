@@ -312,7 +312,9 @@ const Team: React.FC = () => {
         {isCompact ? (
           <div className="mx-auto grid max-w-[440px] grid-cols-1 gap-6 md:max-w-none md:grid-cols-2">
             {displayOrder.map((member) => (
-              <MemberCardLite key={member.name} member={member} />
+              <Reveal key={member.name} direction="none" width="100%" threshold={0.1} blur={false}>
+                <MemberCardLite member={member} />
+              </Reveal>
             ))}
           </div>
         ) : (

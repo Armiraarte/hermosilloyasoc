@@ -29,18 +29,18 @@
   filter: none;
 }
 
-/* Celular / tablet: solo un fade corto, sin blur ni retrasos (mucho mas ligero). */
+/* Celular / tablet: solo un fade (de negro al contenido), sin desplazamiento, blur ni retrasos. */
 @media (max-width: 1023px) {
   .reveal {
-    --rv-x: 0px;
-    --rv-y: 16px;
-    transition-duration: 0.45s;
+    transform: none;
+    transition-property: opacity;
+    transition-duration: 0.6s;
     transition-delay: 0s;
   }
 
   .reveal-blur {
     filter: none;
-    transition-property: opacity, transform;
+    transition-property: opacity;
   }
 }
 
