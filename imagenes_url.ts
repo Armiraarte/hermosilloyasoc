@@ -54,6 +54,7 @@ export const IMAGENES = {
     hero: {
       mainImage: "/components/media/images/LaJusticia.webp",
       videoBackground: "/media/video/0114.mp4", // VIDEO MOVEMOS A PUBLIC (720p, sin audio)
+      videoBackgroundWebm: "/media/video/0114.webm", // misma version en VP9 para navegadores sin H.264
       videoPoster: "/components/media/images/hero-poster.webp" // Imagen que se ve mientras carga el video (y en celular)
     },
 
@@ -97,6 +98,9 @@ export const IMAGENES = {
       ximena_atras: "/components/media/images/members/lic_ximena.webp",
       yanci_frente: "/components/media/images/members/lic_yanci.webp",
       yanci_atras: "/components/media/images/members/lic_yanci.webp",
+      // Sabrina Trujillo: sube la fotografia con este nombre (retrato vertical, .webp ~1080x1350)
+      sabrina_frente: "/components/media/images/members/lic_sabrina.webp",
+      sabrina_atras: "/components/media/images/members/lic_sabrina.webp",
       fabricio_frente: "/components/media/images/members/lic_fabricio.jpg",
       fabricio_atras: "/components/media/images/members/lic_fabricio.jpg"
     },

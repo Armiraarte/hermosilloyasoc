@@ -41,7 +41,7 @@ const ClientControlSystem: React.FC = () => {
     <section id="sistema-control-expedientes" className="relative overflow-hidden bg-black py-20 md:py-24">
       <div className="relative z-10 mx-auto w-[92%] max-w-[1600px] px-4 sm:px-6">
         <Reveal width="100%" className="mb-10 flex justify-center">
-          <div className="rounded-[2rem] border border-white/10 bg-black px-5 py-4">
+          <div className="rounded-sm border border-white/10 bg-black px-5 py-4">
             <img
               src={BRAND_MONOGRAM}
               alt="Hermosillo y Asociados"
@@ -50,10 +50,10 @@ const ClientControlSystem: React.FC = () => {
           </div>
         </Reveal>
 
-        <div className="relative overflow-hidden rounded-[2.4rem] border border-white/10 bg-black p-5 sm:p-8 md:p-12 lg:p-16 shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
+        <div className="relative overflow-hidden rounded-sm border border-white/10 bg-black p-5 sm:p-8 md:p-12 lg:p-16 shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
           <div className="grid items-center gap-14 lg:grid-cols-[0.95fr_1.05fr]">
-            <Reveal width="100%" className="mx-auto flex w-full max-w-2xl flex-col items-center text-center lg:mx-0 lg:items-start lg:text-left">
-              <span className="inline-flex items-center rounded-full border border-white/14 bg-[#050505] px-4 py-2 text-xs font-bold uppercase tracking-[0.3em] text-white">
+            <Reveal variant="stagger" width="100%" className="mx-auto flex w-full max-w-2xl flex-col items-center text-center lg:mx-0 lg:items-start lg:text-left">
+              <span className="inline-flex items-center rounded-sm border border-white/14 bg-[#050505] px-4 py-2 text-xs font-bold uppercase tracking-[0.3em] text-white">
                 Plataforma legal
               </span>
 
@@ -71,9 +71,9 @@ const ClientControlSystem: React.FC = () => {
                 {features.map((item) => (
                   <div
                     key={item.title}
-                    className="flex items-start gap-4 rounded-[1.4rem] border border-white/10 bg-[#050505] px-5 py-4 text-white shadow-[0_18px_50px_rgba(0,0,0,0.45)]"
+                    className="flex items-start gap-4 rounded-sm border border-white/10 bg-[#050505] px-5 py-4 text-white shadow-[0_18px_50px_rgba(0,0,0,0.45)]"
                   >
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-black text-white shadow-[0_10px_24px_rgba(255,255,255,0.06)]">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-sm border border-white/10 bg-black text-white shadow-[0_10px_24px_rgba(255,255,255,0.06)]">
                       {item.icon}
                     </div>
                     <div>
@@ -86,7 +86,7 @@ const ClientControlSystem: React.FC = () => {
 
               <a
                 href={DOSSIER_PORTAL_URL}
-                className="group mt-8 inline-flex items-center gap-4 rounded-full border border-white/16 bg-black px-8 py-4 text-sm font-bold uppercase tracking-[0.2em] text-white transition-all duration-500 hover:scale-[1.02] hover:border-white/28"
+                className="group mt-8 inline-flex items-center gap-4 rounded-sm border border-white/16 bg-black px-8 py-4 text-sm font-bold uppercase tracking-[0.2em] text-white transition-all duration-500 hover:scale-[1.02] hover:border-white/28"
               >
                 <span>Descubrelo</span>
                 <svg
@@ -100,7 +100,7 @@ const ClientControlSystem: React.FC = () => {
               </a>
             </Reveal>
 
-            <Reveal direction="left" delay={0.1} width="100%">
+            <Reveal variant="curtain" direction="left" delay={0.1} width="100%">
               <div className="relative mx-auto flex max-w-[520px] items-center justify-center">
                 <div className="relative w-[320px] rounded-[3.4rem] border border-white/18 bg-black p-3 shadow-[0_35px_120px_rgba(0,0,0,0.85)] sm:w-[360px]">
                   <div className="rounded-[3rem] border border-black/10 bg-white p-3">

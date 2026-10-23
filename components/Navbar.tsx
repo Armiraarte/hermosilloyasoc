@@ -108,12 +108,12 @@ const Navbar: React.FC = () => {
         ref={navRef}
         className={`fixed z-50 overflow-visible transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${
           isFloatingNavbar
-            ? 'top-2 md:top-4 left-0 right-0 mx-auto w-[95%] md:w-[90%] max-w-7xl rounded-[2rem] border border-white/10 bg-black py-2 md:py-3 shadow-[0_18px_60px_rgba(0,0,0,0.45)]'
+            ? 'top-2 md:top-4 left-0 right-0 mx-auto w-[95%] md:w-[90%] max-w-7xl rounded-sm border border-white/10 bg-black py-2 md:py-3 shadow-[0_18px_60px_rgba(0,0,0,0.45)]'
             : 'top-0 left-0 w-full border-b border-white/10 bg-black py-6'
         }`}
       >
         {isDecember && (
-          <div className={`absolute inset-0 pointer-events-none z-0 overflow-hidden ${isFloatingNavbar ? 'rounded-[2rem]' : 'rounded-full'}`}>
+          <div className={`absolute inset-0 pointer-events-none z-0 overflow-hidden ${isFloatingNavbar ? 'rounded-sm' : 'rounded-sm'}`}>
             {[...Array(15)].map((_, i) => (
               <div
                 key={i}
@@ -134,7 +134,7 @@ const Navbar: React.FC = () => {
 
         <div
           className={`absolute inset-0 pointer-events-none bg-gradient-to-b from-white/6 to-transparent transition-opacity duration-700 ${
-            isFloatingNavbar ? 'rounded-[2rem] opacity-60' : 'rounded-full opacity-0'
+            isFloatingNavbar ? 'rounded-sm opacity-60' : 'rounded-sm opacity-0'
           }`}
         ></div>
 
@@ -172,7 +172,7 @@ const Navbar: React.FC = () => {
             <a
               href="#contacto"
               onClick={(e) => handleNavClick(e, '#contacto')}
-              className="group relative overflow-hidden rounded-full border border-white/30 px-5 py-2 text-[10px] uppercase text-white transition-all duration-500 hover:border-white hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] md:rounded-sm xl:text-xs"
+              className="group relative overflow-hidden rounded-sm border border-white/30 px-5 py-2 text-[10px] uppercase text-white transition-all duration-500 hover:border-white hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] md:rounded-sm xl:text-xs"
             >
               <span className="absolute inset-0 h-full w-full -translate-x-full bg-white transition-transform duration-300 ease-out group-hover:translate-x-0"></span>
               <span className="relative z-10 font-bold transition-colors duration-300 group-hover:text-black">
@@ -184,7 +184,7 @@ const Navbar: React.FC = () => {
           <button
             type="button"
             aria-label={mobileMenuOpen ? 'Cerrar menu' : 'Abrir menu'}
-            className={`xl:hidden rounded-full border p-2 transition-all duration-300 ${
+            className={`xl:hidden rounded-sm border p-2 transition-all duration-300 ${
               mobileMenuOpen
                 ? 'border-white/20 bg-white/10 text-white shadow-[0_0_20px_rgba(255,255,255,0.12)]'
                 : 'border-transparent text-white hover:border-white/10 hover:bg-white/5 hover:text-gray-200'
@@ -210,7 +210,7 @@ const Navbar: React.FC = () => {
               : 'invisible -translate-y-3 scale-95 opacity-0 pointer-events-none'
           }`}
         >
-          <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/92 shadow-[0_22px_70px_rgba(0,0,0,0.55)] backdrop-blur-2xl">
+          <div className="overflow-hidden rounded-sm border border-white/10 bg-black/92 shadow-[0_22px_70px_rgba(0,0,0,0.55)] backdrop-blur-2xl">
             <div className="px-5 pb-3 pt-5 text-[11px] uppercase tracking-[0.35em] text-white/45">
               Navegacion
             </div>
@@ -221,7 +221,7 @@ const Navbar: React.FC = () => {
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className="group flex items-center justify-between rounded-[1.25rem] border border-white/8 bg-white/[0.03] px-4 py-3 text-sm font-medium tracking-[0.24em] text-white/75 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
+                  className="group flex items-center justify-between rounded-sm border border-white/8 bg-white/[0.03] px-4 py-3 text-sm font-medium tracking-[0.24em] text-white/75 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
                   style={{ transitionDelay: `${index * 45}ms` }}
                 >
                   <span>{link.name}</span>
@@ -234,7 +234,7 @@ const Navbar: React.FC = () => {
               <a
                 href="#contacto"
                 onClick={(e) => handleNavClick(e, '#contacto')}
-                className="flex items-center justify-center rounded-full border border-white/30 bg-white px-6 py-3 text-xs font-bold uppercase tracking-[0.32em] text-black transition-all duration-300 hover:shadow-[0_0_24px_rgba(255,255,255,0.25)]"
+                className="flex items-center justify-center rounded-sm border border-white/30 bg-white px-6 py-3 text-xs font-bold uppercase tracking-[0.32em] text-black transition-all duration-300 hover:shadow-[0_0_24px_rgba(255,255,255,0.25)]"
               >
                 Contacto
               </a>

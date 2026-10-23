@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { IMAGENES } from '../imagenes_url';
 import Reveal from './Reveal';
+import { Ornament } from './Greek';
 
 // Utilizamos los datos del archivo de configuración
 const facilitiesData = IMAGENES.assets.facilities;
@@ -88,7 +89,7 @@ const Facilities: React.FC = () => {
                     <div className={`relative w-full h-[55vh] md:h-[85vh] flex items-center justify-center transition-[opacity,transform] duration-500 ease-out ${isAnimating ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
 
                         {/* Sombra de la foto */}
-                        <div className="absolute inset-0 bg-black/50 blur-3xl -z-10 rounded-lg transform translate-y-12 scale-90 opacity-60 hidden lg:block"></div>
+                        <div className="absolute inset-0 bg-black/50 blur-3xl -z-10 rounded-sm transform translate-y-12 scale-90 opacity-60 hidden lg:block"></div>
 
                         <img
                             src={currentFacility.image}
@@ -96,14 +97,14 @@ const Facilities: React.FC = () => {
                             // RETORNO A OBJECT-CONTAIN:
                             // Esto asegura que NO se haga zoom (no se recorte nada).
                             // Se verá la imagen completa. Si es vertical, tendrá espacio a los lados.
-                            className="w-full h-full object-cover object-center rounded-lg shadow-2xl border border-white/5"
+                            className="w-full h-full object-cover object-center rounded-sm shadow-2xl border border-white/5"
                             loading="lazy"
                             decoding="async"
                         />
 
                         {/* Etiqueta flotante sobre la foto - Ajustada al centro/bottom para que no tape si la foto es angosta */}
-                        <div className="absolute bottom-8 left-8 md:left-12 bg-black/80 px-8 py-4 border-l-4 border-blue-500 rounded-r-md shadow-2xl z-20 whitespace-nowrap">
-                            <span className="text-blue-400 font-mono text-xs uppercase tracking-widest block mb-2">
+                        <div className="absolute bottom-8 left-8 md:left-12 bg-black/80 px-8 py-4 border-l-4 border-platinum-500 rounded-r-md shadow-2xl z-20 whitespace-nowrap">
+                            <span className="text-platinum-400 font-mono text-xs uppercase tracking-widest block mb-2">
                                 Espacio 0{currentFacility.id}
                             </span>
                             <h3 className="text-white font-serif text-2xl md:text-3xl leading-none">
@@ -116,6 +117,7 @@ const Facilities: React.FC = () => {
 
                 {/* --- COLUMNA DERECHA: NAVEGACIÓN Y DETALLES --- */}
                 <Reveal
+                    variant="stagger"
                     direction="left"
                     delay={0.1}
                     width="100%"
@@ -124,7 +126,7 @@ const Facilities: React.FC = () => {
 
                     <div className="mb-12">
                         <h2 className="font-serif text-4xl md:text-5xl text-white mb-6">Nuestras Instalaciones</h2>
-                        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-transparent mb-8"></div>
+                        <Ornament align="left" className="mb-8" />
                         <p className={`text-gray-300 font-light text-lg leading-relaxed transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
                             {currentFacility.phrase}
                         </p>
@@ -136,7 +138,7 @@ const Facilities: React.FC = () => {
                             <button
                                 key={item.id}
                                 onClick={() => handleSelect(index)}
-                                className={`group w-full text-left py-5 px-8 rounded-xl transition-all duration-300 border border-transparent flex items-center justify-between ${index === currentIndex
+                                className={`group w-full text-left py-5 px-8 rounded-sm transition-all duration-300 border border-transparent flex items-center justify-between ${index === currentIndex
                                     ? 'bg-white/10 border-white/10 shadow-lg translate-x-2'
                                     : 'hover:bg-white/5 hover:border-white/5 hover:translate-x-1'
                                     }`}
@@ -146,7 +148,7 @@ const Facilities: React.FC = () => {
                                 </span>
 
                                 {index === currentIndex ? (
-                                    <div className="w-2.5 h-2.5 bg-blue-500 rounded-full shadow-[0_0_15px_#3b82f6] animate-pulse"></div>
+                                    <div className="w-2.5 h-2.5 bg-platinum-500 rounded-full shadow-[0_0_15px_#C5C8CE] animate-pulse"></div>
                                 ) : (
                                     <span className="text-xs text-gray-700 font-mono group-hover:text-gray-500">0{index + 1}</span>
                                 )}

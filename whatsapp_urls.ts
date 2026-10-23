@@ -18,6 +18,7 @@ export const WHATSAPP_URLS = {
         jose_luis: "523343299463", // Lic. Jose Luis Gutierrez
         ximena: "523318107412", // Derecho civil - Lic. Ximena Lopez Vazquez
         yanci: "523318107412", // Derecho familiar - Lic. Yanci Contreras Garcia
+        sabrina: "523318107412", // Derecho familiar - Lic. Sabrina Trujillo (mismo numero que Yanci por ahora)
         fabrizio: "523318107412" // Lic. Fabrizio Ibarra
     }
 };

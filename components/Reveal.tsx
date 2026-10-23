@@ -10,6 +10,8 @@ interface RevealProps {
   className?: string;
   threshold?: number; // 0 to 1
   blur?: boolean; // Enable blur effect (solo escritorio, ver index.css)
+  // fade: aparece y sube. curtain: la imagen se descubre como una cortina. stagger: los hijos entran uno tras otro.
+  variant?: 'fade' | 'curtain' | 'stagger';
 }
 
 const OFFSETS: Record<NonNullable<RevealProps['direction']>, [string, string]> = {
@@ -51,7 +53,8 @@ const Reveal: React.FC<RevealProps> = ({
   duration = 0.8,
   className = "",
   threshold = 0.2,
-  blur = true
+  blur = true,
+  variant = 'fade'
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -82,7 +85,7 @@ const Reveal: React.FC<RevealProps> = ({
     <div
       ref={ref}
       style={style}
-      className={`reveal${blur ? ' reveal-blur' : ''}${className ? ` ${className}` : ''}`}
+      className={`reveal${variant === 'fade' && blur ? ' reveal-blur' : ''}${variant !== 'fade' ? ` reveal-${variant}` : ''}${className ? ` ${className}` : ''}`}
     >
       {children}
     </div>

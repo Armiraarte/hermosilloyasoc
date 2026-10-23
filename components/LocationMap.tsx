@@ -37,8 +37,8 @@ const LocationMap: React.FC = () => {
         <div className="flex justify-between items-start">
             <Reveal direction="right" className="flex flex-col gap-1 pointer-events-auto">
                 <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_10px_#3b82f6]"></div>
-                    <span className="text-[10px] md:text-xs font-mono text-blue-400 tracking-[0.2em] uppercase">Ubicación</span>
+                    <div className="w-2 h-2 bg-platinum-500 rounded-full animate-pulse shadow-[0_0_10px_#C5C8CE]"></div>
+                    <span className="text-[10px] md:text-xs font-mono text-platinum-400 tracking-[0.2em] uppercase">Ubicación</span>
                 </div>
                 <h3 className="text-xl md:text-3xl font-serif text-white font-bold tracking-tight drop-shadow-lg text-shadow-black">
                     Oficinas Corporativas
@@ -83,7 +83,7 @@ const LocationMap: React.FC = () => {
         <div className="flex justify-between items-end">
              <Reveal
                  direction="right"
-                 className="bg-black/80 border-l-2 border-blue-500 pl-4 py-3 pr-8 rounded-r-lg shadow-xl pointer-events-auto"
+                 className="bg-black/80 border-l-2 border-platinum-500 pl-4 py-3 pr-8 rounded-r-lg shadow-xl pointer-events-auto"
              >
                  <p className="text-[10px] text-gray-300 font-mono mb-1 uppercase tracking-widest">Dirección Corporativa</p>
                  <p className="text-sm md:text-base text-white font-medium">{IMAGENES.contacto.direccion.linea1}</p>

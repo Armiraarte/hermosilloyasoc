@@ -100,7 +100,7 @@ const Contact: React.FC = () => {
          {/* Grid sutil local ELIMINADO para usar el global del body */}
          
          {/* Blue ambient glow */}
-         <div className="absolute top-0 right-0 w-[900px] h-[900px] bg-[radial-gradient(circle,rgba(30,58,138,0.16)_0%,transparent_65%)] -translate-y-1/2 translate-x-1/2 lg:animate-[pulse-glow_3s_ease-in-out_infinite] z-10"></div>
+         <div className="absolute top-0 right-0 w-[900px] h-[900px] bg-[radial-gradient(circle,rgba(197,200,206,0.14)_0%,transparent_65%)] -translate-y-1/2 translate-x-1/2 lg:animate-[pulse-glow_3s_ease-in-out_infinite] z-10"></div>
       </div>
 
       {alertMessage && (
@@ -113,7 +113,7 @@ const Contact: React.FC = () => {
           <div
             role="dialog"
             aria-modal="true"
-            className={`relative w-full max-w-md rounded-2xl border px-6 py-5 shadow-[0_0_30px_rgba(0,0,0,0.6)] ${
+            className={`relative w-full max-w-md rounded-sm border px-6 py-5 shadow-[0_0_30px_rgba(0,0,0,0.6)] ${
               alertMessage.type === 'success'
                 ? 'bg-black/90 border-white/15 text-white'
                 : 'bg-black/90 border-red-500/30 text-red-200'
@@ -144,15 +144,15 @@ const Contact: React.FC = () => {
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-24">
           
           {/* ================= LEFT: FORMULARIO ================= */}
-          <Reveal direction="right" width="100%" className="lg:col-span-7 relative">
+          <Reveal variant="stagger" direction="right" width="100%" className="lg:col-span-7 relative">
             
             <div className="mb-8 md:mb-12">
                <div className="flex items-center gap-3 mb-4">
-                  <div className="h-[2px] w-8 bg-blue-500 shadow-[0_0_10px_#3b82f6]"></div>
-                  <span className="text-blue-400 font-sans font-bold text-xs tracking-[0.2em] uppercase">Inicia tu solución</span>
+                  <div className="h-[2px] w-8 bg-platinum-500 shadow-[0_0_10px_#C5C8CE]"></div>
+                  <span className="text-platinum-400 font-sans font-bold text-xs tracking-[0.2em] uppercase">Inicia tu solución</span>
                </div>
                <h2 className="font-serif text-3xl md:text-5xl text-white mb-6 leading-tight">
-                 Consulta <span className="text-gray-400 italic">Estratégica</span>
+                 Consulta <span className="text-gray-400">Estratégica</span>
                </h2>
                <p className="text-gray-400 font-light text-sm md:text-base leading-relaxed max-w-xl">
                  Cada minuto cuenta en la estrategia legal. Envíanos los detalles de tu caso y nuestro equipo analizará la viabilidad jurídica de inmediato.
@@ -167,29 +167,29 @@ const Contact: React.FC = () => {
                         <input 
                             type="text" 
                             name="nombre"
-                            className="peer w-full bg-transparent border-b border-gray-800 py-3 text-white focus:outline-none focus:border-blue-500 transition-all duration-500 font-sans text-base md:text-lg placeholder-transparent focus:shadow-[0_15px_20px_-10px_rgba(59,130,246,0.3)]"
+                            className="peer w-full bg-transparent border-b border-gray-800 py-3 text-white focus:outline-none focus:border-platinum-500 transition-all duration-500 font-sans text-base md:text-lg placeholder-transparent focus:shadow-[0_15px_20px_-10px_rgba(59,130,246,0.3)]"
                             placeholder="Nombre"
                             id="nombre"
                         />
-                        <label htmlFor="nombre" className="absolute left-0 -top-4 text-gray-500 text-xs transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-blue-400 peer-focus:text-xs uppercase tracking-wide font-medium">
+                        <label htmlFor="nombre" className="absolute left-0 -top-4 text-gray-500 text-xs transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-platinum-400 peer-focus:text-xs uppercase tracking-wide font-medium">
                             Nombre Completo
                         </label>
                         {/* Glow indicator line */}
-                        <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-blue-400 shadow-[0_0_10px_#3b82f6] transition-all duration-500 peer-focus:w-full"></div>
+                        <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-platinum-400 shadow-[0_0_10px_#C5C8CE] transition-all duration-500 peer-focus:w-full"></div>
                     </div>
 
                     <div className="group relative">
                         <input 
                             type="tel" 
                             name="telefono"
-                            className="peer w-full bg-transparent border-b border-gray-800 py-3 text-white focus:outline-none focus:border-blue-500 transition-all duration-500 font-sans text-base md:text-lg placeholder-transparent focus:shadow-[0_15px_20px_-10px_rgba(59,130,246,0.3)]"
+                            className="peer w-full bg-transparent border-b border-gray-800 py-3 text-white focus:outline-none focus:border-platinum-500 transition-all duration-500 font-sans text-base md:text-lg placeholder-transparent focus:shadow-[0_15px_20px_-10px_rgba(59,130,246,0.3)]"
                             placeholder="Telefono"
                             id="telefono"
                         />
-                        <label htmlFor="telefono" className="absolute left-0 -top-4 text-gray-500 text-xs transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-blue-400 peer-focus:text-xs uppercase tracking-wide font-medium">
+                        <label htmlFor="telefono" className="absolute left-0 -top-4 text-gray-500 text-xs transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-platinum-400 peer-focus:text-xs uppercase tracking-wide font-medium">
                             Teléfono / WhatsApp
                         </label>
-                        <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-blue-400 shadow-[0_0_10px_#3b82f6] transition-all duration-500 peer-focus:w-full"></div>
+                        <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-platinum-400 shadow-[0_0_10px_#C5C8CE] transition-all duration-500 peer-focus:w-full"></div>
                     </div>
                 </div>
 
@@ -199,14 +199,14 @@ const Contact: React.FC = () => {
                         <input 
                             type="email" 
                             name="email"
-                            className="peer w-full bg-transparent border-b border-gray-800 py-3 text-white focus:outline-none focus:border-blue-500 transition-all duration-500 font-sans text-base md:text-lg placeholder-transparent focus:shadow-[0_15px_20px_-10px_rgba(59,130,246,0.3)]"
+                            className="peer w-full bg-transparent border-b border-gray-800 py-3 text-white focus:outline-none focus:border-platinum-500 transition-all duration-500 font-sans text-base md:text-lg placeholder-transparent focus:shadow-[0_15px_20px_-10px_rgba(59,130,246,0.3)]"
                             placeholder="Email"
                             id="email"
                         />
-                        <label htmlFor="email" className="absolute left-0 -top-4 text-gray-500 text-xs transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-blue-400 peer-focus:text-xs uppercase tracking-wide font-medium">
+                        <label htmlFor="email" className="absolute left-0 -top-4 text-gray-500 text-xs transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-platinum-400 peer-focus:text-xs uppercase tracking-wide font-medium">
                             Correo Electrónico
                         </label>
-                        <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-blue-400 shadow-[0_0_10px_#3b82f6] transition-all duration-500 peer-focus:w-full"></div>
+                        <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-platinum-400 shadow-[0_0_10px_#C5C8CE] transition-all duration-500 peer-focus:w-full"></div>
                     </div>
 
                     {/* CUSTOM CYBER DROPDOWN */}
@@ -217,32 +217,32 @@ const Contact: React.FC = () => {
                         )}
 
                         <div 
-                            className={`peer w-full bg-transparent border-b py-3 text-base md:text-lg cursor-pointer flex justify-between items-center transition-all duration-500 ${isDropdownOpen ? 'border-blue-500 shadow-[0_15px_20px_-10px_rgba(59,130,246,0.3)]' : 'border-gray-800'}`}
+                            className={`peer w-full bg-transparent border-b py-3 text-base md:text-lg cursor-pointer flex justify-between items-center transition-all duration-500 ${isDropdownOpen ? 'border-platinum-500 shadow-[0_15px_20px_-10px_rgba(59,130,246,0.3)]' : 'border-gray-800'}`}
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                         >
                              <span className={`${selectedInterest ? 'text-white' : 'text-gray-500'} truncate`}>
                                  {selectedInterest || "Seleccionar opción..."}
                              </span>
                              <svg 
-                                className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180 text-blue-400' : ''}`} 
+                                className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180 text-platinum-400' : ''}`} 
                                 fill="none" viewBox="0 0 24 24" stroke="currentColor"
                              >
                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
                              </svg>
                         </div>
                         
-                        <label className={`absolute left-0 -top-4 text-xs uppercase tracking-wide transition-colors ${isDropdownOpen || selectedInterest ? 'text-blue-400' : 'text-gray-400'}`}>
+                        <label className={`absolute left-0 -top-4 text-xs uppercase tracking-wide transition-colors ${isDropdownOpen || selectedInterest ? 'text-platinum-400' : 'text-gray-400'}`}>
                             Área de Interés
                         </label>
                         
                         {/* The Glowing Line */}
-                        <div className={`absolute bottom-0 left-0 h-[1px] bg-blue-400 shadow-[0_0_10px_#3b82f6] transition-all duration-500 ${isDropdownOpen ? 'w-full' : 'w-0'}`}></div>
+                        <div className={`absolute bottom-0 left-0 h-[1px] bg-platinum-400 shadow-[0_0_10px_#C5C8CE] transition-all duration-500 ${isDropdownOpen ? 'w-full' : 'w-0'}`}></div>
 
                         {/* Dropdown Menu */}
-                        <div className={`absolute top-full left-0 w-full mt-2 bg-[#0a0a0a]/95 border border-white/10 rounded-lg shadow-[0_10px_40px_rgba(0,0,0,0.8)] z-50 overflow-hidden transition-all duration-300 origin-top ${isDropdownOpen ? 'opacity-100 scale-y-100 translate-y-0' : 'opacity-0 scale-y-95 -translate-y-2 pointer-events-none'}`}>
+                        <div className={`absolute top-full left-0 w-full mt-2 bg-[#0a0a0a]/95 border border-white/10 rounded-sm shadow-[0_10px_40px_rgba(0,0,0,0.8)] z-50 overflow-hidden transition-all duration-300 origin-top ${isDropdownOpen ? 'opacity-100 scale-y-100 translate-y-0' : 'opacity-0 scale-y-95 -translate-y-2 pointer-events-none'}`}>
                             
                             {/* Decorative Top Line */}
-                            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
+                            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-platinum-500/50 to-transparent"></div>
 
                             <ul className="max-h-64 overflow-y-auto py-2 scrollbar-hide">
                                 {serviceOptions.map((option, index) => (
@@ -252,16 +252,16 @@ const Contact: React.FC = () => {
                                         className="relative group/option px-6 py-3 cursor-pointer transition-all hover:bg-white/5"
                                     >
                                         <div className="flex items-center justify-between relative z-10">
-                                            <span className={`text-sm font-light transition-colors ${selectedInterest === option ? 'text-blue-400 font-medium' : 'text-gray-300 group-hover/option:text-white'}`}>
+                                            <span className={`text-sm font-light transition-colors ${selectedInterest === option ? 'text-platinum-400 font-medium' : 'text-gray-300 group-hover/option:text-white'}`}>
                                                 {option}
                                             </span>
                                             {selectedInterest === option && (
-                                                <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_#3b82f6]"></div>
+                                                <div className="w-2 h-2 rounded-full bg-platinum-500 shadow-[0_0_8px_#C5C8CE]"></div>
                                             )}
                                         </div>
                                         
                                         {/* Hover Left Bar */}
-                                        <div className="absolute left-0 top-0 h-full w-[2px] bg-blue-500 scale-y-0 group-hover/option:scale-y-100 transition-transform duration-300 origin-center"></div>
+                                        <div className="absolute left-0 top-0 h-full w-[2px] bg-platinum-500 scale-y-0 group-hover/option:scale-y-100 transition-transform duration-300 origin-center"></div>
                                     </li>
                                 ))}
                             </ul>
@@ -274,27 +274,27 @@ const Contact: React.FC = () => {
                     <textarea 
                         rows={3} 
                         name="mensaje"
-                        className="peer w-full bg-transparent border-b border-gray-800 py-3 text-white focus:outline-none focus:border-blue-500 transition-all duration-500 font-sans text-base md:text-lg placeholder-transparent resize-none focus:shadow-[0_15px_20px_-10px_rgba(59,130,246,0.3)]"
+                        className="peer w-full bg-transparent border-b border-gray-800 py-3 text-white focus:outline-none focus:border-platinum-500 transition-all duration-500 font-sans text-base md:text-lg placeholder-transparent resize-none focus:shadow-[0_15px_20px_-10px_rgba(59,130,246,0.3)]"
                         placeholder="Mensaje"
                         id="mensaje"
                     ></textarea>
-                    <label htmlFor="mensaje" className="absolute left-0 -top-4 text-gray-500 text-xs transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-blue-400 peer-focus:text-xs uppercase tracking-wide font-medium">
+                    <label htmlFor="mensaje" className="absolute left-0 -top-4 text-gray-500 text-xs transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-platinum-400 peer-focus:text-xs uppercase tracking-wide font-medium">
                         Detalles del Caso (Confidencial)
                     </label>
-                    <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-blue-400 shadow-[0_0_10px_#3b82f6] transition-all duration-500 peer-focus:w-full"></div>
+                    <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-platinum-400 shadow-[0_0_10px_#C5C8CE] transition-all duration-500 peer-focus:w-full"></div>
                 </div>
 
                 {/* Submit Action */}
                 <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6">
                     <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                        <div className="w-2 h-2 rounded-full bg-platinum-500 animate-pulse"></div>
                         <span className="text-xs text-gray-500 font-medium">Respuesta estimada: Menos de 24h</span>
                     </div>
 
                     {/* BUTTON STYLE UPDATED TO MATCH HERO (Rounded, Sheen, Neutral) */}
                     <button 
                         type="submit" 
-                        className="group relative px-12 py-4 w-full md:w-fit overflow-hidden rounded-full bg-neutral-900 border border-neutral-800 transition-all hover:border-gray-500 hover:shadow-[0_0_25px_rgba(255,255,255,0.05)] flex items-center justify-center"
+                        className="group relative px-12 py-4 w-full md:w-fit overflow-hidden rounded-sm bg-neutral-900 border border-neutral-800 transition-all hover:border-gray-500 hover:shadow-[0_0_25px_rgba(255,255,255,0.05)] flex items-center justify-center"
                     >
                          {/* Sheen Effect */}
                          <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[sheen-slide_0.6s_ease-in-out_forwards] z-0 pointer-events-none"></div>
@@ -328,10 +328,10 @@ const Contact: React.FC = () => {
             className="lg:col-span-5 flex flex-col justify-center h-full pt-8 lg:pt-0"
           >
             
-            <div className="relative group p-5 md:p-10 border border-white/10 bg-black/50 rounded-xl transition-all duration-500 hover:border-white/30 hover:shadow-[0_0_50px_rgba(255,255,255,0.1)] overflow-hidden">
+            <div className="relative group p-5 md:p-10 border border-white/10 bg-black/50 rounded-sm transition-all duration-500 hover:border-white/30 hover:shadow-[0_0_50px_rgba(255,255,255,0.1)] overflow-hidden">
                 
                 {/* Neon Background Glow on Hover (Changed Pink to Amber) */}
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-transparent group-hover:from-amber-900/10 group-hover:via-emerald-900/10 group-hover:to-cyan-900/10 transition-all duration-700"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-transparent group-hover:from-platinum-500/10 group-hover:via-platinum-500/10 group-hover:to-platinum-500/10 transition-all duration-700"></div>
                 
                 {/* Tech Scanline Overlay */}
                 <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-0 bg-[length:100%_2px,3px_100%] pointer-events-none opacity-0 group-hover:opacity-30 transition-opacity duration-500"></div>
@@ -361,7 +361,7 @@ const Contact: React.FC = () => {
 
                         {/* Item 2: Teléfono (VERDE EMERALD) */}
                         <div className="flex gap-4 md:gap-6 group/item">
-                            <div className="w-14 h-14 flex items-center justify-center text-gray-500 group-hover/item:text-emerald-400 transition-all duration-300 group-hover/item:drop-shadow-[0_0_8px_rgba(52,211,153,0.8)] shrink-0">
+                            <div className="w-14 h-14 flex items-center justify-center text-gray-500 group-hover/item:text-platinum-400 transition-all duration-300 group-hover/item:drop-shadow-[0_0_8px_rgba(52,211,153,0.8)] shrink-0">
                                 <img 
                                     src={IMAGENES.icons.contact.phone} 
                                     alt="Teléfono" 
@@ -369,14 +369,14 @@ const Contact: React.FC = () => {
                                 />
                             </div>
                             <div>
-                                <p className="text-xs text-gray-500 uppercase tracking-wider mb-2 font-bold group-hover/item:text-emerald-300 transition-colors">Línea Directa</p>
+                                <p className="text-xs text-gray-500 uppercase tracking-wider mb-2 font-bold group-hover/item:text-platinum-300 transition-colors">Línea Directa</p>
                                 <p className="text-white font-sans text-lg md:text-xl font-medium tracking-tight group-hover/item:text-white transition-colors">{IMAGENES.contacto.telefono_visible}</p>
                             </div>
                         </div>
 
                         {/* Item 3: Email (CIAN/CELESTE) */}
                         <div className="flex gap-4 md:gap-6 group/item">
-                            <div className="w-14 h-14 flex items-center justify-center text-gray-500 group-hover/item:text-cyan-400 transition-all duration-300 group-hover/item:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] shrink-0">
+                            <div className="w-14 h-14 flex items-center justify-center text-gray-500 group-hover/item:text-platinum-400 transition-all duration-300 group-hover/item:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] shrink-0">
                                 <img 
                                     src={IMAGENES.icons.contact.email} 
                                     alt="Email" 
@@ -384,7 +384,7 @@ const Contact: React.FC = () => {
                                 />
                             </div>
                             <div>
-                                <p className="text-xs text-gray-500 uppercase tracking-wider mb-2 font-bold group-hover/item:text-cyan-300 transition-colors">Correo Electrónico</p>
+                                <p className="text-xs text-gray-500 uppercase tracking-wider mb-2 font-bold group-hover/item:text-platinum-300 transition-colors">Correo Electrónico</p>
                                 <p className="text-white font-sans text-sm md:text-base text-gray-300 group-hover/item:text-white transition-colors break-all">{IMAGENES.contacto.email}</p>
                             </div>
                         </div>
@@ -392,7 +392,7 @@ const Contact: React.FC = () => {
 
                     {/* Footer clean box info */}
                     <div className="mt-12 pt-6 border-t border-white/5 flex items-center gap-3">
-                        <div className="w-2 h-2 bg-blue-500 rounded-full shadow-[0_0_8px_#3b82f6]"></div>
+                        <div className="w-2 h-2 bg-platinum-500 rounded-full shadow-[0_0_8px_#C5C8CE]"></div>
                         <p className="text-xs text-gray-500 uppercase tracking-widest font-sans">
                             Lunes a Viernes: 9:00 AM - 7:00 PM
                         </p>

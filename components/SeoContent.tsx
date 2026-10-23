@@ -21,9 +21,9 @@ const SeoContent: React.FC = () => {
           <Reveal direction="right" width="100%">
             <a
               href="/abogados-guadalajara/"
-              className="group block h-full p-6 rounded-xl border border-white/10 bg-black/40 hover:border-white/30 transition-all"
+              className="group block h-full p-6 rounded-sm border border-white/10 bg-black/40 hover:border-white/30 transition-all"
             >
-              <p className="text-[11px] uppercase tracking-[0.2em] text-blue-400 mb-2">Guia local</p>
+              <p className="text-[11px] uppercase tracking-[0.2em] text-platinum-400 mb-2">Guia local</p>
               <h3 className="font-serif text-2xl text-white mb-2">Servicios legales en Guadalajara</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
                 Conoce nuestras areas principales y como elegir una estrategia legal para tu caso.
@@ -34,9 +34,9 @@ const SeoContent: React.FC = () => {
           <Reveal direction="left" delay={0.08} width="100%">
             <a
               href="/hermosillo-y-asociados/"
-              className="group block h-full p-6 rounded-xl border border-white/10 bg-black/40 hover:border-white/30 transition-all"
+              className="group block h-full p-6 rounded-sm border border-white/10 bg-black/40 hover:border-white/30 transition-all"
             >
-              <p className="text-[11px] uppercase tracking-[0.2em] text-blue-400 mb-2">Marca del despacho</p>
+              <p className="text-[11px] uppercase tracking-[0.2em] text-platinum-400 mb-2">Marca del despacho</p>
               <h3 className="font-serif text-2xl text-white mb-2">Hermosillo y Asociados</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
                 Informacion del despacho, ubicacion, horario de atencion y canales directos de contacto.
@@ -46,10 +46,10 @@ const SeoContent: React.FC = () => {
         </div>
 
         <Reveal direction="up" delay={0.1} width="100%">
-          <div className="rounded-2xl border border-white/10 bg-black/40 p-6 md:p-8">
+          <div className="rounded-sm border border-white/10 bg-black/40 p-6 md:p-8">
           <h3 className="font-serif text-2xl text-white mb-6">Preguntas frecuentes</h3>
           <div className="space-y-4 text-gray-300">
-            <details className="border border-white/10 rounded-lg p-4">
+            <details className="border border-white/10 rounded-sm p-4">
               <summary className="cursor-pointer font-medium text-white">
                 ¿Qué tipo de asuntos atienden como abogados en Guadalajara?
               </summary>
@@ -59,7 +59,7 @@ const SeoContent: React.FC = () => {
               </p>
             </details>
 
-            <details className="border border-white/10 rounded-lg p-4">
+            <details className="border border-white/10 rounded-sm p-4">
               <summary className="cursor-pointer font-medium text-white">
                 ¿Cómo puedo agendar una consulta con Hermosillo y Asociados?
               </summary>
@@ -69,7 +69,7 @@ const SeoContent: React.FC = () => {
               </p>
             </details>
 
-            <details className="border border-white/10 rounded-lg p-4">
+            <details className="border border-white/10 rounded-sm p-4">
               <summary className="cursor-pointer font-medium text-white">
                 ¿Dónde se ubica el despacho?
               </summary>
@@ -84,7 +84,7 @@ const SeoContent: React.FC = () => {
               href={`https://wa.me/${WHATSAPP_URLS.general}?text=Hola, necesito asesoria legal en Guadalajara.`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-7 py-3 rounded-full border border-white/20 text-white hover:bg-white hover:text-black transition-colors"
+              className="inline-flex items-center gap-3 px-7 py-3 rounded-sm border border-white/20 text-white hover:bg-white hover:text-black transition-colors"
             >
               Solicitar asesoria legal
             </a>
