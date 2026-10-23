@@ -1,7 +1,12 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { IMAGENES } from '../imagenes_url';
 import Reveal from './Reveal';
+
+// Decoraciones con GSAP: se cargan aparte y solo cuando la seccion esta cerca de la pantalla.
+const SectionLight = lazy(() => import('./SectionLight'));
+const SectionFigure = lazy(() => import('./SectionFigure'));
 
 // Lista sincronizada con los títulos de la sección de Servicios
 const serviceOptions = [
@@ -24,6 +29,27 @@ const Contact: React.FC = () => {
   const [selectedInterest, setSelectedInterest] = useState("");
   const [alertMessage, setAlertMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const alertTimerRef = useRef<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [showDecor, setShowDecor] = useState(false);
+
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node || typeof IntersectionObserver === 'undefined') {
+      setShowDecor(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowDecor(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '700px 0px' }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   const handleSelect = (option: string) => {
     setSelectedInterest(option);
@@ -79,7 +105,13 @@ const Contact: React.FC = () => {
 
   return (
     // Se quitó bg-[#050505] para transparencia
-    <section id="contacto" className="py-16 md:py-24 bg-transparent relative overflow-hidden">
+    <section ref={sectionRef} id="contacto" className="py-16 md:py-24 bg-transparent relative overflow-hidden">
+      {showDecor && (
+        <Suspense fallback={null}>
+          <SectionLight side="right" />
+          <SectionFigure variant="contact" className="-right-10 bottom-[-5rem] z-[1] hidden h-[18rem] w-[18rem] opacity-40 lg:block" />
+        </Suspense>
+      )}
       
       {/* ================= BACKGROUND ATMOSPHERE ================= */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -103,8 +135,9 @@ const Contact: React.FC = () => {
          <div className="absolute top-0 right-0 w-[900px] h-[900px] bg-[radial-gradient(circle,rgba(197,200,206,0.14)_0%,transparent_65%)] -translate-y-1/2 translate-x-1/2 lg:animate-[pulse-glow_3s_ease-in-out_infinite] z-10"></div>
       </div>
 
-      {alertMessage && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center px-4">
+      {/* En body: por encima de la barra de navegación, fuera del contexto de la sección */}
+      {alertMessage && createPortal(
+        <div className="fixed inset-0 z-[80] flex items-center justify-center px-4">
           <div
             className="absolute inset-0 bg-black/75"
             onClick={dismissAlert}
@@ -136,7 +169,8 @@ const Contact: React.FC = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
