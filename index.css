@@ -440,3 +440,40 @@
     }
   }
 }
+
+/* ------------------------------------------------------------------
+   Texto animado (SplitText): letras en titulos, palabras en parrafos.
+------------------------------------------------------------------- */
+.st-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.st-unit {
+  display: inline-block;
+  opacity: 0;
+  transform: translate3d(0, 0.6em, 0);
+  transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--st-delay, 0s) + var(--i, 0) * var(--st-step, 24ms));
+}
+
+.st[data-visible] .st-unit {
+  opacity: 1;
+  transform: none;
+}
+
+/* Celular: el mismo efecto, con menos desplazamiento. */
+@media (max-width: 1023px) {
+  .st-unit {
+    transform: translate3d(0, 0.35em, 0);
+    transition-duration: 0.5s, 0.6s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .st-unit {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

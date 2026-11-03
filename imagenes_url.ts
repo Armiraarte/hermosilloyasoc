@@ -55,7 +55,6 @@ export const IMAGENES = {
       mainImage: "/components/media/images/LaJusticia.webp",
       videoBackground: "/media/video/0114.mp4", // VIDEO MOVEMOS A PUBLIC (720p, sin audio)
       videoBackgroundWebm: "/media/video/0114.webm", // misma version en VP9 para navegadores sin H.264
-      videoPoster: "/components/media/images/hero-poster.webp" // Imagen que se ve mientras carga el video (y en celular)
     },
 
     // 3. SECCIÓN QUIÉNES SOMOS (LEGAL)
@@ -86,8 +85,8 @@ export const IMAGENES = {
 
     // 6. EQUIPO LEGAL
     team: {
-      carlos_frente: "/components/media/images/members/img1.webp",
-      carlos_atras: "/components/media/images/members/img1.webp",
+      alfonso_frente: "/components/media/images/members/lic_alfonso.webp",
+      alfonso_atras: "/components/media/images/members/lic_alfonso.webp",
       senen_frente: "/components/media/images/members/lic_senen.webp",
       senen_atras: "/components/media/images/members/lic_senen.webp",
       alejandro_frente: "/components/media/images/members/lic_antonio.webp",

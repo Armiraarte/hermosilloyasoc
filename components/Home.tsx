@@ -8,6 +8,7 @@ import Team from './Team';
 import Contact from './Contact';
 import Facilities from './Facilities';
 import Reveal from './Reveal';
+import SplitText from './SplitText';
 import { IMAGENES } from '../imagenes_url';
 import DeferredSection from './DeferredSection';
 import { Frieze } from './Greek';
@@ -36,15 +37,15 @@ const Home: React.FC = () => {
                 width="100%"
                 className="flex flex-col justify-center relative z-10 max-w-xl text-center lg:text-center mx-auto lg:mx-0 w-full items-center lg:items-center"
               >
-                <h2 className="font-serif text-4xl mb-4 text-white font-bold tracking-tight text-center">
+                <SplitText as="h2" unit="chars" className="font-serif text-4xl mb-4 text-white font-bold tracking-tight text-center">
                   ¿Quiénes somos?
-                </h2>
-                <p className="text-gray-400 text-base leading-relaxed mb-6 font-light text-center">
+                </SplitText>
+                <SplitText as="p" unit="words" delay={0.2} className="text-gray-400 text-base leading-relaxed mb-6 font-light text-center">
                   Somos un despacho con vocación estratégica y humana. 
                   Acompañamos a empresas y personas en decisiones clave, 
                   combinando experiencia en litigio y consultoría con un enfoque 
                   claro: proteger tus intereses.
-                </p>
+                </SplitText>
 
                 <div className="space-y-3 mb-8 w-full max-w-md mx-auto text-left">
                   <div className="flex items-center gap-4 group">

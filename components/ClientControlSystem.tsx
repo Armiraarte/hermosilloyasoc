@@ -1,6 +1,7 @@
 import React from 'react';
 import { DOSSIER_PORTAL_URL } from '../config';
 import Reveal from './Reveal';
+import SplitText from './SplitText';
 
 const BRAND_WORDMARK = '/components/media/images/HA ABOGADOS BLANCO Y NEGRO.png';
 const BRAND_MONOGRAM = '/components/media/images/HA-BWH.png';
@@ -39,7 +40,7 @@ const features = [
 const ClientControlSystem: React.FC = () => {
   return (
     <section id="sistema-control-expedientes" className="relative overflow-hidden bg-black py-20 md:py-24">
-      <div className="relative z-10 mx-auto w-[92%] max-w-[1600px] px-4 sm:px-6">
+      <div className="relative z-10 mx-auto w-full max-w-[1600px] px-3 min-[480px]:w-[92%] min-[480px]:px-4 sm:px-6">
         <Reveal width="100%" className="mb-10 flex justify-center">
           <div className="rounded-sm border border-white/10 bg-black px-5 py-4">
             <img
@@ -50,22 +51,22 @@ const ClientControlSystem: React.FC = () => {
           </div>
         </Reveal>
 
-        <div className="relative overflow-hidden rounded-sm border border-white/10 bg-black p-5 sm:p-8 md:p-12 lg:p-16 shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
-          <div className="grid items-center gap-14 lg:grid-cols-[0.95fr_1.05fr]">
-            <Reveal variant="stagger" width="100%" className="mx-auto flex w-full max-w-2xl flex-col items-center text-center lg:mx-0 lg:items-start lg:text-left">
+        <div className="relative overflow-hidden rounded-sm border border-white/10 bg-black p-4 sm:p-8 md:p-12 lg:p-16 shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
+            <Reveal variant="stagger" width="100%" className="mx-auto flex w-full min-w-0 max-w-2xl flex-col items-center text-center lg:mx-0 lg:items-start lg:text-left">
               <span className="inline-flex items-center rounded-sm border border-white/14 bg-[#050505] px-4 py-2 text-xs font-bold uppercase tracking-[0.3em] text-white">
                 Plataforma legal
               </span>
 
-              <h2 className="mt-7 max-w-[12ch] font-serif text-[2.35rem] font-bold leading-[0.95] text-white sm:text-5xl lg:max-w-none lg:text-6xl">
+              <SplitText as="h2" unit="chars" className="mt-7 max-w-full break-words font-serif text-[clamp(1.5rem,7.6vw,2.35rem)] font-bold leading-[1] text-white sm:text-5xl lg:text-6xl">
                 SISTEMA DE CONTROL
                 <br />
                 DE EXPEDIENTES.
-              </h2>
+              </SplitText>
 
-              <p className="mt-6 max-w-xl text-base leading-relaxed text-[#d8dde2] md:text-lg">
+              <SplitText as="p" unit="words" delay={0.3} className="mt-6 max-w-xl text-base leading-relaxed text-[#d8dde2] md:text-lg">
                 Portal para control de juicios y expedientes con una experiencia sobria, clara y lista para crecer con el despacho.
-              </p>
+              </SplitText>
 
               <div className="mt-8 w-full max-w-xl space-y-3">
                 {features.map((item) => (
@@ -100,14 +101,14 @@ const ClientControlSystem: React.FC = () => {
               </a>
             </Reveal>
 
-            <Reveal variant="curtain" direction="left" delay={0.1} width="100%">
+            <Reveal variant="curtain" direction="left" delay={0.1} width="100%" className="min-w-0">
               <div className="relative mx-auto flex max-w-[520px] items-center justify-center">
-                <div className="relative w-[320px] rounded-[3.4rem] border border-white/18 bg-black p-3 shadow-[0_35px_120px_rgba(0,0,0,0.85)] sm:w-[360px]">
+                <div className="relative w-full max-w-[320px] rounded-[3.4rem] border border-white/18 bg-black p-3 shadow-[0_35px_120px_rgba(0,0,0,0.85)] sm:max-w-[360px]">
                   <div className="rounded-[3rem] border border-black/10 bg-white p-3">
                     <div className="relative overflow-hidden rounded-[2.5rem] bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
                       <div className="mx-auto mt-3 h-1.5 w-20 rounded-full bg-black/10" />
 
-                      <div className="space-y-4 p-5">
+                      <div className="space-y-4 p-4 min-[400px]:p-5">
                         <div className="rounded-[1.5rem] border border-white/8 bg-black px-4 py-4">
                           <img
                             src={BRAND_WORDMARK}
@@ -116,13 +117,13 @@ const ClientControlSystem: React.FC = () => {
                           />
                         </div>
 
-                        <div className="rounded-[1.6rem] border border-white/8 bg-[linear-gradient(135deg,#090909,#171717)] px-5 py-5 text-white shadow-[0_14px_35px_rgba(0,0,0,0.5)]">
-                          <div className="flex items-center justify-between">
-                            <div>
+                        <div className="rounded-[1.6rem] border border-white/8 bg-[linear-gradient(135deg,#090909,#171717)] px-4 py-5 min-[400px]:px-5 text-white shadow-[0_14px_35px_rgba(0,0,0,0.5)]">
+                          <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-3">
+                            <div className="min-w-0">
                               <p className="text-[0.65rem] uppercase tracking-[0.24em] text-white/60">Expediente</p>
                               <p className="mt-1 text-lg font-semibold">EXP-2026-014</p>
                             </div>
-                            <span className="rounded-full border border-white/18 bg-white/6 px-3 py-1 text-[0.65rem] uppercase tracking-[0.2em] text-white/85">
+                            <span className="shrink-0 whitespace-nowrap rounded-full border border-white/18 bg-white/6 px-3 py-1 text-[0.65rem] uppercase tracking-[0.2em] text-white/85">
                               En proceso
                             </span>
                           </div>

@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { IMAGENES } from '../imagenes_url';
 import Reveal from './Reveal';
+import SplitText from './SplitText';
 import { Ornament } from './Greek';
 
 // Utilizamos los datos del archivo de configuración
@@ -125,7 +126,7 @@ const Facilities: React.FC = () => {
                 >
 
                     <div className="mb-12">
-                        <h2 className="font-serif text-4xl md:text-5xl text-white mb-6">Nuestras Instalaciones</h2>
+                        <SplitText as="h2" unit="chars" className="font-serif text-4xl md:text-5xl text-white mb-6">Nuestras Instalaciones</SplitText>
                         <Ornament align="left" className="mb-8" />
                         <p className={`text-gray-300 font-light text-lg leading-relaxed transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
                             {currentFacility.phrase}

@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import Reveal from './Reveal';
+import SplitText from './SplitText';
 import { IMAGENES } from '../imagenes_url';
 import { WHATSAPP_URLS } from '../whatsapp_urls';
 import { Ornament, Emblem, Scales, Gavel, Shield, Quill, Amphora, Scroll } from './Greek';
@@ -459,7 +460,7 @@ const Services: React.FC = () => {
       <div className="relative z-10 max-w-[1400px] mx-auto px-6">
 
         <Reveal variant="stagger" direction="up" width="100%" className="text-center mb-16">
-          <h2 className="font-serif text-3xl md:text-4xl text-white mb-4">Áreas de Especialización</h2>
+          <SplitText as="h2" unit="chars" className="font-serif text-3xl md:text-4xl text-white mb-4">Áreas de Especialización</SplitText>
           <Ornament className="mb-6" />
           <p className="text-gray-400 max-w-2xl mx-auto font-light leading-relaxed text-base md:text-lg">
             Excelencia jurídica aplicada. Soluciones diseñadas para brindar certeza, protección y estrategia en cada aspecto de tu vida y empresa.
@@ -505,21 +506,21 @@ const Services: React.FC = () => {
             </button>
 
             {/* === LEFT COLUMN: HERO IMAGE & BIG TITLE (AS PER IMAGE) === */}
-            <div className="w-full md:w-1/3 relative h-48 md:h-auto bg-neutral-900 overflow-hidden">
+            <div className="relative flex min-h-[13rem] w-full shrink-0 flex-col justify-end overflow-hidden bg-neutral-900 md:h-auto md:w-1/3">
               <img
                 src={selectedService.image}
                 alt={selectedService.title}
                 loading="lazy"
                 decoding="async"
-                className="w-full h-full object-cover opacity-60 grayscale mix-blend-overlay"
+                className="absolute inset-0 h-full w-full object-cover opacity-60 grayscale mix-blend-overlay"
               />
               {/* Decorative Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
 
               {/* Title at Bottom Left with Icon */}
-              <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 pr-6">
-                <div className="w-12 h-1 bg-platinum-500 mb-6 shadow-[0_0_10px_#C5C8CE]"></div>
-                <div className="mb-4 w-12 h-12 rounded-sm bg-white/10 border border-white/20 flex items-center justify-center backdrop-blur-sm">
+              <div className="relative z-10 p-5 pr-16 pt-16 md:absolute md:bottom-12 md:left-12 md:p-0 md:pr-6">
+                <div className="mb-6 hidden h-1 w-12 bg-platinum-500 shadow-[0_0_10px_#C5C8CE] md:block"></div>
+                <div className="mb-3 h-10 w-10 md:mb-4 md:h-12 md:w-12 rounded-sm bg-white/10 border border-white/20 flex items-center justify-center backdrop-blur-sm">
                   <img src={selectedService.icon} alt="Icon" className="w-6 h-6 filter brightness-0 invert" />
                 </div>
                 <h3 className="text-xl md:text-2xl lg:text-3xl font-serif text-white font-bold leading-[0.95] tracking-tight uppercase">

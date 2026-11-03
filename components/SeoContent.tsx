@@ -1,6 +1,7 @@
 import React from 'react';
 import SectionLight from './SectionLight';
 import Reveal from './Reveal';
+import SplitText from './SplitText';
 import { WHATSAPP_URLS } from '../whatsapp_urls';
 
 const SeoContent: React.FC = () => {
@@ -9,14 +10,14 @@ const SeoContent: React.FC = () => {
       <SectionLight side="left" />
       <div className="max-w-6xl mx-auto px-6">
         <Reveal direction="up" width="100%" className="mb-10 text-center">
-          <h2 className="font-serif text-3xl md:text-4xl text-white mb-4">
+          <SplitText as="h2" unit="chars" className="font-serif text-3xl md:text-4xl text-white mb-4">
             Abogados en Guadalajara con enfoque estrategico
-          </h2>
-          <p className="text-gray-300 text-base md:text-lg leading-relaxed max-w-4xl mx-auto">
+          </SplitText>
+          <SplitText as="p" unit="words" delay={0.3} className="text-gray-300 text-base md:text-lg leading-relaxed max-w-4xl mx-auto">
             En Hermosillo y Asociados asesoramos a empresas y particulares en Guadalajara y Jalisco. Atendemos
             asuntos de derecho corporativo, notaria, litigio civil, amparo, laboral, registro de marca y tramites
             administrativos con seguimiento claro y puntual.
-          </p>
+          </SplitText>
         </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">

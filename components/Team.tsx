@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Reveal from '@/components/Reveal';
+import SplitText from './SplitText';
 import { IMAGENES } from '../imagenes_url';
 import { WHATSAPP_URLS } from '../whatsapp_urls';
 import { Column, Ornament } from './Greek';
@@ -77,7 +78,7 @@ const teamMembers: TeamMember[] = [
     description:
       'Con una solida formacion en derecho corporativo y notarial, me especializo en brindar certeza juridica a las operaciones comerciales de nuestros clientes, con enfoque en prevencion de conflictos y estructuracion patrimonial.',
     phone: WHATSAPP_URLS.socios.alfonso,
-    imageFront: IMAGENES.assets.team.carlos_frente,
+    imageFront: IMAGENES.assets.team.alfonso_frente,
   },
   {
     name: 'Lic. Antonio Guzman',
@@ -218,7 +219,7 @@ const Team: React.FC = () => {
     <section id="equipo" className="relative bg-transparent pt-24">
       <div className="mx-auto max-w-7xl px-6">
         <Reveal variant="stagger" direction="up" duration={1.0} width="100%" className="mb-10 text-center">
-          <h2 className="mb-4 font-serif text-4xl text-white md:text-5xl">Nuestro Equipo</h2>
+          <SplitText as="h2" unit="chars" className="mb-4 font-serif text-4xl text-white md:text-5xl">Nuestro Equipo</SplitText>
           <Ornament className="mb-6" />
           <p className="mx-auto max-w-2xl text-sm font-light leading-relaxed text-gray-400 md:text-base">
             Profesionales comprometidos con la excelencia juridica y la etica profesional.

@@ -1,41 +1,30 @@
 ﻿
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Reveal from './Reveal';
+import SplitText from './SplitText';
 import { IMAGENES } from '../imagenes_url';
 import { WHATSAPP_URLS } from '../whatsapp_urls';
 import { Column } from './Greek';
 
 const Hero: React.FC = () => {
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoReady, setVideoReady] = useState(false);
+
+  // El video es el fondo del Hero en todos los dispositivos. Solo se omite si la persona pidio
+  // reducir el movimiento o activo el ahorro de datos.
+  const [allowVideo] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    return !reduceMotion && !connection?.saveData;
+  });
 
   useEffect(() => {
-    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const connection = (navigator as Navigator & {
-      connection?: { saveData?: boolean; effectiveType?: string };
-    }).connection;
-    const isSlowConnection = Boolean(connection?.saveData) || /^(slow-2g|2g|3g)$/.test(connection?.effectiveType ?? '');
-
-    if (!isDesktop || prefersReducedMotion || isSlowConnection) {
-      return;
-    }
-
-    // El video es decorativo: se pide hasta que la pagina termino de cargar para no competir con el contenido.
-    let timer: number | undefined;
-    const scheduleVideo = () => {
-      timer = window.setTimeout(() => setShouldLoadVideo(true), 1200);
-    };
-
-    if (document.readyState === 'complete') {
-      scheduleVideo();
-    } else {
-      window.addEventListener('load', scheduleVideo, { once: true });
-    }
-
-    return () => {
-      window.removeEventListener('load', scheduleVideo);
-      window.clearTimeout(timer);
-    };
+    const video = videoRef.current;
+    if (!video) return;
+    // Algunos navegadores moviles solo permiten el autoplay si "muted" se fija como propiedad.
+    video.muted = true;
+    video.play().catch(() => undefined);
   }, []);
 
   return (
@@ -43,29 +32,23 @@ const Hero: React.FC = () => {
       
       {/* ================= BACKGROUND VIDEO LAYER ================= */}
       <div className="absolute inset-0 z-0 w-full h-full overflow-hidden">
-          {shouldLoadVideo ? (
-            <video 
-              autoPlay 
-              loop 
-              muted 
-              playsInline 
-              preload="metadata"
-              poster={IMAGENES.assets.hero.videoPoster}
-              aria-label="Video de fondo de Hermosillo y Asociados"
-              className="w-full h-full object-cover opacity-40"
-            >
-               <source src={IMAGENES.assets.hero.videoBackgroundWebm} type="video/webm" />
-               <source src={IMAGENES.assets.hero.videoBackground} type="video/mp4" />
-            </video>
-          ) : (
-            <img
-              src={IMAGENES.assets.hero.videoPoster}
-              alt=""
+          {allowVideo && (
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              disablePictureInPicture
               aria-hidden="true"
-              fetchPriority="high"
-              decoding="async"
-              className="w-full h-full object-cover opacity-40"
-            />
+              onPlaying={() => setVideoReady(true)}
+              className={`h-full w-full object-cover transition-opacity duration-1000 ${videoReady ? 'opacity-40' : 'opacity-0'}`}
+            >
+              {/* mp4 primero: lo reproducen Safari/iOS y Chrome; el WebM cubre navegadores sin H.264 */}
+              <source src={IMAGENES.assets.hero.videoBackground} type="video/mp4" />
+              <source src={IMAGENES.assets.hero.videoBackgroundWebm} type="video/webm" />
+            </video>
           )}
 
           {/* Overlay Gradient: Negro puro a transparente para legibilidad */}
@@ -79,10 +62,10 @@ const Hero: React.FC = () => {
         <div className="flex flex-col justify-center items-start text-left">
           
           <Reveal direction="down" duration={1.0} delay={0.1}>
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl xl:text-[4.25rem] leading-[1.05] text-white tracking-[0.04em] uppercase mb-10">
+            <SplitText as="h1" unit="chars" delay={0.2} className="font-serif text-4xl sm:text-5xl md:text-6xl xl:text-[4.25rem] leading-[1.05] text-white tracking-[0.04em] uppercase mb-10">
               Hermosillo
               <span className="mt-3 block text-xl sm:text-2xl md:text-3xl font-normal tracking-[0.32em] text-gray-400">y Asociados.</span>
-            </h1>
+            </SplitText>
           </Reveal>
           
           <div className="mb-12 max-w-lg">
@@ -90,14 +73,14 @@ const Hero: React.FC = () => {
                 <div className="flex flex-col gap-5 pl-1">
                     <div className="flex items-center gap-4">
                         <div className="h-[2px] w-12 bg-platinum-600 shadow-[0_0_15px_#C5C8CE]"></div>
-                        <h2 className="text-lg md:text-xl text-white font-sans font-medium uppercase tracking-[0.25em] drop-shadow-lg">
+                        <SplitText as="h2" unit="chars" delay={0.5} className="text-lg md:text-xl text-white font-sans font-medium uppercase tracking-[0.25em] drop-shadow-lg">
                           Abogados en Guadalajara
-                        </h2>
+                        </SplitText>
                     </div>
                     <div className="pl-[4rem] border-l border-white/20">
-                        <p className="text-gray-300 text-base md:text-lg font-light tracking-wide leading-relaxed pl-6">
+                        <SplitText as="p" unit="words" delay={0.9} className="text-gray-300 text-base md:text-lg font-light tracking-wide leading-relaxed pl-6">
                           Defensa estratégica y certeza legal para quienes exigen excelencia.
-                        </p>
+                        </SplitText>
                     </div>
                 </div>
             </Reveal>

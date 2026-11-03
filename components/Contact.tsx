@@ -3,6 +3,7 @@ import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { IMAGENES } from '../imagenes_url';
 import Reveal from './Reveal';
+import SplitText from './SplitText';
 
 // Decoraciones con GSAP: se cargan aparte y solo cuando la seccion esta cerca de la pantalla.
 const SectionLight = lazy(() => import('./SectionLight'));
@@ -185,12 +186,12 @@ const Contact: React.FC = () => {
                   <div className="h-[2px] w-8 bg-platinum-500 shadow-[0_0_10px_#C5C8CE]"></div>
                   <span className="text-platinum-400 font-sans font-bold text-xs tracking-[0.2em] uppercase">Inicia tu solución</span>
                </div>
-               <h2 className="font-serif text-3xl md:text-5xl text-white mb-6 leading-tight">
+               <SplitText as="h2" unit="chars" className="font-serif text-3xl md:text-5xl text-white mb-6 leading-tight">
                  Consulta <span className="text-gray-400">Estratégica</span>
-               </h2>
-               <p className="text-gray-400 font-light text-sm md:text-base leading-relaxed max-w-xl">
+               </SplitText>
+               <SplitText as="p" unit="words" delay={0.3} className="text-gray-400 font-light text-sm md:text-base leading-relaxed max-w-xl">
                  Cada minuto cuenta en la estrategia legal. Envíanos los detalles de tu caso y nuestro equipo analizará la viabilidad jurídica de inmediato.
-               </p>
+               </SplitText>
             </div>
 
             <form className="space-y-8 md:space-y-10" onSubmit={handleSubmit}>
