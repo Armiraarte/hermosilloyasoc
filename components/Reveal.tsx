@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface RevealProps {
   children: React.ReactNode;
@@ -9,74 +9,84 @@ interface RevealProps {
   duration?: number; // in seconds
   className?: string;
   threshold?: number; // 0 to 1
-  blur?: boolean; // Enable blur effect
+  blur?: boolean; // Enable blur effect (solo escritorio, ver index.css)
+  // fade: aparece y sube. curtain: la imagen se descubre como una cortina. stagger: los hijos entran uno tras otro.
+  variant?: 'fade' | 'curtain' | 'stagger';
 }
 
-const Reveal: React.FC<RevealProps> = ({ 
-  children, 
-  width = "fit-content", 
-  direction = "up", 
-  delay = 0, 
-  duration = 0.8,
-  className = "",
-  threshold = 0.2,
-  blur = true
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+const OFFSETS: Record<NonNullable<RevealProps['direction']>, [string, string]> = {
+  up: ['0px', '40px'],
+  down: ['0px', '-40px'],
+  left: ['40px', '0px'],
+  right: ['-40px', '0px'],
+  none: ['0px', '0px'],
+};
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          // Once visible, we can disconnect if we only want it to animate once
-          if (ref.current) observer.unobserve(ref.current);
-        }
+// Un solo IntersectionObserver por umbral para toda la pagina (antes era uno por elemento).
+const observers = new Map<number, IntersectionObserver>();
+
+const getObserver = (threshold: number): IntersectionObserver => {
+  let observer = observers.get(threshold);
+  if (!observer) {
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Se marca directo en el DOM: evita un re-render de React por cada elemento revelado.
+            (entry.target as HTMLElement).dataset.visible = 'true';
+            observer!.unobserve(entry.target);
+          }
+        });
       },
       { threshold }
     );
+    observers.set(threshold, observer);
+  }
+  return observer;
+};
 
-    if (ref.current) {
-      observer.observe(ref.current);
+const Reveal: React.FC<RevealProps> = ({
+  children,
+  width = "fit-content",
+  direction = "up",
+  delay = 0,
+  duration = 0.8,
+  className = "",
+  threshold = 0.2,
+  blur = true,
+  variant = 'fade'
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    if (typeof IntersectionObserver === 'undefined') {
+      node.dataset.visible = 'true';
+      return;
     }
 
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
+    const observer = getObserver(threshold);
+    observer.observe(node);
+    return () => observer.unobserve(node);
   }, [threshold]);
 
-  // Calculate transform based on direction
-  const getTransform = () => {
-    if (!isVisible) {
-      switch (direction) {
-        case "up": return "translate3d(0, 40px, 0)";
-        case "down": return "translate3d(0, -40px, 0)";
-        case "left": return "translate3d(40px, 0, 0)";
-        case "right": return "translate3d(-40px, 0, 0)";
-        case "none": return "translate3d(0, 0, 0)";
-        default: return "translate3d(0, 40px, 0)";
-      }
-    }
-    return "translate3d(0, 0, 0)";
-  };
-
-  const transitionProperty = blur ? "opacity, transform, filter" : "opacity, transform";
-  const style: React.CSSProperties = {
-    opacity: isVisible ? 1 : 0,
-    transform: getTransform(),
-    filter: blur ? (isVisible ? "blur(0px)" : "blur(4px)") : "none",
-    transitionProperty,
-    transitionDuration: `${duration}s`,
-    transitionTimingFunction: "cubic-bezier(0.17, 0.55, 0.55, 1)",
-    transitionDelay: `${delay}s`,
-    willChange: transitionProperty,
-  };
+  const [x, y] = OFFSETS[direction] ?? OFFSETS.up;
+  const style = {
+    width,
+    '--rv-x': x,
+    '--rv-y': y,
+    '--rv-dur': `${duration}s`,
+    '--rv-delay': `${delay}s`,
+  } as React.CSSProperties;
 
   return (
-    <div ref={ref} style={{ width, ...style }} className={className}>
+    <div
+      ref={ref}
+      style={style}
+      className={`reveal${variant === 'fade' && blur ? ' reveal-blur' : ''}${variant !== 'fade' ? ` reveal-${variant}` : ''}${className ? ` ${className}` : ''}`}
+    >
       {children}
     </div>
   );

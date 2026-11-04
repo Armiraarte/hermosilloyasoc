@@ -1,8 +1,10 @@
 
 import React, { useState } from 'react';
 import Reveal from './Reveal';
+import SplitText from './SplitText';
 import { IMAGENES } from '../imagenes_url';
 import { WHATSAPP_URLS } from '../whatsapp_urls';
+import { Ornament, Emblem, Scales, Gavel, Shield, Quill, Amphora, Scroll } from './Greek';
 
 // --- DATA STRUCTURE ---
 interface SubService {
@@ -316,89 +318,153 @@ const allServices: ServiceData[] = [
   }
 ];
 
-const serviceRevealDirections = [
-  "right",
-  "left",
-  "right",
-  "left",
-  "right",
-  "left",
-  "right",
-  "up",
-  "left",
-  "right",
-  "left"
-] as const;
+const ServiceCard: React.FC<{
+  service: ServiceData;
+  glyphIndex: number;
+  onSelect: (service: ServiceData) => void;
+}> = React.memo(({ service, glyphIndex, onSelect }) => {
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={() => onSelect(service)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSelect(service);
+        }
+      }}
+      className="group temple relative flex h-full min-h-[400px] w-full cursor-pointer flex-col transition-transform duration-500 hover:-translate-y-1 focus-visible:outline focus-visible:outline-1 focus-visible:outline-platinum-400"
+    >
+      {/* Frontón */}
+      <div className="temple-pediment relative h-14 shrink-0 text-platinum-500/70 transition-colors duration-500 group-hover:text-platinum-200">
+        <svg
+          viewBox="0 0 600 56"
+          preserveAspectRatio="none"
+          className="greek-svg absolute inset-0 h-full w-full"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+          aria-hidden="true"
+        >
+          <path d="M0 55L300 3L600 55Z" />
+          <path d="M36 55L300 14L564 55" strokeOpacity="0.4" />
+        </svg>
+      </div>
+      <span
+        className="temple-emblem absolute top-[20px] block h-[26px] w-[26px] text-platinum-300 transition-colors duration-500 group-hover:text-white"
+        style={{ left: 'calc(50% - 13px)' }}
+        aria-hidden="true"
+      >
+        <Emblem index={glyphIndex} className="h-full w-full" />
+      </span>
+
+      {/* Arquitrabe con dentellones */}
+      <div className="temple-architrave h-4 shrink-0 border-y border-platinum-500/40 bg-platinum-500/[0.04]" aria-hidden="true"></div>
+
+      {/* Cella entre dos columnas */}
+      <div className="relative flex min-h-0 flex-1">
+        <span className="greek-col temple-col" aria-hidden="true"></span>
+
+        <div className="relative flex-1 overflow-hidden bg-[#050505]">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <img
+              src={service.image}
+              alt={service.title}
+              loading="lazy"
+              decoding="async"
+              fetchPriority="low"
+              className="h-full w-full object-cover opacity-40 grayscale transition-transform duration-[1.5s] group-hover:scale-110 group-hover:opacity-60"
+            />
+            {/* Dark Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-80"></div>
+
+            {/* Scanline Effect (Subtle) */}
+            <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] opacity-0 transition-opacity duration-500 group-hover:opacity-20"></div>
+          </div>
+
+          {/* Content Container */}
+          <div className="absolute inset-0 z-20 flex flex-col justify-end p-6 md:p-8">
+            {/* Text Content */}
+            <div className="translate-y-2 transform transition-transform duration-500 group-hover:translate-y-0">
+              <div className="mb-3 flex items-center gap-3">
+                <div className="h-[1px] w-8 bg-platinum-500 shadow-[0_0_8px_#C5C8CE] transition-all duration-500 group-hover:w-12"></div>
+                <span className="font-mono text-[10px] uppercase tracking-widest text-platinum-400 opacity-0 transition-opacity delay-100 duration-500 group-hover:opacity-100">Servicio Legal</span>
+              </div>
+
+              <h3 className="mb-3 font-serif text-lg font-bold uppercase leading-tight text-white drop-shadow-md transition-colors group-hover:text-white md:text-xl">
+                {service.title}
+              </h3>
+
+              <p className="line-clamp-3 border-l border-white/10 pl-4 text-[11px] font-light leading-relaxed text-gray-400 transition-colors group-hover:text-gray-300 md:text-xs">
+                {service.description}
+              </p>
+            </div>
+
+            {/* Hover "Ver Más" Indicator */}
+            <div className="mt-6 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white opacity-0 transition-all delay-200 duration-500 group-hover:opacity-100">
+              Ver Detalles
+              <svg className="h-4 w-4 text-platinum-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <span className="greek-col temple-col" aria-hidden="true"></span>
+      </div>
+
+      {/* Estilobato */}
+      <div className="greek-steps" aria-hidden="true">
+        <i></i>
+        <i></i>
+        <i></i>
+      </div>
+    </div>
+  );
+});
+
+// Objetos de abogado que aparecen y flotan alrededor del titulo (solo escritorio).
+const AMBIENT_OBJECTS: { Glyph: React.FC<{ className?: string }>; style: React.CSSProperties }[] = [
+  { Glyph: Gavel, style: { left: '6%', top: 56, width: 150, '--r': '-14deg', '--d': '0.1s', '--o': 0.24 } as React.CSSProperties },
+  { Glyph: Quill, style: { left: '19%', top: 196, width: 88, '--r': '12deg', '--d': '0.5s', '--o': 0.18 } as React.CSSProperties },
+  { Glyph: Amphora, style: { left: '29%', top: 30, width: 66, '--r': '-6deg', '--d': '0.9s', '--o': 0.14 } as React.CSSProperties },
+  { Glyph: Scales, style: { right: '7%', top: 44, width: 172, '--r': '8deg', '--d': '0.3s', '--o': 0.24 } as React.CSSProperties },
+  { Glyph: Shield, style: { right: '20%', top: 200, width: 92, '--r': '-8deg', '--d': '0.7s', '--o': 0.17 } as React.CSSProperties },
+  { Glyph: Scroll, style: { right: '30%', top: 28, width: 64, '--r': '10deg', '--d': '1.1s', '--o': 0.14 } as React.CSSProperties },
+];
+
+const AmbientObjects: React.FC = () => (
+  <Reveal
+    direction="none"
+    width="100%"
+    threshold={0.1}
+    blur={false}
+    className="pointer-events-none absolute inset-x-0 top-0 z-0 hidden h-[420px] lg:block"
+  >
+    {AMBIENT_OBJECTS.map(({ Glyph, style }, i) => (
+      <span key={i} className="ambient-object block text-platinum-300" style={style} aria-hidden="true">
+        <Glyph className="h-auto w-full" />
+      </span>
+    ))}
+  </Reveal>
+);
 
 const Services: React.FC = () => {
   const [selectedService, setSelectedService] = useState<ServiceData | null>(null);
 
-  const ServiceCard: React.FC<{ service: ServiceData }> = ({ service }) => {
-    return (
-      <div
-        onClick={() => setSelectedService(service)}
-        className="group relative h-full min-h-[340px] w-full rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-[#050505] transition-all duration-500 hover:border-white/30 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-1"
-      >
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <img
-            src={service.image}
-            alt={service.title}
-            loading="lazy"
-            decoding="async"
-            fetchPriority="low"
-            className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110 grayscale opacity-40 group-hover:opacity-60"
-          />
-          {/* Dark Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent opacity-90 group-hover:opacity-80 transition-opacity duration-500"></div>
-
-          {/* Scanline Effect (Subtle) */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%] pointer-events-none opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
-        </div>
-
-        {/* Content Container */}
-        <div className="absolute inset-0 p-8 flex flex-col justify-end z-20">
-
-          {/* Text Content */}
-          <div className="transform transition-transform duration-500 translate-y-2 group-hover:translate-y-0">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-8 h-[1px] bg-blue-500 group-hover:w-12 transition-all duration-500 shadow-[0_0_8px_#3b82f6]"></div>
-              <span className="text-[10px] uppercase tracking-widest text-blue-400 font-mono opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Servicio Legal</span>
-            </div>
-
-            <h3 className="text-lg md:text-xl font-serif text-white font-bold leading-tight mb-3 drop-shadow-md group-hover:text-white transition-colors uppercase">
-              {service.title}
-            </h3>
-
-            <p className="text-gray-400 text-[11px] md:text-xs font-light leading-relaxed line-clamp-3 group-hover:text-gray-300 transition-colors border-l border-white/10 pl-4">
-              {service.description}
-            </p>
-          </div>
-
-          {/* Hover "Ver Más" Indicator */}
-          <div className="mt-6 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">
-            Ver Detalles
-            <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <section id="servicios" className="py-24 bg-transparent relative border-t border-white/5">
-      <div className="max-w-[1400px] mx-auto px-6">
+      <AmbientObjects />
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6">
 
-        <Reveal direction="up" width="100%">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-3xl md:text-4xl text-white mb-4">Áreas de Especialización</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent mx-auto mb-6"></div>
-            <p className="text-gray-400 max-w-2xl mx-auto font-light leading-relaxed text-base md:text-lg">
-              Excelencia jurídica aplicada. Soluciones diseñadas para brindar certeza, protección y estrategia en cada aspecto de tu vida y empresa.
-            </p>
-          </div>
+        <Reveal variant="stagger" direction="up" width="100%" className="text-center mb-16">
+          <SplitText as="h2" unit="chars" className="font-serif text-3xl md:text-4xl text-white mb-4">Áreas de Especialización</SplitText>
+          <Ornament className="mb-6" />
+          <p className="text-gray-400 max-w-2xl mx-auto font-light leading-relaxed text-base md:text-lg">
+            Excelencia jurídica aplicada. Soluciones diseñadas para brindar certeza, protección y estrategia en cada aspecto de tu vida y empresa.
+          </p>
         </Reveal>
 
         {/* --- REORGANIZED BENTO GRID --- */}
@@ -407,12 +473,13 @@ const Services: React.FC = () => {
             <Reveal
               key={service.id}
               width="100%"
-              direction={serviceRevealDirections[index] ?? "up"}
-              delay={(index % 3) * 0.08}
+              direction="up"
+              delay={(index % 3) * 0.12}
               blur={false}
+              threshold={0.12}
               className={`h-full ${service.className || 'md:col-span-1'}`}
             >
-              <ServiceCard service={service} />
+              <ServiceCard service={service} glyphIndex={index} onSelect={setSelectedService} />
             </Reveal>
           ))}
         </div>
@@ -423,10 +490,10 @@ const Services: React.FC = () => {
       {selectedService && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-6">
           {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/95 backdrop-blur-md" onClick={() => setSelectedService(null)}></div>
+          <div className="absolute inset-0 bg-black/95" onClick={() => setSelectedService(null)}></div>
 
           {/* MODAL CONTAINER */}
-          <div className="relative bg-[#080808] border border-white/10 w-full max-w-6xl max-h-[95vh] overflow-hidden rounded-3xl shadow-2xl flex flex-col md:flex-row animate-[float_0.3s_ease-out]">
+          <div className="relative bg-[#080808] border border-white/10 w-full max-w-6xl max-h-[95vh] overflow-hidden rounded-sm shadow-2xl flex flex-col md:flex-row animate-[float_0.3s_ease-out]">
 
             {/* Close Button */}
             <button
@@ -439,21 +506,21 @@ const Services: React.FC = () => {
             </button>
 
             {/* === LEFT COLUMN: HERO IMAGE & BIG TITLE (AS PER IMAGE) === */}
-            <div className="w-full md:w-1/3 relative h-48 md:h-auto bg-neutral-900 overflow-hidden">
+            <div className="relative flex min-h-[13rem] w-full shrink-0 flex-col justify-end overflow-hidden bg-neutral-900 md:h-auto md:w-1/3">
               <img
                 src={selectedService.image}
                 alt={selectedService.title}
                 loading="lazy"
                 decoding="async"
-                className="w-full h-full object-cover opacity-60 grayscale mix-blend-overlay"
+                className="absolute inset-0 h-full w-full object-cover opacity-60 grayscale mix-blend-overlay"
               />
               {/* Decorative Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
 
               {/* Title at Bottom Left with Icon */}
-              <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 pr-6">
-                <div className="w-12 h-1 bg-blue-500 mb-6 shadow-[0_0_10px_#3b82f6]"></div>
-                <div className="mb-4 w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center backdrop-blur-sm">
+              <div className="relative z-10 p-5 pr-16 pt-16 md:absolute md:bottom-12 md:left-12 md:p-0 md:pr-6">
+                <div className="mb-6 hidden h-1 w-12 bg-platinum-500 shadow-[0_0_10px_#C5C8CE] md:block"></div>
+                <div className="mb-3 h-10 w-10 md:mb-4 md:h-12 md:w-12 rounded-sm bg-white/10 border border-white/20 flex items-center justify-center backdrop-blur-sm">
                   <img src={selectedService.icon} alt="Icon" className="w-6 h-6 filter brightness-0 invert" />
                 </div>
                 <h3 className="text-xl md:text-2xl lg:text-3xl font-serif text-white font-bold leading-[0.95] tracking-tight uppercase">
@@ -468,12 +535,12 @@ const Services: React.FC = () => {
               {/* HEADER SECTION */}
               <div className="mb-10">
                 {/* BADGE DESTACADOS (AZUL CON CORONA AMARILLA/DORADA BRILLANTE) */}
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-900/30 border border-blue-500/50 rounded mb-4 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-platinum-900/30 border border-platinum-500/50 rounded mb-4 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
                   {/* Crown Icon (Yellow/Amber - Glowing) */}
-                  <svg className="w-4 h-4 text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,1)]" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-platinum-400 drop-shadow-[0_0_8px_rgba(197,200,206,1)]" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M5 16L3 5L8.5 10L12 4L15.5 10L21 5L19 16H5ZM19 19C19 19.6 18.6 20 18 20H6C5.4 20 5 19.6 5 19V18H19V19Z" />
                   </svg>
-                  <span className="text-[10px] font-bold text-blue-200 uppercase tracking-widest text-shadow-blue">Destacados</span>
+                  <span className="text-[10px] font-bold text-platinum-200 uppercase tracking-widest text-shadow-blue">Destacados</span>
                 </div>
                 <p className="text-gray-300 text-sm md:text-base leading-relaxed font-light border-l-2 border-white/10 pl-4">
                   {selectedService.fullDescription || selectedService.description}
@@ -484,10 +551,10 @@ const Services: React.FC = () => {
               {selectedService.subServices && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                   {selectedService.subServices.map((sub, idx) => (
-                    <div key={idx} className="group/card bg-[#111] p-6 md:p-8 rounded-xl border border-white/5 transition-all duration-500 flex flex-col h-full hover:border-gray-300/40 hover:shadow-[0_0_30px_rgba(226,232,240,0.15)] hover:bg-[#161616]">
+                    <div key={idx} className="group/card bg-[#111] p-6 md:p-8 rounded-sm border border-white/5 transition-all duration-500 flex flex-col h-full hover:border-gray-300/40 hover:shadow-[0_0_30px_rgba(226,232,240,0.15)] hover:bg-[#161616]">
 
                       <div className="flex items-start gap-4 mb-4">
-                        <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center shrink-0 border border-white/5">
+                        <div className="w-8 h-8 rounded-sm bg-white/5 flex items-center justify-center shrink-0 border border-white/5">
                           <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                           </svg>
@@ -504,7 +571,7 @@ const Services: React.FC = () => {
                       <ul className="space-y-2 mt-auto border-t border-white/5 pt-4">
                         {sub.items.map((item, i) => (
                           <li key={i} className="flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0 opacity-70 group-hover/card:bg-blue-400"></span>
+                            <span className="w-1.5 h-1.5 rounded-full bg-platinum-500 shrink-0 opacity-70 group-hover/card:bg-platinum-400"></span>
                             <span className="text-xs text-gray-300 font-light leading-snug group-hover/card:text-gray-200">
                               {item}
                             </span>

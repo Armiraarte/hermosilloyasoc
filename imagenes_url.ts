@@ -52,20 +52,19 @@ export const IMAGENES = {
 
     // 2. SECCIÓN INICIO (HERO LEGAL)
     hero: {
-      mainImage: "/components/media/images/LaJusticia.png",
-      videoBackground: "/media/video/0114.mp4", // VIDEO MOVEMOS A PUBLIC
-      videoBackgroundWebm: "/media/video/0114.webm",
-      videoPoster: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2070&auto=format&fit=crop" // Imagen que se ve mientras carga el video
+      mainImage: "/components/media/images/LaJusticia.webp",
+      videoBackground: "/media/video/0114.mp4", // VIDEO MOVEMOS A PUBLIC (720p, sin audio)
+      videoBackgroundWebm: "/media/video/0114.webm", // misma version en VP9 para navegadores sin H.264
     },
 
     // 3. SECCIÓN QUIÉNES SOMOS (LEGAL)
     about: {
-      mainImage: "/components/media/images/FOTOHERMOSILLO2.png"
+      mainImage: "/components/media/images/FOTOHERMOSILLO2.webp"
     },
 
     // 4. FONDOS GENERALES
     contactSection: {
-      backgroundImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=50&w=1000&auto=format&fit=crop"
+      backgroundImage: "/components/media/images/contact-bg.webp"
     },
 
     // 5. SERVICIOS LEGALES
@@ -86,24 +85,21 @@ export const IMAGENES = {
 
     // 6. EQUIPO LEGAL
     team: {
-      carlos_frente: "/components/media/images/members/img1.webp",
-      carlos_atras: "/components/media/images/members/img1.webp",
+      alfonso_frente: "/components/media/images/members/lic_alfonso.webp",
+      alfonso_atras: "/components/media/images/members/lic_alfonso.webp",
       senen_frente: "/components/media/images/members/lic_senen.webp",
       senen_atras: "/components/media/images/members/lic_senen.webp",
       alejandro_frente: "/components/media/images/members/lic_antonio.webp",
       alejandro_atras: "/components/media/images/members/lic_antonio.webp",
       jose_luis_frente: "/components/media/images/members/lic_joseluis.webp",
       jose_luis_atras: "/components/media/images/members/lic_joseluis.webp",
-      ximena_frente: "/components/media/images/members/lic_ximena.png",
-      ximena_atras: "/components/media/images/members/lic_ximena.png",
-      yanci_frente: "/components/media/images/members/lic_yanci.png",
-      yanci_atras: "/components/media/images/members/lic_yanci.png",
-      // Reemplaza estas rutas cuando subas la fotografia de Jesus Godinez
-      jesus_frente: "/components/media/images/members/lic_jesus.jpeg",
-      jesus_atras: "/components/media/images/members/lic_jesus.jpeg",
-      // Rutas listas para las nuevas tarjetas de derecho inmobiliario
-      sarah_frente: "/components/media/images/members/lic_sarah.jpg",
-      sarah_atras: "/components/media/images/members/lic_sarah.jpg",
+      ximena_frente: "/components/media/images/members/lic_ximena.webp",
+      ximena_atras: "/components/media/images/members/lic_ximena.webp",
+      yanci_frente: "/components/media/images/members/lic_yanci.webp",
+      yanci_atras: "/components/media/images/members/lic_yanci.webp",
+      // Sabrina Trujillo: sube la fotografia con este nombre (retrato vertical, .webp ~1080x1350)
+      sabrina_frente: "/components/media/images/members/lic_sabrina.webp",
+      sabrina_atras: "/components/media/images/members/lic_sabrina.webp",
       fabricio_frente: "/components/media/images/members/lic_fabricio.jpg",
       fabricio_atras: "/components/media/images/members/lic_fabricio.jpg"
     },
@@ -114,7 +110,7 @@ export const IMAGENES = {
       { id: 2, title: "Sala de Juntas", phrase: "Estrategia y Decisión.", image: "/components/media/instalaciones/juntas.webp" },
       { id: 3, title: "Oficinas", phrase: "Privacidad Absoluta.", image: "/components/media/instalaciones/4.jpeg" },
       { id: 4, title: "Sala de Espera", phrase: "Confort y Serenidad.", image: "/components/media/instalaciones/espera.webp" },
-      { id: 5, title: "Edificio", phrase: "Infraestructura de vanguardia.", image: "/components/media/instalaciones/edificio.jpg" }
+      { id: 5, title: "Edificio", phrase: "Infraestructura de vanguardia.", image: "/components/media/instalaciones/edificio.webp" }
     ]
   }
 };

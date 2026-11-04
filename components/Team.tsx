@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Reveal from '@/components/Reveal';
+import SplitText from './SplitText';
 import { IMAGENES } from '../imagenes_url';
 import { WHATSAPP_URLS } from '../whatsapp_urls';
+import { Column, Ornament } from './Greek';
 
 interface TeamMember {
   name: string;
@@ -11,9 +13,9 @@ interface TeamMember {
   phone: string;
   showWhatsapp?: boolean;
   imageFront: string;
-  imageBack: string;
 }
 
+// El orden de este arreglo es el orden en que aparecen al hacer scroll.
 const teamMembers: TeamMember[] = [
   {
     name: 'Lic. Senen Hermosillo',
@@ -23,27 +25,6 @@ const teamMembers: TeamMember[] = [
       'Mi trayectoria se ha forjado a traves de anos de experiencia en distintas ramas del derecho, con un enfoque en brindar soluciones practicas, innovadoras y de alto impacto. La base de mi ejercicio profesional es la confianza y la transparencia.',
     phone: WHATSAPP_URLS.socios.senen,
     imageFront: IMAGENES.assets.team.senen_frente,
-    imageBack: IMAGENES.assets.team.senen_atras,
-  },
-  {
-    name: 'Lic. Alfonso Gonzalez',
-    role: 'Lic. en Derecho',
-    tagline: 'Estrategia corporativa y vision de negocios.',
-    description:
-      'Con una solida formacion en derecho corporativo y notarial, me especializo en brindar certeza juridica a las operaciones comerciales de nuestros clientes, con enfoque en prevencion de conflictos y estructuracion patrimonial.',
-    phone: WHATSAPP_URLS.socios.alfonso,
-    imageFront: IMAGENES.assets.team.carlos_frente,
-    imageBack: IMAGENES.assets.team.carlos_atras,
-  },
-  {
-    name: 'Lic. Antonio Guzman',
-    role: 'Lic. en Derecho',
-    tagline: 'Especialista y apasionado en materia aduanal.',
-    description:
-      'Experto en litigio civil y mercantil, mi practica se distingue por el analisis minucioso y la argumentacion solida. Cada controversia requiere una estrategia unica para proteger los intereses de nuestros representados con firmeza y etica.',
-    phone: WHATSAPP_URLS.socios.antonio,
-    imageFront: IMAGENES.assets.team.alejandro_frente,
-    imageBack: IMAGENES.assets.team.alejandro_atras,
   },
   {
     name: 'Lic. Jose Luis Gutierrez',
@@ -53,17 +34,6 @@ const teamMembers: TeamMember[] = [
       'Experto en la gestion de relaciones obrero-patronales y litigio laboral. Mi enfoque se centra en el blindaje preventivo de las empresas y en la resolucion eficiente de controversias, garantizando seguridad juridica y estabilidad operativa.',
     phone: WHATSAPP_URLS.socios.jose_luis,
     imageFront: IMAGENES.assets.team.jose_luis_frente,
-    imageBack: IMAGENES.assets.team.jose_luis_atras,
-  },
-  {
-    name: 'Lic. Jesus Godinez',
-    role: 'Lic. en Derecho',
-    tagline: 'Asesoria legal integral y enfoque en resultados.',
-    description:
-      'Perfil profesional en actualizacion. Brindamos acompanamiento juridico con atencion personalizada, analisis tecnico y compromiso etico para proteger los intereses de cada cliente.',
-    phone: WHATSAPP_URLS.socios.jesus,
-    imageFront: IMAGENES.assets.team.jesus_frente,
-    imageBack: IMAGENES.assets.team.jesus_atras,
   },
   {
     name: 'Lic. Ximena Lopez Vazquez',
@@ -73,7 +43,6 @@ const teamMembers: TeamMember[] = [
       'Brinda acompanamiento juridico en asuntos de derecho civil con enfoque analitico, claridad procesal y atencion cercana. Su practica se orienta a construir estrategias solidas para proteger los intereses patrimoniales y personales.',
     phone: WHATSAPP_URLS.socios.ximena,
     imageFront: IMAGENES.assets.team.ximena_frente,
-    imageBack: IMAGENES.assets.team.ximena_atras,
   },
   {
     name: 'Lic. Yanci Contreras Garcia',
@@ -83,17 +52,15 @@ const teamMembers: TeamMember[] = [
       'Acompana procesos de derecho familiar con sensibilidad, orden y firmeza juridica. Su trabajo se centra en ofrecer atencion personalizada y estrategias claras para resolver conflictos familiares con el mayor cuidado posible.',
     phone: WHATSAPP_URLS.socios.yanci,
     imageFront: IMAGENES.assets.team.yanci_frente,
-    imageBack: IMAGENES.assets.team.yanci_atras,
   },
   {
-    name: 'Lic. Sarah Robles',
-    role: 'Derecho Inmobiliario',
-    tagline: 'Estrategia patrimonial y certeza juridica en operaciones inmobiliarias.',
+    name: 'Lic. Sabrina Trujillo',
+    role: 'Lic. en Derecho',
+    tagline: 'Atencion humana y defensa firme en derecho familiar.',
     description:
-      'Brinda acompanamiento legal en asuntos de derecho inmobiliario, con enfoque en contratos, revision documental, regularizacion y proteccion patrimonial. Su practica se centra en aportar claridad y seguridad juridica en cada operacion.',
-    phone: WHATSAPP_URLS.socios.sarah,
-    imageFront: IMAGENES.assets.team.sarah_frente,
-    imageBack: IMAGENES.assets.team.sarah_atras,
+      'Acompana procesos de derecho familiar con sensibilidad, orden y firmeza juridica. Su trabajo se centra en ofrecer atencion personalizada y estrategias claras para resolver conflictos familiares con el mayor cuidado posible.',
+    phone: WHATSAPP_URLS.socios.sabrina,
+    imageFront: IMAGENES.assets.team.sabrina_frente,
   },
   {
     name: 'Fabrizio Ibarra',
@@ -103,217 +70,253 @@ const teamMembers: TeamMember[] = [
       'Participa en el acompanamiento juridico de operaciones inmobiliarias con enfoque practico, orden documental y seguimiento cercano. Su trabajo se orienta a fortalecer la certeza legal en compraventas, arrendamientos y procesos de regularizacion.',
     phone: WHATSAPP_URLS.socios.fabrizio,
     imageFront: IMAGENES.assets.team.fabricio_frente,
-    imageBack: IMAGENES.assets.team.fabricio_atras,
+  },
+  {
+    name: 'Lic. Alfonso Gonzalez',
+    role: 'Lic. en Derecho',
+    tagline: 'Estrategia corporativa y vision de negocios.',
+    description:
+      'Con una solida formacion en derecho corporativo y notarial, me especializo en brindar certeza juridica a las operaciones comerciales de nuestros clientes, con enfoque en prevencion de conflictos y estructuracion patrimonial.',
+    phone: WHATSAPP_URLS.socios.alfonso,
+    imageFront: IMAGENES.assets.team.alfonso_frente,
+  },
+  {
+    name: 'Lic. Antonio Guzman',
+    role: 'Lic. en Derecho',
+    tagline: 'Especialista y apasionado en materia aduanal.',
+    description:
+      'Experto en litigio civil y mercantil, mi practica se distingue por el analisis minucioso y la argumentacion solida. Cada controversia requiere una estrategia unica para proteger los intereses de nuestros representados con firmeza y etica.',
+    phone: WHATSAPP_URLS.socios.antonio,
+    imageFront: IMAGENES.assets.team.alejandro_frente,
   },
 ];
 
-const TEAM_IMAGE_FALLBACK = IMAGENES.assets.team.carlos_frente;
+const MEMBER_COUNT = teamMembers.length;
+// Cuanto hay que bajar (en alto de pantalla) para pasar al siguiente miembro.
+const STEP_SVH = 40;
 
-const MemberCard: React.FC<{ member: TeamMember; index: number }> = ({ member, index }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
+const getInitials = (name: string) =>
+  name
+    .replace(/^(Lic\.|Lic)\s+/i, '')
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((word) => word.charAt(0).toUpperCase())
+    .join('');
 
-  const handleFlip = (e: React.MouseEvent, flipState: boolean) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsFlipped(flipState);
-  };
+// Si la foto no existe todavia se muestra un monograma, no la foto de otra persona.
+const MemberPhoto: React.FC<{ member: TeamMember }> = ({ member }) => {
+  const [failed, setFailed] = useState(false);
 
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const target = e.currentTarget;
-    target.onerror = null;
-    target.src = TEAM_IMAGE_FALLBACK;
-  };
+  if (failed) {
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-gradient-to-b from-neutral-800 to-neutral-950">
+        <span className="font-serif text-7xl text-white/30 lg:text-8xl">{getInitials(member.name)}</span>
+      </div>
+    );
+  }
 
   return (
-    <div className="group h-[780px] w-full [perspective:1000px]">
-      <div
-        className={`relative h-full w-full transition-all duration-700 [transform-style:preserve-3d] ${
-          isFlipped ? '[transform:rotateY(180deg)]' : ''
-        }`}
-      >
-        <div
-          className={`absolute inset-0 h-full w-full overflow-hidden rounded-xl bg-neutral-900 [backface-visibility:hidden] ${
-            isFlipped ? 'pointer-events-none' : 'pointer-events-auto'
-          }`}
-        >
-          <div
-            className="absolute inset-[-2px] animate-spin-slow bg-gradient-to-r from-transparent via-gray-400 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100"
-            style={{ backgroundSize: '200% 200%' }}
-          ></div>
-          <div className="absolute inset-[1px] z-0 rounded-xl bg-neutral-900"></div>
-
-          <div className="relative z-10 h-full w-full">
-            <img
-              src={member.imageFront}
-              alt={member.name}
-              loading="lazy"
-              decoding="async"
-              onError={handleImageError}
-              className="h-full w-full object-cover grayscale contrast-125 transition-transform duration-700 group-hover:scale-105"
-            />
-
-            <div className="pointer-events-none absolute inset-0 z-20 overflow-hidden rounded-xl opacity-30 mix-blend-overlay">
-              <div
-                className="h-full w-full -translate-x-[150%] bg-gradient-to-tr from-transparent via-white/40 to-transparent animate-[sheen-slide_4s_infinite_ease-in-out]"
-                style={{ animationDelay: `${index * 1.5}s` }}
-              ></div>
-            </div>
-
-            <div className="absolute inset-0 z-20 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90"></div>
-
-            <div className="absolute bottom-0 left-0 z-30 w-full p-6 text-left md:p-8">
-              <div className="mb-4 translate-y-2 transition-transform duration-500 group-hover:translate-y-0">
-                <h3 className="mb-2 text-2xl font-bold leading-tight text-white drop-shadow-md md:text-3xl font-serif">
-                  {member.name}
-                </h3>
-                <p className="pl-1 font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-gray-300 md:text-xs">
-                  {member.role}
-                </p>
-              </div>
-
-              <div className="flex items-center justify-between border-t border-white/20 pt-4 opacity-0 transition-opacity duration-500 delay-100 group-hover:opacity-100">
-                <div className="flex-grow pr-2">
-                  <p className="break-words whitespace-normal text-xs italic leading-relaxed text-gray-400 md:text-sm font-light">
-                    "{member.tagline}"
-                  </p>
-                </div>
-
-                <button
-                  onClick={(e) => handleFlip(e, true)}
-                  className="group/btn relative flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/10 backdrop-blur-sm transition-all hover:bg-white hover:text-black"
-                >
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.5v15m7.5-7.5h-15" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div
-          className={`absolute inset-0 h-full w-full overflow-hidden rounded-xl border border-gray-700 bg-neutral-950 shadow-[0_0_30px_rgba(255,255,255,0.1)] [backface-visibility:hidden] [transform:rotateY(180deg)] ${
-            isFlipped ? 'pointer-events-auto' : 'pointer-events-none'
-          }`}
-        >
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
-
-          <div className="relative z-10 flex h-full flex-col justify-between p-8 text-center">
-            <div className="flex-shrink-0">
-              <div className="mx-auto mb-4 h-16 w-16 overflow-hidden rounded-full border-2 border-gray-600 p-1 shadow-lg">
-                <img
-                  src={member.imageFront}
-                  className="h-full w-full rounded-full object-cover grayscale"
-                  alt="thumb"
-                  loading="lazy"
-                  decoding="async"
-                  onError={handleImageError}
-                />
-              </div>
-              <h3 className="mb-1 font-serif text-2xl text-white">{member.name}</h3>
-              <p className="mb-4 text-xs font-bold uppercase tracking-widest text-gray-400">{member.role}</p>
-              <div className="mx-auto h-[1px] w-12 bg-gradient-to-r from-transparent via-gray-400 to-transparent"></div>
-            </div>
-
-            <div className="my-4 flex flex-grow items-center overflow-y-auto scrollbar-hide">
-              <p className="w-full px-2 text-justify text-sm leading-relaxed text-gray-300 font-light">
-                {member.description}
-              </p>
-            </div>
-
-            <div className="flex w-full flex-shrink-0 flex-col items-center gap-3">
-              {member.showWhatsapp !== false && (
-                <a
-                  href={`https://wa.me/${member.phone}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex w-full items-center justify-center gap-3 rounded-lg border border-[#25D366] bg-neutral-900 px-6 py-3 text-xs font-bold uppercase tracking-wide text-[#25D366] shadow-[0_0_10px_rgba(37,211,102,0.2)] transition-all duration-300 hover:bg-[#25D366] hover:text-black hover:shadow-[0_0_20px_#25D366]"
-                >
-                  <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-                  </svg>
-                  Contactar por WhatsApp
-                </a>
-              )}
-
-              <button
-                onClick={(e) => handleFlip(e, false)}
-                className="flex cursor-pointer items-center gap-2 py-2 text-xs uppercase tracking-widest text-gray-500 transition-colors hover:text-white"
-              >
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
-                </svg>
-                Regresar
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <img
+      src={member.imageFront}
+      alt={member.name}
+      width={900}
+      height={1200}
+      loading="lazy"
+      decoding="async"
+      onError={() => setFailed(true)}
+      className="h-full w-full object-cover object-[50%_15%] grayscale"
+    />
   );
 };
 
+const WhatsappIcon: React.FC = () => (
+  <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+  </svg>
+);
+
+// Miembro activo segun el avance del scroll dentro de la pista. Solo escucha el scroll
+// mientras la pista esta cerca de la pantalla y solo actualiza el estado cuando cambia el indice.
+const useActiveMember = (
+  trackRef: React.RefObject<HTMLDivElement>,
+  stageRef: React.RefObject<HTMLDivElement>
+) => {
+  const [active, setActive] = useState(0);
+  const [isNear, setIsNear] = useState(false);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track || typeof IntersectionObserver === 'undefined') {
+      setIsNear(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => setIsNear(entry.isIntersecting), {
+      rootMargin: '100% 0px',
+    });
+    observer.observe(track);
+    return () => observer.disconnect();
+  }, [trackRef]);
+
+  useEffect(() => {
+    if (!isNear) return;
+    const track = trackRef.current;
+    const stage = stageRef.current;
+    if (!track || !stage) return;
+
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const scrollable = track.offsetHeight - stage.offsetHeight;
+      if (scrollable <= 0) return;
+      const progress = Math.min(1, Math.max(0, -track.getBoundingClientRect().top / scrollable));
+      const next = Math.min(MEMBER_COUNT - 1, Math.floor(progress * MEMBER_COUNT));
+      setActive((current) => (current === next ? current : next));
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, [isNear, trackRef, stageRef]);
+
+  return active;
+};
+
 const Team: React.FC = () => {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const active = useActiveMember(trackRef, stageRef);
+  // Solo se monta la foto del miembro activo y sus vecinos; las demas se piden al acercarse.
+  const [mounted, setMounted] = useState<Set<number>>(() => new Set([0, 1]));
+
+  useEffect(() => {
+    setMounted((prev) => {
+      const next = new Set(prev);
+      [active - 1, active, active + 1].forEach((index) => {
+        if (index >= 0 && index < MEMBER_COUNT) next.add(index);
+      });
+      return next.size === prev.size ? prev : next;
+    });
+  }, [active]);
+
+  const goTo = (index: number) => {
+    const track = trackRef.current;
+    const stage = stageRef.current;
+    if (!track || !stage) return;
+    const scrollable = track.offsetHeight - stage.offsetHeight;
+    const top = window.scrollY + track.getBoundingClientRect().top + ((index + 0.5) / MEMBER_COUNT) * scrollable;
+    window.scrollTo({ top, behavior: 'smooth' });
+  };
+
   return (
-    <section id="equipo" className="relative bg-transparent py-24">
+    <section id="equipo" className="relative bg-transparent pt-24">
       <div className="mx-auto max-w-7xl px-6">
-        <Reveal direction="up" duration={1.0} width="100%">
-          <div className="mb-16 text-center">
-            <h2 className="mb-4 font-serif text-4xl text-white md:text-5xl">Nuestro Equipo</h2>
-            <div className="mx-auto mb-6 h-1 w-24 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
-            <p className="mx-auto max-w-2xl text-sm font-light leading-relaxed text-gray-400 md:text-base">
-              Profesionales comprometidos con la excelencia juridica y la etica profesional.
-              Cada socio aporta una vision estrategica unica para blindar tus intereses.
-            </p>
-          </div>
+        <Reveal variant="stagger" direction="up" duration={1.0} width="100%" className="mb-10 text-center">
+          <SplitText as="h2" unit="chars" className="mb-4 font-serif text-4xl text-white md:text-5xl">Nuestro Equipo</SplitText>
+          <Ornament className="mb-6" />
+          <p className="mx-auto max-w-2xl text-sm font-light leading-relaxed text-gray-400 md:text-base">
+            Profesionales comprometidos con la excelencia juridica y la etica profesional.
+            Cada socio aporta una vision estrategica unica para blindar tus intereses.
+          </p>
         </Reveal>
+      </div>
 
-        <div className="flex flex-col items-center gap-12">
-          <div className="z-30 w-full max-w-[400px]">
-            <Reveal direction="up" delay={0.1} width="100%">
-              <MemberCard member={teamMembers[0]} index={0} />
-            </Reveal>
+      {/* Pista de scroll: mientras se recorre, el escenario se queda fijo y cambia de miembro. */}
+      <div ref={trackRef} className="relative" style={{ height: `calc(100svh + ${MEMBER_COUNT * STEP_SVH}svh)` }}>
+        <div ref={stageRef} className="sticky top-0 h-[100svh] overflow-hidden">
+          {/* Columnas laterales del "templo" (solo pantallas amplias) */}
+          <Column className="pointer-events-none absolute bottom-14 left-[2%] hidden h-[80%] w-auto text-platinum-500/25 xl:block" />
+          <Column className="pointer-events-none absolute bottom-14 right-[2%] hidden h-[80%] w-auto text-platinum-500/25 xl:block" />
+          <div className="relative mx-auto h-full max-w-6xl">
+            {teamMembers.map((member, index) => {
+              const isActive = index === active;
+
+              return (
+                <div
+                  key={member.name}
+                  className="team-panel px-4 pb-14 pt-[76px] md:px-6 md:pb-16 md:pt-24 lg:pb-24 lg:pt-28"
+                  data-active={isActive ? '' : undefined}
+                  aria-hidden={!isActive}
+                >
+                  <div className="mx-auto flex h-full max-w-5xl flex-col gap-3 md:gap-4 lg:grid lg:grid-cols-[minmax(0,400px)_1fr] lg:items-center lg:gap-16">
+                    <div className="team-photo relative mx-auto min-h-[160px] w-full max-w-[460px] flex-1 overflow-hidden rounded-sm border border-white/10 bg-neutral-900 lg:h-full lg:max-h-[640px] lg:max-w-none lg:flex-none">
+                      {mounted.has(index) ? (
+                        <MemberPhoto member={member} />
+                      ) : (
+                        <div className="h-full w-full bg-neutral-900" />
+                      )}
+                      {/* Brillo plateado que cruza la foto (solo escritorio, ver index.css) */}
+                      <div className="team-sheen" aria-hidden="true"></div>
+
+                      {/* Celular y tablet: la foto es la protagonista y el nombre va encima */}
+                      <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black via-black/70 to-transparent px-4 pb-4 pt-16 text-center lg:hidden">
+                        <span className="mb-1 block font-mono text-[10px] uppercase tracking-[0.3em] text-platinum-400">
+                          {String(index + 1).padStart(2, '0')} / {String(MEMBER_COUNT).padStart(2, '0')}
+                        </span>
+                        <h3 className="font-serif text-2xl font-bold leading-tight text-white">{member.name}</h3>
+                        <p className="mt-1 font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-gray-300">{member.role}</p>
+                      </div>
+                    </div>
+
+                    <div className="team-copy flex shrink-0 flex-col text-center lg:text-left">
+                      <span className="mb-3 hidden font-mono text-xs uppercase tracking-[0.3em] text-platinum-400 lg:block">
+                        {String(index + 1).padStart(2, '0')} / {String(MEMBER_COUNT).padStart(2, '0')}
+                      </span>
+                      <h3 className="mb-2 hidden font-serif text-3xl font-bold leading-tight text-white lg:block lg:text-5xl">
+                        {member.name}
+                      </h3>
+                      <p className="mb-4 hidden font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-gray-300 lg:block lg:text-xs">
+                        {member.role}
+                      </p>
+                      <p className="mb-3 text-sm font-light leading-relaxed text-gray-400 max-md:hidden lg:mb-4 lg:text-lg">
+                        "{member.tagline}"
+                      </p>
+                      <p className="mb-5 line-clamp-6 text-sm font-light leading-relaxed text-gray-300 max-md:hidden lg:mb-6 lg:line-clamp-none lg:text-base">
+                        {member.description}
+                      </p>
+
+                      {member.showWhatsapp !== false && (
+                        <a
+                          href={`https://wa.me/${member.phone}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex w-full items-center justify-center gap-3 self-center rounded-sm border border-[#25D366] bg-neutral-900 px-6 py-3 text-xs font-bold uppercase tracking-wide text-[#25D366] transition-colors duration-300 hover:bg-[#25D366] hover:text-black lg:w-auto lg:self-start"
+                        >
+                          <WhatsappIcon />
+                          Contactar por WhatsApp
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
-          <div className="z-20 flex w-full flex-wrap justify-center gap-8 lg:gap-12">
-            {teamMembers.slice(3, 7).map((member, index) => (
-              <div key={`${member.name}-${index + 3}`} className="w-full max-w-[400px]">
-                <Reveal
-                  direction={index % 2 === 0 ? 'right' : 'left'}
-                  delay={0.2 + index * 0.12}
-                  width="100%"
-                >
-                  <MemberCard member={member} index={index + 3} />
-                </Reveal>
-              </div>
-            ))}
-          </div>
-
-          <div className="z-[15] flex w-full flex-wrap justify-center gap-8 lg:gap-12">
-            {teamMembers.slice(7, 9).map((member, index) => (
-              <div key={`${member.name}-${index + 7}`} className="w-full max-w-[400px]">
-                <Reveal
-                  direction={index % 2 === 0 ? 'right' : 'left'}
-                  delay={0.34 + index * 0.12}
-                  width="100%"
-                >
-                  <MemberCard member={member} index={index + 7} />
-                </Reveal>
-              </div>
-            ))}
-          </div>
-
-          <div className="z-10 flex w-full flex-wrap justify-center gap-8 lg:gap-12">
-            {teamMembers.slice(1, 3).map((member, index) => (
-              <div key={`${member.name}-${index + 1}`} className="w-full max-w-[400px]">
-                <Reveal
-                  direction={index % 2 === 0 ? 'right' : 'left'}
-                  delay={0.4 + index * 0.12}
-                  width="100%"
-                >
-                  <MemberCard member={member} index={index + 1} />
-                </Reveal>
-              </div>
+          <div className="absolute inset-x-0 bottom-6 flex justify-center gap-2 px-6" role="tablist" aria-label="Miembros del equipo">
+            {teamMembers.map((member, index) => (
+              <button
+                key={member.name}
+                type="button"
+                role="tab"
+                aria-selected={index === active}
+                aria-label={`Ver a ${member.name}`}
+                onClick={() => goTo(index)}
+                className="group flex h-6 w-6 items-center justify-center"
+              >
+                <span
+                  className={`block h-1.5 w-full rounded-full transition-colors duration-300 ${
+                    index === active ? 'bg-white' : 'bg-white/25 group-hover:bg-white/50'
+                  }`}
+                ></span>
+              </button>
             ))}
           </div>
         </div>

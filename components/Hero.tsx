@@ -1,25 +1,30 @@
 ﻿
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Reveal from './Reveal';
+import SplitText from './SplitText';
 import { IMAGENES } from '../imagenes_url';
 import { WHATSAPP_URLS } from '../whatsapp_urls';
+import { Column } from './Greek';
 
 const Hero: React.FC = () => {
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoReady, setVideoReady] = useState(false);
+
+  // El video es el fondo del Hero en todos los dispositivos. Solo se omite si la persona pidio
+  // reducir el movimiento o activo el ahorro de datos.
+  const [allowVideo] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    return !reduceMotion && !connection?.saveData;
+  });
 
   useEffect(() => {
-    const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (!isDesktop || prefersReducedMotion) {
-      return;
-    }
-
-    const timer = window.setTimeout(() => {
-      setShouldLoadVideo(true);
-    }, 150);
-
-    return () => window.clearTimeout(timer);
+    const video = videoRef.current;
+    if (!video) return;
+    // Algunos navegadores moviles solo permiten el autoplay si "muted" se fija como propiedad.
+    video.muted = true;
+    video.play().catch(() => undefined);
   }, []);
 
   return (
@@ -27,28 +32,23 @@ const Hero: React.FC = () => {
       
       {/* ================= BACKGROUND VIDEO LAYER ================= */}
       <div className="absolute inset-0 z-0 w-full h-full overflow-hidden">
-          {shouldLoadVideo ? (
-            <video 
-              autoPlay 
-              loop 
-              muted 
-              playsInline 
-              preload="metadata"
-              poster={IMAGENES.assets.hero.videoPoster}
-              aria-label="Video de fondo de Hermosillo y Asociados"
-              className="w-full h-full object-cover opacity-40 grayscale contrast-125"
-            >
-               <source src={IMAGENES.assets.hero.videoBackgroundWebm} type="video/webm" />
-               <source src={IMAGENES.assets.hero.videoBackground} type="video/mp4" />
-            </video>
-          ) : (
-            <img
-              src={IMAGENES.assets.hero.videoPoster}
-              alt=""
+          {allowVideo && (
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              disablePictureInPicture
               aria-hidden="true"
-              fetchPriority="high"
-              className="w-full h-full object-cover opacity-40 grayscale contrast-125"
-            />
+              onPlaying={() => setVideoReady(true)}
+              className={`h-full w-full object-cover transition-opacity duration-1000 ${videoReady ? 'opacity-40' : 'opacity-0'}`}
+            >
+              {/* mp4 primero: lo reproducen Safari/iOS y Chrome; el WebM cubre navegadores sin H.264 */}
+              <source src={IMAGENES.assets.hero.videoBackground} type="video/mp4" />
+              <source src={IMAGENES.assets.hero.videoBackgroundWebm} type="video/webm" />
+            </video>
           )}
 
           {/* Overlay Gradient: Negro puro a transparente para legibilidad */}
@@ -62,25 +62,25 @@ const Hero: React.FC = () => {
         <div className="flex flex-col justify-center items-start text-left">
           
           <Reveal direction="down" duration={1.0} delay={0.1}>
-            <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl leading-[0.9] text-white tracking-tight mb-10">
-              Hermosillo <br />
-              <span className="italic font-light text-gray-400">y Asociados.</span>
-            </h1>
+            <SplitText as="h1" unit="chars" delay={0.2} className="font-serif text-4xl sm:text-5xl md:text-6xl xl:text-[4.25rem] leading-[1.05] text-white tracking-[0.04em] uppercase mb-10">
+              Hermosillo
+              <span className="mt-3 block text-xl sm:text-2xl md:text-3xl font-normal tracking-[0.32em] text-gray-400">y Asociados.</span>
+            </SplitText>
           </Reveal>
           
           <div className="mb-12 max-w-lg">
             <Reveal direction="right" delay={0.3} duration={0.8}>
                 <div className="flex flex-col gap-5 pl-1">
                     <div className="flex items-center gap-4">
-                        <div className="h-[2px] w-12 bg-blue-600 shadow-[0_0_15px_#2563eb]"></div>
-                        <h2 className="text-lg md:text-xl text-white font-sans font-medium uppercase tracking-[0.25em] drop-shadow-lg">
+                        <div className="h-[2px] w-12 bg-platinum-600 shadow-[0_0_15px_#C5C8CE]"></div>
+                        <SplitText as="h2" unit="chars" delay={0.5} className="text-lg md:text-xl text-white font-sans font-medium uppercase tracking-[0.25em] drop-shadow-lg">
                           Abogados en Guadalajara
-                        </h2>
+                        </SplitText>
                     </div>
                     <div className="pl-[4rem] border-l border-white/20">
-                        <p className="text-gray-300 text-base md:text-lg font-light tracking-wide leading-relaxed pl-6">
+                        <SplitText as="p" unit="words" delay={0.9} className="text-gray-300 text-base md:text-lg font-light tracking-wide leading-relaxed pl-6">
                           Defensa estratégica y certeza legal para quienes exigen excelencia.
-                        </p>
+                        </SplitText>
                     </div>
                 </div>
             </Reveal>
@@ -92,7 +92,7 @@ const Hero: React.FC = () => {
                 href={`https://wa.me/${WHATSAPP_URLS.general}?text=Hola, deseo agendar una cita o recibir informes.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative inline-flex items-center gap-4 px-10 py-4 rounded-full bg-white text-black border border-white hover:bg-transparent hover:text-white transition-all duration-500 overflow-hidden"
+                className="group relative inline-flex items-center gap-4 px-10 py-4 rounded-sm bg-white text-black border border-white hover:bg-transparent hover:text-white transition-all duration-500 overflow-hidden"
                 >
                     <span className="relative z-10 text-sm font-bold tracking-[0.15em] uppercase">
                         Agendar Cita
@@ -108,12 +108,19 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Right Content - Abstract or Image */}
-        <div className="hidden lg:flex justify-end relative h-full items-center">
-             <Reveal direction="none" delay={0.2} duration={1.2} className="relative z-10 w-full flex justify-end">
+        <div className="hidden lg:flex justify-end relative h-full min-h-[85vh] items-center">
+             {/* Columnas doricas a los lados de la estatua */}
+             <Column className="pointer-events-none absolute bottom-0 left-0 z-0 h-full w-auto text-platinum-500/30" />
+             <Column className="pointer-events-none absolute bottom-0 right-0 z-0 h-full w-auto text-platinum-500/30" />
+             <Reveal direction="none" delay={0} duration={0.7} className="relative z-10 w-full flex justify-end">
                 <img 
                     src={IMAGENES.assets.hero.mainImage}
                     alt="Justicia"
-                    className="w-auto max-w-full h-auto max-h-[85vh] object-contain opacity-100 drop-shadow-2xl"
+                    width={1024}
+                    height={1536}
+                    loading="lazy"
+                    decoding="async"
+                    className="statue-drift w-auto max-w-full h-auto max-h-[85vh] object-contain opacity-100 drop-shadow-2xl"
                     style={{ 
                         filter: 'contrast(1.1) brightness(1.1)',
                         maskImage: 'linear-gradient(to left, black 70%, transparent 100%)',
@@ -124,6 +131,9 @@ const Hero: React.FC = () => {
         </div>
 
       </div>
+
+      {/* Greca griega al pie del Hero */}
+      <div className="greek-key absolute inset-x-0 bottom-0 z-10 opacity-70" aria-hidden="true"></div>
     </section>
   );
 };

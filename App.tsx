@@ -58,6 +58,33 @@ const App: React.FC = () => {
           border: 1px solid rgba(255, 255, 255, 0.2);
           box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
         }
+        /* Vidrio negro con filo platino (tarjetas flotantes) */
+        .platinum-glass {
+          position: relative;
+          border-radius: 0.75rem;
+          background: linear-gradient(135deg, rgba(30, 31, 36, 0.92), rgba(8, 8, 10, 0.96));
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        }
+        .platinum-glass::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          padding: 1px;
+          border-radius: inherit;
+          background: linear-gradient(135deg, #f4f4f5 0%, #9a9aa0 22%, #3a3a3f 42%, #d8d8dc 60%, #6e6e75 80%, #f4f4f5 100%);
+          -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
+        }
+        .platinum-text {
+          background: linear-gradient(180deg, #ffffff, #e0e3ec 48%, #a7afbf);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+        }
         .platinum-shine::after {
           content: '';
           position: absolute;

@@ -25,5 +25,7 @@
     },
     "allowImportingTsExtensions": true,
     "noEmit": true
-  }
+  },
+  "include": ["*.ts", "*.tsx", "components/**/*"],
+  "exclude": ["node_modules", "dist", "portal-de-expedientes", "administrator_sistema_expendientes"]
 }
